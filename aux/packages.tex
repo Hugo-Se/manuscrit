@@ -1,8 +1,13 @@
 % !TEX root = ../master.tex
 
 % Use utf-8 encoding for foreign characters
-\usepackage[utf8]{inputenc}
-\usepackage[russian,frenchb,english]{babel}
+%\usepackage[utf8]{inputenc} %%%%%%%%%%
+%\usepackage[russian,french,english]{babel} %%%%%%%%%%
+
+
+%\usepackage{fontspec} %%%%%%%%%%
+%\usepackage{polyglossia} %%%%%%%%%%
+
 
 
 \usepackage{pdfpages} % For front and back covers, warning, when scehack is used, must be loaded before mathtools
@@ -184,6 +189,10 @@
 			bookmarksopen=true,
 			bookmarksopenlevel=1
 			]{hyperref}
+
+
+\setdefaultlanguage{french} %%%%%%%%%%
+\setotherlanguage{english} %%%%%%%%%%
 
 \hypersetup{
   % linktoc        = page,

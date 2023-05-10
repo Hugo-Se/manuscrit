@@ -1,0 +1,182 @@
+% !TEX root = introduction_master.tex
+
+\section{La cryptographie} % (fold)
+\label{sec:cryptographie}
+
+
+Dans son {\it Dictionnaire de la langue française}, Émile Littré définissait la cryptographie
+comme l’art « d'écrire en caractères secrets qui sont ou de convention ou le résultat d'une
+transposition des lettres de l'alphabet\footnote{{\it Dictionnaire de la langue française}, d’Émile
+Littré, édition de 1873, tome premier, page 922, entrée CRYPTOGRAPHIE.} ».
+Il est vrai qu’en général, en cette seconde moitié  du {\sc xix}ᵉ siècle, pour rendre un message
+inintelligible au cas où celui-ci, confidentiel, viendrait à être intercepté, on écrivait un
+caractère pour un autre, ou on remplaçait une suite de lettres par une autre (par exemple, selon une
+substitution dite {\it polyalphabétique\/}) ; la cryptographie était alors, pour ainsi dire,
+balbutiante.
+Pourtant, à cette époque déjà, dans ses {\it Recherches arithmétiques}\footnote{}, Carl Friedrich
+Gauss avait jeté les bases de la théorie des nombres moderne, et Évariste Galois, dans son fameux
+mémoire\footnote{} --- publié après sa mort par le mathématicien Joseph Liouville ---, celles de la
+théorie qui portera son nom.
+
+La constatation de l’insuffisante valeur de la cryptographie du {\sc xix}ᵉ siècle se retrouve dans
+l’article en deux parties d’Auguste Kerckhoffs, paru en 1883, intitulé {\it La
+cryptographie militaire}\footnote{}, où le cryptographe s’étonne de voir savants et professeurs «
+enseigner et recommander pour les usages de la guerre des systèmes dont un déchiffreur tant soit peu
+expérimenté trouverait certainement la clef en moins d’une heure de temps » ; l’auteur ne voit guère
+d’explication à cet « excès de confiance dans certains chiffres » que par « l’abandon dans lequel la
+suppression des cabinets noirs et la sécurité des relations postales ont fait tomber les études
+cryptographiques ».
+
+Ce n’est qu’au siècle suivant, sous l’impulsion, notamment, des grands conflits qui l’ont déchiré,
+qu’on vit la cryptographie tirer réellement parti des outils de la mathématique moderne et muer en
+une science complexe, si bien que dans le dernier tiers de ce {\sc xx}ᵉ siècle apparut une
+nouvelle sorte de cryptographie, qu’on dit {\it asymétrique} par opposition à la cryptographie
+{\it symétrique}, son pendant plus ancien.
+
+Jusqu’alors, en effet, pour établir une communication chiffrée, il fallait que les correspondants
+convinssent au préalable d’une règle secrète de chiffrement qui fixât
+notamment les caractéristiques du système propres à cette communication dès lors qu’elles étaient à
+connaître pour réaliser la transformation du texte d’origine, le {\it clair}.
+Avec cette configuration, tout chiffré produit par l’un des correspondants aurait pu l’avoir été par
+un autre d’entre eux s’il avait eu connaissance du clair ; en outre, tout chiffré produit par l’un
+des correspondant pouvait être déchiffré naturellement par un autre, sans même qu’il ait été convenu
+d’une méthode de déchiffrement, simplement par l’application d’un procédé inverse à celui employé
+pour chiffrer.
+Par exemple, deux personnes pouvaient convenir qu’à chacune des lettres d’un clair qu’ils
+souhaiteraient transmettre serait substituée une autre lettre de l’alphabet selon une table de
+correspondance définit à l’avance : qu’ainsi le {\sc C} se verrait, en chacune de ses occurences,
+remplacer par un {\sc G}, que le {\sc E} serait remplacé par un {\sc S}, le {\sc F} par un {\sc M},
+le {\sc H} par un {\sc C}, et ainsi de suite, le mot « CHEF » devenant alors en « GCSM », suite
+de lettres que les deux personnes serait en mesure non seulement de produire mais de déchiffrer aisément en
+appliquant la table de substitution dans le sens inverse. La correspondance entre les lettres du
+clair et du chiffré est dans cet exemple l’information qui doit rester secrète pour que le
+chiffrement le demeure aussi.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%tous les correspondants sont capables de produire le même chiffré à partir d’un clair déterminé.
+%pourrait l’être par un
+%autre d’entre eux s’il avait connaissance du clair ; il apparaît aussi que tout chiffré produit par
+%Les correspondants étaient alors en mesure de produire les mêmes chiffrés s’ils avaient le même clair et 
+%Ainsi, un de ces correspondants, était naturellement en mesure de produire un chiffré qui ne soit {\it a priori\/} pas distingable du chiffré d’un autre
+%Ainsi, s’il avait la connaist clair} commun, un des correspondants
+%chacun des correspondants avait naturellement en sa possesion la possibilité de produire le même résultat à partir du même texte d’origine.
+%Dotés des mêmes éléments
+%Ainsi, chacun des correspondants
+%Ainsi, chacun des correspondants était en mesure d’y appliquer la même transformation.
+%qu’un texte serait qu’en chacune de ses occurences dans le texte d’origine, la lettre {\it h\/} se verrait remplacer par la lettre {\it f}.
+%caractéristiques éventuellement variables dans le système général.
+%, qui devait concerner, non seulement les caractéristiques générales du système employé, mais aussi ses éventuelles caractéristiques spécifiques à la communication nécessaire à la transformation des messages. 
+%Cette convention devait concerner non seulement les caractéristiques générales du système employé, mais aussi ses caractéristiques variables propres à cette communication spécifique.
+%Avec cette règle commune, il était 
+%commune quant au système et aux données techniques précises à employer pour chiffrer et déchiffrer.
+%L’individu doté de la capacité de chiffrer avec le système était immédiatement en mesure de déchiffrer
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%Jusqu’alors en effet, toute communication chiffrée ne pouvait s’établir qu’avec le partage préalable entre les correspondants d’une information secrète qui correspondait aux données techniques du système de chiffrement et déchiffrement, système qui se trouvait être identique pour la communication en question y compris dans  
+%Autrement dit, il fallait une convention 
+%utilisées pour chiffrer et déchiffrer, données identiques pour chacun des
+%correspondants qui se trouvaient alors employer le même système avec les mêmes détails variables.
+
+%qui se trouvaient alors employer exactement le même procédé, avec les mêmes détails variables pour mettre en œuvre le chiffrement, et le déchiffrement qui
+
+
+%Cette identité entre ces données techniques est ce qui a permis de qualifier de {\it symétrique\/} ce
+%type de cryptographie.
+%, avec laquelle le chiffrement est le même
+%des deux côtés, il utilisent exactement les mêmes paramètres.
+L’information secrète --- il en faut une --- sur lequel se fonde le chiffrement peut être de deux natures : soit elle
+correspond au système de chiffrement lui-même, et la sécurité de la communication repose alors
+sur la méconnaissance par l’adversaire du système employé, soit elle se réduit à un petit ensemble de
+paramètres du système, appelé {\it clef}, et la connaissance de la méthode générale de chiffrement
+employée est alors supposée ne pas compromettre le système.
+De ces deux approches du chiffrement, la première a fini par être largement rejetée par les
+cryptographes.
+L’article de Kerckhoffs exprimait déjà, au deuxième chef d’une liste de six « {\it desiderata\/} de
+la cryptographie militaire », la nécessité que le système « n’exige pas le secret et qu’il puisse
+sans inconvénient tomber entre les mains de l’ennemi ».
+Par secret, Kerckhoffs entend « non la clef proprement dite, mais ce qui constitue la partie
+matérielle du système » --- ce qui correspondrait, à l’ère numérique, à l'algorithme de chiffrement
+--- car, explique-t-il, « il n’est pas nécessaire de se créer des fantômes imaginaires et de mettre
+en suspicion l’incorruptibilité des employés ou agents subalternes, pour comprendre que, si un
+système exigeant le secret se trouvait entre les mains d’un trop grand nombre d’individus, il
+pourrait être compromis à chaque engagement auquel l’un ou l’autre d’entre eux prendrait part ».
+Ce {\it desideratum} de la cryptographie militaire est ce qui est maintenant connu sous le nom de
+principe de Kerckhoffs ; il s’applique tout aussi bien en dehors du domaine militaire.
+%qui reste bien sûr tout à fait valable en-dehors du cadre militaire.
+À l’époque actuelle, il est en outre considéré comme entendu que le fait qu’un système de
+chiffrement soit connaissable du monde entier, et donc largement susceptible d’être étudié et mis à
+l’épreuve par les spécialistes, et qu’aucune faille critique ne se fasse connaître malgré cela, tend
+à être gage de sa bonne qualité.
+% source ?
+
+Prenons en exemple le système AES\footnote{Le sigle AES correspond à « {\it advanced encryption
+standard} », littéralement « norme de chiffrement avancé ».}, qui est le système de chiffrement
+symétrique par bloc (c’est-à-dire traitant les données à chiffrer bloc par bloc) recommandé par
+l’ANSSI\footnote{L’ANSSI est l’Agence nationale de la sécurité des systèmes d’information, en
+France.}.
+Ce système résulte d’un concours public du NIST\footnote{Le NIST est l’Institut national des normes
+et de la technologie des États-Unis.} dont l’ambition affichée était de choisir un algorithme de
+chiffrement, dans plusieurs déclinaisons déterminées précisément pour que le système fût à la fois
+robuste et efficace, d’en faire une norme dont les spécifications%
+\footnote{https://csrc.nist.gov/csrc/media/publications/fips/197/final/documents/fips-197.pdf}
+fussent accessibles à tous, et d’en permettre un usage non dissimulé comme celui qu’en fait par
+exemple l’environnement de messagerie
+Signal\footnote{https://signal.org/docs/specifications/doubleratchet/doubleratchet.pdf}, dont le
+code-source est ouvert.
+De ce concours du NIST est sorti gagnant l’algorithme de Rijndael dans trois déclinaisons
+spécifiques correspondant à trois tailles de clef différentes : 128, 192 et 256 bits. 
+Le libre accès aux spécifications du système AES a permis la réalisation d’analyses précises de
+celui-ci par le monde de la recherche et la publication de méthodes d’attaques qui, bien que de
+nature à le fragiliser un peu en certains aspects, ne se sont pas montrées suffisamment
+puissantes pour le rendre caduc.
+% à le rendre ?
+Notons cependant qu’il apparaît, au nombre des révélations dont fut à l’orgine Edward Snowden, que
+la NSA\footnote{{\it National Security Agency}, «Agence nationale de la sécurité » aux États-Unis.},
+tout en recommandant l’utilisation d’AES, s’est employée à essayer de trouver des attaques sur ce
+système ; il ne semble pas déraisonnable de penser qu’un tel organisme de renseignement pourrait
+garder pour lui toute trouvaille offensive déterminante dans un système de chiffrement à
+spécifications publiques.
+%C’est un risque qui n’est pas complètement à exclure.
+%On parle souvent de la cryptographie comme un art plutôt qu’une science.
+%Juger de la probabilité d’un tel scénario est souvent difficile. On parle souvent de la
+%cryptographie comme un art
+
+Pour que des systèmes informatiques, directement liés à des êtres humains ou non, puissent
+employer un système de chiffrement symétrique tel qu’AES, il est nécessaire comme nous l’avons dit,
+qu’ils aient en commun une clef.
+Or, si ces systèmes sont distants et sont supposés communiquer de façon sécurisé pour la première
+fois comment faire en sorte qu’ils puissent convenir d’une clef qui doit être secrète et le rester
+longtemps ?
+
+C’est ce que permet la cryptographie asymétrique. 
+
+\vskip2cm
+\hrule
+\vskip2cm
+
+Cryptographie asymétrique, définition, utilité.
+
+Problèmes difficiles de la cryptographie asymétriques, logarithme discret, factorisation.
+
+Autres avantages de la cryptographie asymétrique.
+
+Définition complète de la cryptographie.
+
+
+
+%et qu’aucun canal de communication sécurisé n’existe à cet instant, rester ?
+%On pourrait imaginer que ses systèmes pourrait se communiquer la clef comme deux humains pourrait le
+%faire en se murmurant à l’oreille la valeur de la clef, en se la montrant sur un bout de papier.
+
+%Or, pour les communications numériques, il n’est en général
+%Pour faire usage d’un système de chiffrement symétrique tel qu’AES, il est nécessaires que les
+%établir une communication sécurisé.
+%Or, en pratique, il est difficile de faire en sorte, il est très difficile de faire en sorte que la clef 
+
+
+
+%\lipsum[1-9] %%%%%%%%%%
+
+
+% section motivation (end)
