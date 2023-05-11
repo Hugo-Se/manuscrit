@@ -34,23 +34,23 @@ nouvelle sorte de cryptographie, qu’on dit {\it asymétrique} par opposition �
 {\it symétrique}, son pendant plus ancien.
 
 Jusqu’alors, en effet, pour établir une communication chiffrée, il fallait que les correspondants
-convinssent au préalable d’une règle secrète de chiffrement qui fixât
-notamment les caractéristiques du système propres à cette communication dès lors qu’elles étaient à
+convinssent au préalable d’une règle secrète de chiffrement fixant, 
+notamment, les caractéristiques du système, propres à cette communication, à
 connaître pour réaliser la transformation du texte d’origine, le {\it clair}.
 Avec cette configuration, tout chiffré produit par l’un des correspondants aurait pu l’avoir été par
-un autre d’entre eux s’il avait eu connaissance du clair ; en outre, tout chiffré produit par l’un
+un autre d’entre eux s’il avait eu connaissance du clair, et tout chiffré produit par l’un
 des correspondant pouvait être déchiffré naturellement par un autre, sans même qu’il ait été convenu
 d’une méthode de déchiffrement, simplement par l’application d’un procédé inverse à celui employé
 pour chiffrer.
 Par exemple, deux personnes pouvaient convenir qu’à chacune des lettres d’un clair qu’ils
 souhaiteraient transmettre serait substituée une autre lettre de l’alphabet selon une table de
-correspondance définit à l’avance : qu’ainsi le {\sc C} se verrait, en chacune de ses occurences,
-remplacer par un {\sc G}, que le {\sc E} serait remplacé par un {\sc S}, le {\sc F} par un {\sc M},
-le {\sc H} par un {\sc C}, et ainsi de suite, le mot « CHEF » devenant alors en « GCSM », suite
-de lettres que les deux personnes serait en mesure non seulement de produire mais de déchiffrer aisément en
-appliquant la table de substitution dans le sens inverse. La correspondance entre les lettres du
-clair et du chiffré est dans cet exemple l’information qui doit rester secrète pour que le
-chiffrement le demeure aussi.
+correspondance définit à l’avance : qu’ainsi le A se verrait, en chacune de ses occurences,
+remplacer par un G, que le B serait remplacé par un A, le C par un M,
+et ainsi de suite, le mot « BAC » devenant alors en « AGM » dans ce cas, suite
+de lettres que les deux personnes serait en mesure non seulement de produire, mais aussi de
+déchiffrer aisément en appliquant la table de substitution dans le sens inverse.
+La correspondance entre les lettres du clair et du chiffré est dans cet exemple l’information qui
+doit rester secrète pour que le chiffrement le demeure aussi.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %tous les correspondants sont capables de produire le même chiffré à partir d’un clair déterminé.
@@ -146,14 +146,20 @@ Pour que des systèmes informatiques, directement liés à des êtres humains ou
 employer un système de chiffrement symétrique tel qu’AES, il est nécessaire comme nous l’avons dit,
 qu’ils aient en commun une clef.
 Or, si ces systèmes sont distants et sont supposés communiquer de façon sécurisé pour la première
-fois comment faire en sorte qu’ils puissent convenir d’une clef qui doit être secrète et le rester
+fois, comment faire en sorte qu’ils puissent convenir d’une clef qui doit être secrète et le rester
 longtemps ?
 
-C’est ce que permet la cryptographie asymétrique. 
+C’est ce que permet la cryptographie {\it asymétrique}.
+Par l’emploi d’un chiffrement dit {\it asymétrique\/}, deux individus ou davantage peuvent établir une communication secrète sans pourtant détenir une clef commune.
+Il leur faut pour cela être chacun pourvus de deux clefs propres, l’une publique, connaissable des autres correspondants, l’autre privée, secrète. 
+Imaginons que l’un de ces individus, qu’on appellera Alice, entreprenne d’envoyer un message chiffré à un autre individu nommé Benoît. C’est la clef publique de Benoît qui doit être employée par Alice pour chiffrer le message qu’elle lui destine, mais c’est la clef privée de Benoît, qu’il est normalement seul à posséder, que celui-ci doit utiliser pour déchiffrer le message qui lui est adressé.
+%Une fois le message reçu, il ne reste à Benoît que de déchiffrer, avec sa clef privée
+
 
 \vskip2cm
 \hrule
 \vskip2cm
+Diffie-Hellman.
 
 Cryptographie asymétrique, définition, utilité.
 
@@ -162,6 +168,8 @@ Problèmes difficiles de la cryptographie asymétriques, logarithme discret, fac
 Autres avantages de la cryptographie asymétrique.
 
 Définition complète de la cryptographie.
+
+Informatique quantique et menace relatives aux problèmes difficiles de la cryptographie asymétrique.
 
 
 
