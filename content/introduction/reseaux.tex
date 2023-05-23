@@ -6,11 +6,51 @@
 %\usepackage{amsmath,amssymb}
 
 
-Un \emph{réseau euclidien} $\mathcal{L}$ est un sous-groupe discret de l’espace euclidien $\mathbb{R}^n$. Il est isomorphe à $\mathbb{Z}^n$, c'est-à-dire qu’il existe une base $\{\mathbf{b}_1, \mathbf{b}_2, \ldots, \mathbf{b}_n\}$ de $\mathbb{R}^n$ telle que
+%Un \emph{réseau euclidien} $\mathcal{L}$ est un sous-groupe discret de l’espace vectoriel $\mathbb{R}^n$ tel qu’il existe une base $(\mathbf{b}_i)_{i\in[\![1, n]\!]}$ de $\mathbb{R}^n$ telle que
+%\[
+%\mathcal{L} = \left\{ \sum_{i=1}^n z_i \mathbf{b}_i : z_i \in \mathbb{Z} \right\}.
+%\]
+
+\subsection{Définitions}
+Un \emph{réseau euclidien} $\mathcal{L}$ est, pour un entier naturel $n$, un sous-groupe discret de l’espace vectoriel $\mathbb{R}^n$ pour lequel il existe une base $(\mathbf{b}_i)_{i\in[\![1, n]\!]}$ de $\mathbb{R}^n$ telle que
 \[
-\mathcal{L} = \left\{ \sum_{i=1}^n z_i \mathbf{b}_i : z_i \in \mathbb{Z} \right\}.
+\mathcal{L} = \bigoplus^n_{i=1} \mathbb{Z}\mathbf{b}_i\text{.}
 \]
 %Chaque vecteur dans $\mathcal{L}$ est une combinaison linéaire avec des coefficients entiers des vecteurs de la base. On dit que $\mathcal{L}$ est généré par la base $\{\mathbf{b}_1, \mathbf{b}_2, \ldots, \mathbf{b}_n\}$.
+
+
+\subsection{Production d'instances difficiles de problèmes sur les réseaux}
+
+Dans un article\cite{STOC:Ajtai96} publié en 1996, Miklós Ajtai présente la réduction de trois problèmes, considérés
+difficiles \emph{dans le pire des cas}, au \emph{cas moyen} d’un problème qu’il définit à partir
+d’une classe particulière de réseaux.
+En d’autres termes, à partir de la difficulté supposée de trois problèmes dans les instances les
+plus défavorables à leur résolution --- sans que ces instances spécifiques ne soit précisées ---
+Ajtai démontre la difficulté d’un problème dont l’instance correspond à un réseau tiré aléatoirement
+dans la classe qu’il spécifie.
+
+Le premier des trois problèmes supposés difficiles, par exemple, consiste à trouver,
+approximativement, la plus petite norme parmi celles des vecteurs non nuls d’un réseau.
+
+La classe \emph{aléatoire} se définit \emph{modulo} un entier $q$ 
+
+Ajtai démontre que si un algorithme probabilistique qui opère en temps polynomial trouve, avec une
+probabilité de $1/2$ au moins, un vecteur court dans un réseau tiré aléatoirement dans cette classe,
+il existe un autre algorithme en temps polynomial qui résout les trois problèmes difficiles avec une
+probabilité qui tend exponentiellement vers $1$.
+En démontrant ainsi la difficulté du problème du plus court vecteur avec des instances aisément
+engendrables, Ajtai a ouvert la voie la création de primitives cryptographiques reposant sur des
+problèmes attachés aux réseaux euclidiens.
+
+
+
+%opère une réduction
+%à un facteur polynomial près, 
+%autrement dit
+%Premièrement, le problème du plus court vecteur non nul dans un réseau
+%En 1996, Miklós Ajtai définit une classe de réseaux euclidiens telle 
+
+
 \vskip1cm
 \hrule
 \vskip1cm
@@ -46,13 +86,5 @@ Cela a été démontré en montrant une réduction quantique de ces problèmes d
 
 
 Le problème LWE a trouvé de nombreuses applications en cryptographie, notamment dans la construction de systèmes de chiffrement, de signatures numériques et de protocoles de transfert de clef. La sécurité de ces constructions repose sur la difficulté supposée du problème LWE, qui à son tour est liée à la difficulté de certains problèmes dans les réseaux euclidiens. Cela fait du problème LWE un outil précieux pour la construction de systèmes cryptographiques résistants aux attaques par ordinateur quantique.
-
-Pire cas--cas moyen.
-
-\end{document}
-
-
-%\lipsum[1-9]
-
 
 % section reseaux (end)

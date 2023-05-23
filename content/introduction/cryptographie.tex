@@ -4,50 +4,47 @@
 \label{sec:cryptographie}
 
 
-Dans son {\it Dictionnaire de la langue française}, Émile Littré définissait la cryptographie
-comme l’art « d'écrire en caractères secrets qui sont ou de convention ou le résultat d'une
-transposition des lettres de l'alphabet\footnote{{\it Dictionnaire de la langue française}, d’Émile
-Littré, édition de 1873, tome premier, page 922, entrée CRYPTOGRAPHIE.} ».
+Dans son \emph{Dictionnaire de la langue française}, Émile Littré définissait la cryptographie comme
+l’« Art d'écrire en caractères secrets qui sont ou de convention ou le résultat d'une transposition
+des lettres de l'alphabet\footnote{\emph{Dictionnaire de la langue française}, d’Émile Littré,
+édition de 1873, tome premier, page 922, entrée CRYPTOGRAPHIE.} ».
 Il est vrai qu’en général, en cette seconde moitié  du {\sc xix}ᵉ siècle, pour rendre un message
 inintelligible au cas où celui-ci, confidentiel, viendrait à être intercepté, on écrivait un
 caractère pour un autre, ou on remplaçait une suite de lettres par une autre (par exemple, selon une
-substitution dite {\it polyalphabétique\/}) ; la cryptographie était alors, pour ainsi dire,
-balbutiante.
-Pourtant, à cette époque déjà, dans ses {\it Recherches arithmétiques}\footnote{}, Carl Friedrich
+substitution dite polyalphabétique) ; la cryptographie était alors, pour ainsi dire, balbutiante.
+Pourtant, à cette époque déjà, dans ses \emph{Recherches arithmétiques}\footnote{}, Carl Friedrich
 Gauss avait jeté les bases de la théorie des nombres moderne, et Évariste Galois, dans son fameux
 mémoire\footnote{} --- publié après sa mort par le mathématicien Joseph Liouville ---, celles de la
 théorie qui portera son nom.
 
 La constatation de l’insuffisante valeur de la cryptographie du {\sc xix}ᵉ siècle se retrouve dans
-l’article en deux parties d’Auguste Kerckhoffs, paru en 1883, intitulé {\it La
-cryptographie militaire}\footnote{}, où le cryptographe s’étonne de voir savants et professeurs «
-enseigner et recommander pour les usages de la guerre des systèmes dont un déchiffreur tant soit peu
-expérimenté trouverait certainement la clef en moins d’une heure de temps » ; l’auteur ne voit guère
+l’article en deux parties d’Auguste Kerckhoffs, paru en 1883, intitulé \emph{La cryptographie
+militaire}\footnote{}, où le cryptographe s’étonne de voir savants et professeurs « enseigner et
+recommander pour les usages de la guerre des systèmes dont un déchiffreur tant soit peu expérimenté
+trouverait certainement la clef en moins d’une heure de temps » ; l’auteur ne voit guère
 d’explication à cet « excès de confiance dans certains chiffres » que par « l’abandon dans lequel la
 suppression des cabinets noirs et la sécurité des relations postales ont fait tomber les études
 cryptographiques ».
 
 Ce n’est qu’au siècle suivant, sous l’impulsion, notamment, des grands conflits qui l’ont déchiré,
 qu’on vit la cryptographie tirer réellement parti des outils de la mathématique moderne et muer en
-une science complexe, si bien que dans le dernier tiers de ce {\sc xx}ᵉ siècle apparut une
-nouvelle sorte de cryptographie, qu’on dit {\it asymétrique} par opposition à la cryptographie
-{\it symétrique}, son pendant plus ancien.
+une science complexe, si bien que dans les années 1970 apparut une nouvelle sorte de cryptographie,
+qu’on dit asymétrique par opposition à la cryptographie symétrique, son pendant plus ancien.
 
 Jusqu’alors, en effet, pour établir une communication chiffrée, il fallait que les correspondants
-convinssent au préalable d’une règle secrète de chiffrement fixant, 
-notamment, les caractéristiques du système, propres à cette communication, à
-connaître pour réaliser la transformation du texte d’origine, le {\it clair}.
-Avec cette configuration, tout chiffré produit par l’un des correspondants aurait pu l’avoir été par
-un autre d’entre eux s’il avait eu connaissance du clair, et tout chiffré produit par l’un
-des correspondant pouvait être déchiffré naturellement par un autre, sans même qu’il ait été convenu
-d’une méthode de déchiffrement, simplement par l’application d’un procédé inverse à celui employé
-pour chiffrer.
+convinssent au préalable d’une règle secrète de chiffrement fixant notamment les caractéristiques du
+système à connaître pour réaliser la transformation du texte d’origine, le clair.
+Avec cette configuration, celle de la cryptographie symétrique, tout correspondant était en mesure
+de chiffrer, \emph{à la place} d’un autre, un clair donné, et tout chiffré produit par l’un des
+correspondant pouvait être déchiffré naturellement par un autre, sans même qu’il ait été convenu
+d’une méthode de déchiffrement, mais simplement par l’application d’un procédé inverse à celui
+employé pour chiffrer.
 Par exemple, deux personnes pouvaient convenir qu’à chacune des lettres d’un clair qu’ils
 souhaiteraient transmettre serait substituée une autre lettre de l’alphabet selon une table de
 correspondance définit à l’avance : qu’ainsi le A se verrait, en chacune de ses occurences,
 remplacer par un G, que le B serait remplacé par un A, le C par un M,
-et ainsi de suite, le mot « BAC » devenant alors en « AGM » dans ce cas, suite
-de lettres que les deux personnes serait en mesure non seulement de produire, mais aussi de
+et ainsi de suite, le mot « BAC » devenant alors « AGM » dans ce cas, suite
+de lettres que les deux personnes seraient en mesure non seulement de produire, mais aussi de
 déchiffrer aisément en appliquant la table de substitution dans le sens inverse.
 La correspondance entre les lettres du clair et du chiffré est dans cet exemple l’information qui
 doit rester secrète pour que le chiffrement le demeure aussi.
@@ -57,13 +54,13 @@ doit rester secrète pour que le chiffrement le demeure aussi.
 %pourrait l’être par un
 %autre d’entre eux s’il avait connaissance du clair ; il apparaît aussi que tout chiffré produit par
 %Les correspondants étaient alors en mesure de produire les mêmes chiffrés s’ils avaient le même clair et 
-%Ainsi, un de ces correspondants, était naturellement en mesure de produire un chiffré qui ne soit {\it a priori\/} pas distingable du chiffré d’un autre
+%Ainsi, un de ces correspondants, était naturellement en mesure de produire un chiffré qui ne soit \emph{a priori} pas distingable du chiffré d’un autre
 %Ainsi, s’il avait la connaist clair} commun, un des correspondants
 %chacun des correspondants avait naturellement en sa possesion la possibilité de produire le même résultat à partir du même texte d’origine.
 %Dotés des mêmes éléments
 %Ainsi, chacun des correspondants
 %Ainsi, chacun des correspondants était en mesure d’y appliquer la même transformation.
-%qu’un texte serait qu’en chacune de ses occurences dans le texte d’origine, la lettre {\it h\/} se verrait remplacer par la lettre {\it f}.
+%qu’un texte serait qu’en chacune de ses occurences dans le texte d’origine, la lettre \emph{h} se verrait remplacer par la lettre \emph{f}.
 %caractéristiques éventuellement variables dans le système général.
 %, qui devait concerner, non seulement les caractéristiques générales du système employé, mais aussi ses éventuelles caractéristiques spécifiques à la communication nécessaire à la transformation des messages. 
 %Cette convention devait concerner non seulement les caractéristiques générales du système employé, mais aussi ses caractéristiques variables propres à cette communication spécifique.
@@ -81,18 +78,18 @@ doit rester secrète pour que le chiffrement le demeure aussi.
 %qui se trouvaient alors employer exactement le même procédé, avec les mêmes détails variables pour mettre en œuvre le chiffrement, et le déchiffrement qui
 
 
-%Cette identité entre ces données techniques est ce qui a permis de qualifier de {\it symétrique\/} ce
+%Cette identité entre ces données techniques est ce qui a permis de qualifier de \emph{symétrique} ce
 %type de cryptographie.
 %, avec laquelle le chiffrement est le même
 %des deux côtés, il utilisent exactement les mêmes paramètres.
-L’information secrète --- il en faut une --- sur lequel se fonde le chiffrement peut être de deux natures : soit elle
+Cette information secrète --- il en faut une --- sur lequel se fonde le chiffrement peut être de deux natures : soit elle
 correspond au système de chiffrement lui-même, et la sécurité de la communication repose alors
 sur la méconnaissance par l’adversaire du système employé, soit elle se réduit à un petit ensemble de
-paramètres du système, appelé {\it clef}, et la connaissance de la méthode générale de chiffrement
+paramètres du système, appelé \emph{clef}, et la connaissance de la méthode générale de chiffrement
 employée est alors supposée ne pas compromettre le système.
 De ces deux approches du chiffrement, la première a fini par être largement rejetée par les
 cryptographes.
-L’article de Kerckhoffs exprimait déjà, au deuxième chef d’une liste de six « {\it desiderata\/} de
+L’article de Kerckhoffs exprimait déjà, au deuxième chef d’une liste de six « \emph{desiderata} de
 la cryptographie militaire », la nécessité que le système « n’exige pas le secret et qu’il puisse
 sans inconvénient tomber entre les mains de l’ennemi ».
 Par secret, Kerckhoffs entend « non la clef proprement dite, mais ce qui constitue la partie
@@ -101,16 +98,16 @@ matérielle du système » --- ce qui correspondrait, à l’ère numérique, à
 en suspicion l’incorruptibilité des employés ou agents subalternes, pour comprendre que, si un
 système exigeant le secret se trouvait entre les mains d’un trop grand nombre d’individus, il
 pourrait être compromis à chaque engagement auquel l’un ou l’autre d’entre eux prendrait part ».
-Ce {\it desideratum} de la cryptographie militaire est ce qui est maintenant connu sous le nom de
+Ce \emph{desideratum} de la cryptographie militaire est ce qui est maintenant connu sous le nom de
 principe de Kerckhoffs ; il s’applique tout aussi bien en dehors du domaine militaire.
 %qui reste bien sûr tout à fait valable en-dehors du cadre militaire.
-À l’époque actuelle, il est en outre considéré comme entendu que le fait qu’un système de
+À l’époque actuelle, en outre, le fait qu’un système de
 chiffrement soit connaissable du monde entier, et donc largement susceptible d’être étudié et mis à
 l’épreuve par les spécialistes, et qu’aucune faille critique ne se fasse connaître malgré cela, tend
-à être gage de sa bonne qualité.
+à être perçu comme un gage de sa bonne qualité.
 % source ?
 
-Prenons en exemple le système AES\footnote{Le sigle AES correspond à « {\it advanced encryption
+Prenons en exemple le système AES\footnote{Le sigle AES correspond à « \emph{advanced encryption
 standard} », littéralement « norme de chiffrement avancé ».}, qui est le système de chiffrement
 symétrique par bloc (c’est-à-dire traitant les données à chiffrer bloc par bloc) recommandé par
 l’ANSSI\footnote{L’ANSSI est l’Agence nationale de la sécurité des systèmes d’information, en
@@ -132,7 +129,7 @@ nature à le fragiliser un peu en certains aspects, ne se sont pas montrées suf
 puissantes pour le rendre caduc.
 % à le rendre ?
 Notons cependant qu’il apparaît, au nombre des révélations dont fut à l’orgine Edward Snowden, que
-la NSA\footnote{{\it National Security Agency}, «Agence nationale de la sécurité » aux États-Unis.},
+la NSA\footnote{\emph{National Security Agency}, «Agence nationale de la sécurité » aux États-Unis.},
 tout en recommandant l’utilisation d’AES, s’est employée à essayer de trouver des attaques sur ce
 système ; il ne semble pas déraisonnable de penser qu’un tel organisme de renseignement pourrait
 garder pour lui toute trouvaille offensive déterminante dans un système de chiffrement à
@@ -149,27 +146,27 @@ Or, si ces systèmes sont distants et sont supposés communiquer de façon sécu
 fois, comment faire en sorte qu’ils puissent convenir d’une clef qui doit être secrète et le rester
 longtemps ?
 
-C’est ce que permet la cryptographie {\it asymétrique}.
-Par l’emploi d’un chiffrement dit {\it asymétrique\/}, deux individus ou davantage peuvent établir une communication secrète sans pourtant détenir une clef commune.
+C’est ce que permet la cryptographie \emph{asymétrique}.
+Par l’emploi d’un chiffrement dit \emph{asymétrique}, deux individus ou davantage peuvent établir une communication secrète sans pourtant détenir une clef commune.
 Il leur faut pour cela être chacun pourvus de deux clefs propres, l’une publique, connaissable des autres correspondants, l’autre privée, secrète. 
 Imaginons que l’un de ces individus, qu’on appellera Alice, entreprenne d’envoyer un message chiffré à un autre individu nommé Benoît. C’est la clef publique de Benoît qui doit être employée par Alice pour chiffrer le message qu’elle lui destine, mais c’est la clef privée de Benoît, qu’il est normalement seul à posséder, que celui-ci doit utiliser pour déchiffrer le message qui lui est adressé.
 %Une fois le message reçu, il ne reste à Benoît que de déchiffrer, avec sa clef privée
 
 
-\vskip2cm
-\hrule
-\vskip2cm
-Diffie-Hellman.
+%\vskip2cm
+%\hrule
+%\vskip2cm
+%Diffie-Hellman.
 
-Cryptographie asymétrique, définition, utilité.
+%Cryptographie asymétrique, définition, utilité.
 
-Problèmes difficiles de la cryptographie asymétriques, logarithme discret, factorisation.
+%Problèmes difficiles de la cryptographie asymétriques, logarithme discret, factorisation.
 
-Autres avantages de la cryptographie asymétrique.
+%Autres avantages de la cryptographie asymétrique.
 
-Définition complète de la cryptographie.
+%Définition complète de la cryptographie.
 
-Informatique quantique et menace relatives aux problèmes difficiles de la cryptographie asymétrique.
+%Informatique quantique et menace relatives aux problèmes difficiles de la cryptographie asymétrique.
 
 
 
@@ -184,7 +181,6 @@ Informatique quantique et menace relatives aux problèmes difficiles de la crypt
 
 
 
-%\lipsum[1-9] %%%%%%%%%%
 
 
 % section motivation (end)
