@@ -1,6 +1,6 @@
 %!TEX TS-options = --output-directory=build
 
-\errorstopmode
+%\errorstopmode
 
 \RequirePackage{etoolbox}
 \newcommand{\onlyif}[2]{\iftoggle{#1}{#2}{}}
@@ -46,6 +46,7 @@
 \input{aux/macros.tex}
 \input{aux/topic_macros.tex}
 
+\input{couverture/première_de_couverture.tex}
 \input{aux/chapter_toggles.tex}
 
 \usepackage{lipsum}
@@ -55,10 +56,10 @@
 \makeindex
 
 
-\title{An amazing PhD topic}
-\subtitle{Great things you did}
-\author{John DOE \texorpdfstring{\\[1em]}{---} Supervisors: Jane SMITH}
-\date{}
+%\title{An amazing PhD topic}
+%\subtitle{Great things you did}
+%\author{John DOE \texorpdfstring{\\[1em]}{---} Supervisors: Jane SMITH}
+%\date{}
 
 
 
@@ -99,6 +100,8 @@
 }
 
 \begin{document}
+
+\maketitle{}
 	
 \frontmatter
 
@@ -107,12 +110,12 @@
 \pagenumbering{alph}
 
 %% Add the cover of the thesis
-\includepdf{cover/front.pdf}
+%\includepdf{cover/front.pdf}
+%\includepdf{couverture/sample.pdf}
 \setcounter{page}{0}
 
 \cleardoublepage
 
-\maketitle
 
 % to silence warnings about identifiers duplication
 % cf. https://en.wikibooks.org/wiki/LaTeX/Hyperlinks#Problems_with_Links_and_Pages
