@@ -121,8 +121,9 @@ fussent accessibles à tous, et d’en permettre un usage non dissimulé comme c
 exemple l’environnement de messagerie
 Signal\footnote{https://signal.org/docs/specifications/doubleratchet/doubleratchet.pdf}, dont le
 code-source est ouvert.
-De ce concours du NIST est sorti gagnant l’algorithme de Rijndael dans trois déclinaisons
-spécifiques correspondant à trois tailles de clef différentes : 128, 192 et 256 bits. 
+De ce concours du NIST est sorti gagnant l’algorithme de Rijndael, du nom de ses deux concepteurs
+Joan Daemen et Vincent Rijmen dans trois déclinaisons spécifiques correspondant à trois tailles de
+clef différentes : 128, 192 et 256 bits. 
 Le libre accès aux spécifications du système AES a permis la réalisation d’analyses précises de
 celui-ci par le monde de la recherche et la publication de méthodes d’attaques qui, bien que de
 nature à le fragiliser un peu en certains aspects, ne se sont pas montrées suffisamment
@@ -150,6 +151,16 @@ C’est ce que permet la cryptographie \emph{asymétrique}.
 Par l’emploi d’un chiffrement dit \emph{asymétrique}, deux individus ou davantage peuvent établir une communication secrète sans pourtant détenir une clef commune.
 Il leur faut pour cela être chacun pourvus de deux clefs propres, l’une publique, connaissable des autres correspondants, l’autre privée, secrète. 
 Imaginons que l’un de ces individus, qu’on appellera Alice, entreprenne d’envoyer un message chiffré à un autre individu nommé Benoît. C’est la clef publique de Benoît qui doit être employée par Alice pour chiffrer le message qu’elle lui destine, mais c’est la clef privée de Benoît, qu’il est normalement seul à posséder, que celui-ci doit utiliser pour déchiffrer le message qui lui est adressé.
+
+Ces systèmes asymétriques reposent sur la difficulté de résoudre des problèmes mathématiques dits
+« difficiles ».
+Or, ces problèmes, comme le problème du logarithme discret ou le problème de la factorisation de
+grands entiers, pourraient ne plus être suffisamment difficiles dans certaines conditions liées au
+développement potentiel des calculateurs quantiques.
+De nombreux systèmes cryptographiques utilisés actuellement reposent sur ces problèmes, considéré maintenant comme potentiellement vulnérables.
+C’est pourquoi il est impératif de parer à cette menace et de trouver à tous les systèmes dits « classiques » des adaptations résistantes à ces possibilités de calculs potentielles, qui soient suffisamment efficaces pour être utilisées dans le monde réel.
+
+
 %Une fois le message reçu, il ne reste à Benoît que de déchiffrer, avec sa clef privée
 
 
