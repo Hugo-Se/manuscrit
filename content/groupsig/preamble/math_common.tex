@@ -1,0 +1,94 @@
+\newtheorem{remark}{Remark}
+
+% General Commands
+\mathchardef\mhyphen="2D % Define a "math hyphen"
+
+% Common operations/functions
+\providecommand{\gcd}{\mathsf{gcd}} 
+
+
+\newcommand{\proj}[1][]{
+\ifstrempty{#1}{\mathsf{proj}}{\mathsf{proj}_{#1}}}
+
+% for nint
+\DeclarePairedDelimiter{\nint}\lfloor\rceil
+
+% Linear algebra
+\providecommand{\innerproduct}[2]{\left\langle #1, #2 \right\rangle} 
+\renewcommand{\Im}{\mathsf{Im}} % Image of a fonction
+\renewcommand{\vec}[1]{\mathbf{\lowercase{#1}}} % for vectors of the ring. Lower-case!
+\newcommand{\mat}[1]{\mathbf{\uppercase{#1}}} % For matrix of the ring. Upper-case!
+\newcommand{\Ker}{\mathsf{Ker}} % Ker of a linear function 
+\newcommand{\Span}{\mathsf{Span}} % Linear Span of a subset of a vector space
+\newcommand{\Id}{\mathsf{I}}
+
+% Common sets
+\providecommand{\RR}{\mathbb{R}}
+\providecommand{\RRplus}{\mathbb{R}_{\geq 0}}
+\providecommand{\RRplusstar}{\mathbb{R}^*_{\geq 0}}
+\providecommand{\ZZ}{\mathbb{Z}}
+\providecommand{\ZZq}{\mathbb{Z}}
+\providecommand{\ZZplus}{\ZZ_{\geq 0}}
+\providecommand{\ZZplusstar}{\ZZplus^*}
+\providecommand{\NN}{\mathbb{N}}
+\providecommand{\NNstar}{\mathbb{N}^*}
+\providecommand{\QQ}{\mathbb{Q}}
+
+% a short equal sign. 
+\newcommand{\shorteq}{\hstretch{0.8}{=}}
+\newcommand{\shortminus}{\hstretch{0.8}{-}}
+\newcommand{\shortplus}{\hstretch{0.9}{+}}
+\newcommand{\shortldots}{\hstretch{0.85}{\ldots}}
+
+% common norms/abs values/card
+\providecommand{\abs}[1]{\left\lvert #1 \right\rvert} % absolute value 
+\providecommand{\norm}[1]{\left\lVert #1 \right\rVert} % euclidean norm
+\newcommand{\onenorm}[1]{\norm{#1}_1} % l1-norm
+\newcommand{\infnorm}[1]{\norm{#1}_\infty}
+\newcommand{\singularnorm}[1]{\ifstrempty{#1}
+				{\mathsf{s}_1}
+				{\mathsf{s}_1\!\left(#1\right)}
+			} % the norm of a matrix (the smaller |A|
+			% s.t |Au|_2 \leq |A||u|_2 for each u
+\newcommand{\card}[1]{{\left|#1\right|}}
+
+\newcommand{\bnorm}[1]{{|#1|}_{\textsf{bin}}} % A suppr?
+
+
+
+% a modifed proof environment
+\newenvironment{modifproof}[2][]{% version of proof where "proof" can be modified to another text.
+				 % It is compatible with the optional option of proof that write
+				 % text into parenthesis.
+\let\oldproofnameformodifproof\undefined
+\newcommand{\oldproofnameformodifproof}{\proofname}
+\renewcommand{\proofname}{\textbf{#2}}
+\ifstrempty{#1}{\proof}{\proof[#1]}}
+{\endproof 
+\renewcommand{\proofname}{\oldproofnameformodifproof}}
+
+
+%
+% new \oset macro: from https://tex.stackexchange.com/questions/194798/change-vertical-space-in-overset
+% Example X_n\oset[.45ex]{\text{rth}}{\to} X 
+% with removed mathrel
+\makeatletter
+\renewcommand{\oset}[3][0ex]{%
+  \mathop{#3}\limits^{
+    \vbox to#1{\kern-2\ex@
+    \hbox{$\scriptstyle#2$}\vss}}}
+\makeatother
+
+%new \usetmacro: from https://tex.stackexchange.com/questions/194798/change-vertical-space-in-overset
+% with removed mathrel
+\makeatletter
+\newcommand{\uset}[3][0ex]{%
+  \mathop{#3}\limits_{
+    \vbox to#1{\kern-7\ex@
+    \hbox{$\scriptstyle#2$}\vss}}}
+\makeatother
+
+% See https://www.tug.org/TUGboat/Articles/tb22-4/tb72perlS.pdf to understand boxes
+% a left align uset and underset, see https://tex.stackexchange.com/questions/671746/horizontal-alignement-leftalign-kind-with-underset-overset
+\newcommand{\lunderset}[2]{\underset{\mathrlap{#1}}{\mathrlap{#2}}\phantom{#2}}
+\newcommand{\luset}[3][0ex]{\uset[#1]{\mathrlap{#2}}{\mathrlap{#3}}\phantom{#3}}

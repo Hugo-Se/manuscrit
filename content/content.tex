@@ -11,6 +11,9 @@
 
 %\input{ares/main.tex} %%%
 
+\iftoggle{groupsig_chapter}{
+\subimport{groupsig/}{groupsig_master.tex}
+}{}
 
 \iftoggle{conclusion_chapter}{
 \subimport{conclusion/}{conclusion_master.tex}

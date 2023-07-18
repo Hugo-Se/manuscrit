@@ -52,6 +52,46 @@
 
 \usepackage{lipsum}
 
+% groupsig
+\usepackage[olditem,oldenum]{paralist}
+\usepackage{amsmath, amsfonts}
+\usepackage{placeins} % for FloatBarrier
+\usepackage{float}
+\usepackage{color} % for \color
+\usepackage{tikz}
+\usepackage{lscape}
+\usetikzlibrary{positioning, calc, math}
+\usepackage{tikz-cd} % to create commutative diagram
+\usepackage{listings} %  to write code 
+\usepackage{stmaryrd} % for double brackets \llbracket \rrbracket
+\usepackage{booktabs} % for toprule, bottomrule, midrule
+\definecolor{keywordsoneColor}{rgb}{0.800000, 0.360000, 0.27} % Dark coral 
+% color (see latexcolor.com)
+\definecolor{keywordstwoColor}{rgb}{0.000000, 0.00000, 0.55} % Dark coral 
+% color (see latexcolor.com)
+
+\lstdefinelanguage{pseudocode}[]{}{
+    morekeywords=[1]{if, then, else, end, while, pick, for, For, each, and, 
+return, for, restart, goto,
+            Restart, or, and, Accept, Abort, Reject, reject, Else},
+    morekeywords=[2]{Input, Output, Require},
+    keywordstyle=[1]\color{keywordsoneColor}\bfseries,
+    keywordstyle=[2]\color{keywordstwoColor}\bfseries,
+    comment=[l]{//},
+    commentstyle=\color{purple}\ttfamily
+}
+\usepackage{bm}
+\PassOptionsToPackage{lambda,
+           advantage,
+           adversary,
+           probability,
+           operators,
+           keys,
+           asymptotics,
+           sets}{cryptocode}
+\providecommand{\sample}{\hskip2.3pt{\gets\!\!\mbox{\scriptsize${\$}$\normalsize}}\,}
+
+
 
 \makeglossary
 \makeindex
@@ -73,6 +113,8 @@
 %% The first two suppose that you are using Cryptobib (http://cryptobib.di.ens.fr)
 \addbibresource{cryptobib/abbrev3.bib}
 \addbibresource{cryptobib/crypto.bib}
+% groupsig
+\addbibresource{content/groupsig/groupsig_biblio.bib}
 
 \addbibresource{biblio_aux.bib}
 

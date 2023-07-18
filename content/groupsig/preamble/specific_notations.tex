@@ -1,0 +1,324 @@
+% Because bar is not adapted to big symbols,
+% seen in https://tex.stackexchange.com/questions/22100/the-bar-and-overline-commands
+\newcommand{\overbar}[1]{\mkern1.5mu\overline{\mkern-1.5mu#1\mkern-1.5mu}\mkern1.5mu}
+\newcommand{\arr}{\ensuremath{\,\rightarrow\,}} % (guill: pour mes commentaires seulement)
+
+\newcommand{\distchall}[1]{\mathcal{X}(#1)}
+
+% PRIMES NUMBERS
+\newcommand{\pcomI}{q_1} % upper part of the commitment
+\newcommand{\pcomII}{q_2} % bottom part of the commitment, also used in signature
+\newcommand{\penclittle}{p} 
+\newcommand{\pencbig}{Q}
+
+% GENERIC FUNCTIONS
+
+
+\newcommand{\sizeset}{\mathsf{size}}
+\newcommand{\powerset}{\mathcal{P}}
+\newcommand{\lift}[1]{\mathsf{lift}_{#1}} % the lift function Z_q ---> Z that takes representant
+\newcommand{\idfunction}{\ensuremath{\text{id}}}
+\newcommand{\projX}{\proj[X]}
+\newcommand{\Witness}[1]{\mathcal{W}(#1)}
+\newcommand{\Language}[1]{\mathcal{L}(#1)}
+
+% GENERIC RELATIONS
+\newcommand{\grelation}{g} % relation extensionj
+\newcommand{\relation}{\mathcal{R}} % relation
+\newcommand{\barrelation}{\overbar{\mathcal{R}}} % relation
+
+% "tau" versions of functions (link with 517)
+\newcommand{\automorphism}{\sigma} % FAIL de notations
+\newcommand{\automorphismtau}[1]{{\sigma\left[#1\right]}}
+\newcommand{\phitau}[1]{{\phi\left[#1\right]}}
+\newcommand{\Phitau}[1]{{\Phi\left[#1\right]}}
+\newcommand{\Itau}[1]{{\mathsf{I}\left[#1\right]}}
+\newcommand{\II}{\mathsf{I}}
+\newcommand{\taudec}{\tau_{\mathsf{enc}}}
+\newcommand{\tausign}{\tau_{\mathsf{sign}}}
+\newcommand{\BijIIItau}{\epsilon_{\mathsf{bij}}}
+
+% Hash functions
+\newcommand{\hashZK}{\mathcal{H}^{ZK}}
+\newcommand{\hashSIGN}{\mathcal{H}}
+
+% Names of bounds
+% for first part of nizk proof (existence of decryption)
+\newcommand{\BoundNizkDecOne}{\bcom} % {N^{\mathsf{dec}}_1}
+\newcommand{\BoundNizkDecTwo}{N^{\mathsf{dec}}_2}
+\newcommand{\BoundNizkDecOneInfty}{N^{\mathsf{dec}}_{1, \infty}}
+\newcommand{\BoundNizkDecTwoInfty}{N^{\mathsf{dec}}_{2, \infty}}
+% for second part of nizk proof (existence of the com sign)
+\newcommand{\BoundNizkSignOne}{N^{\mathsf{comsign}}_1}
+\newcommand{\BoundNizkSignTwo}{N^{\mathsf{comsign}}_2}
+\newcommand{\BoundNizkSignInfty}{N^{\mathsf{comsign}}_{\infty}}
+
+% others
+\newcommand{\bcom}{B^{\text{com}}}
+\newcommand{\bsignone}{B^{\text{sign}}_1}
+\newcommand{\bsigntwo}{B^{\text{sign}}_2}
+\newcommand{\brelsignone}{B^{\text{relsign}}_1}
+\newcommand{\brelsigntwo}{B^{\text{relsign}}_2}
+\newcommand{\bforgsign}{B^{\text{forgsign}}}
+\newcommand{\bsone}{B^{\text{s}_1}}
+\newcommand{\bstwo}{B^{\text{s}_2}}
+
+% Names of oracles
+\newcommand{\OIssue}{\mathfrak{O}_{\text{Issue}}}
+\newcommand{\OOpen}{\mathfrak{O}_{\text{Open}}}
+\newcommand{\OHonestPresent}{\mathfrak{O}_{\text{HonestPresent}}}
+\newcommand{\OSimulationHonestPresent}{\mathfrak{O}^{\mathsf{sim}}_{\text{HonestPresent}}}
+\newcommand{\OHonestIssue}{\mathfrak{O}_{\text{HonestIssue}}}
+\newcommand{\OCorruptIssue}{\mathfrak{O}_{\text{CorruptIssue}}}
+
+
+% ANONYMOUS CREDENTIAL
+\newcommand{\ACScheme}{\underline{\mathsf{ACScheme}}}
+% Problems
+\newcommand{\ProbNIZKAC}{\mathsf{NIZKAC} }
+\newcommand{\ProbAnomCredAC}{\mathsf{AnonCredAC} }
+\newcommand{\ProbAnomIdAC}{\mathsf{AnomIdAC} }
+\newcommand{\ProbUnforgAC}{\mathsf{UnforgAC}}
+\newcommand{\ProbModifUnforgAC}{\mathsf{ModifUnforgAC}}
+\newcommand{\ProbModifTraceaAC}{\mathsf{ModifTraceaAC}}
+\newcommand{\ProbTraceaAC}{\mathsf{TraceaAC} }
+\newcommand{\ProbHidAC}{\mathsf{HidingAC}}
+% Algorithms
+\newcommand{\ParGen}{\mathsf{SPGen}}
+\newcommand{\IKeyGen}{\mathsf{IKGen}}
+\newcommand{\OKeyGen}{\mathsf{OKGen}}
+\newcommand{\Issue}{\mathsf{Issue}}
+\newcommand{\Present}{\mathsf{Present}}
+\newcommand{\VerifyCred}{\mathsf{VerifyCred}}
+\newcommand{\VerifyPt}{\mathsf{VerifyPt}}
+\newcommand{\ExtractAttr}{\mathsf{ExtractAttr}}
+\newcommand{\Open}{\mathsf{Open}}
+\newcommand{\isk}{\text{isk}}
+\newcommand{\ipk}{\text{ipk}}
+\newcommand{\osk}{\text{osk}}
+\newcommand{\opk}{\text{opk}}
+% Sets
+\newcommand{\SetSavedHonestIssueAC}{\mathsf{Sav}_{\mathsf{HonestI}}} % set of saved honest issues
+\newcommand{\SetSavedHonestCredAC}{\mathsf{Sav}_{\mathsf{HonestCred}}} % set of saved honest issues
+\newcommand{\SetSavedCorruptIssueAC}{\mathsf{Sav}_{\mathsf{CorruptI}}} % set of saved corrupt issues
+\newcommand{\SetSavedPresentation}{\mathsf{Sav}_{\mathsf{Pres}}} % set of saved presentations issues
+\newcommand{\SetIdAC}{\mathsf{Identities}} % set of identities
+\newcommand{\SetAttrAC}{\mathsf{Attributes}} % set of attributes
+\newcommand{\SetIssuedIdAC}{\mathsf{IssuedID}} % set of issued identities
+\newcommand{\SetCredAC}{\mathsf{Cred}} % set of credentials
+\newcommand{\SetPresAC}{\mathsf{Pres}} % set of presentations
+% Elements
+\newcommand{\acpar}{\mathsf{acpar}} % parameters
+\newcommand{\identity}{\ensuremath{\text{id}}}
+\newcommand{\baridentity}{\ensuremath{\overbar{\text{id}}}}
+\newcommand{\attralpha}[1]{{(\alpha_i)}_{i\in #1}}
+\newcommand{\attralphastar}[1]{{(\alpha^*_i)}_{i\in #1}}
+\newcommand{\attralphaR}{{(\alpha_i)}_{i\in R}}
+\newcommand{\attralphaRstar}{{(\alpha^*_i)}_{i \in R}}
+\newcommand{\pt}{\ensuremath{\text{pt}}}
+\newcommand{\cred}{\mathsf{cred}} % parameters
+% Sets of instantiation
+\newcommand{\SetInstanciationAttrAC}{\SetAttrAC}
+
+% NIZK PROOFS
+% SETS
+\newcommand{\SetChallenges}{\mathcal{C}} % set of challenges
+\newcommand{\SetDiffChallenges}{\overbar{\mathcal{C}}} % set of diff of challenges
+\newcommand{\SetSquareDiffChallenges}{{\hat{\mathcal{C}}}} % set of square of diff of challenges
+% ELEMENTS
+\newcommand{\nizkproof}{\pi}
+% Algorithms
+\newcommand{\Rej}{\mathsf{Rej}}
+\newcommand{\proverintern}{\mathcal{P}^{\mathsf{intern}}}
+\newcommand{\simulation}{{\mathcal{S}_{\mathsf{im}}}}
+\newcommand{\simulationintern}{{\mathcal{S}^{\mathsf{intern}}_{\mathsf{im}}}}
+\newcommand{\proofsimulation}{{\mathcal{P}^{\mathsf{sim}}}}
+\newcommand{\pextract}{p^{\mathsf{extract}}}
+\newcommand{\Hashsimulation}{\mathcal{H}^{\mathsf{sim}}}
+\newcommand{\sethash}{S}
+\newcommand{\maxhashcall}{c^{\mathsf{maxhashcall}}}
+\newcommand{\probamaxhashcall}{p^{\mathsf{maxhashcall}}}
+\newcommand{\Hashdistrib}[1]{\mathcal{H}(#1)}
+\newcommand{\extraction}{\mathcal{E}_{\mathsf{xt}}}
+\newcommand{\distribution}{\mathcal{D}_{\mathsf{ist}}}
+\newcommand{\acc}{\mathsf{acc}} 
+\renewcommand{\ext}{\mathsf{ext}}
+
+% standard derivations for the NIZK proof
+\newcommand{\standarddevnizkI}{\standarddev^{\mathsf{nizk}}_1} % first nizk proof: first standard
+\newcommand{\standarddevnizkII}{\standarddev^{\mathsf{nizk}}_2} % second nizk proof: first standard
+\newcommand{\standarddevnizkIII}{\standarddev^{\mathsf{nizk}}_3} % second nizk proof: second standard
+
+% SIGNATURE
+\newcommand{\SignScheme}{\underline{\mathsf{RelSignScheme}}}
+% Problems
+\newcommand{\ProbUnforgSign}{\mathsf{g}\mathsf{UnforgSign} }
+\newcommand{\ProbWeakUnforgSign}{\mathsf{gWeaklyUnforgSign} }
+\newcommand{\ProbModifUnforgSign}{\mathsf{ModifUnforgSign} }
+\newcommand{\ProbSelectModifUnforgSign}{\mathsf{SelectModifUnforgSign} }
+% Algorithms
+\newcommand{\SignKeyGen}{\mathsf{SignKeyGen}}
+\newcommand{\SignVf}{\mathsf{SignVf}}
+% Sets
+\newcommand{\SetPublicKeysSign}{\mathsf{Pk}_{\mathsf{sign}}}
+\newcommand{\SetParamsSign}{\mathcal{P}_{\text{aramSign}}}
+\newcommand{\SetSignaturesSign}{\mathcal{S}_{\text{ign}}} % set of signatures
+\newcommand{\SetMessSign}{\mathcal{M}_{\mathsf{sign}}} % set of message
+\newcommand{\SetRelMessSign}{\overbar{\mathcal{M}}_{\mathsf{sign}}} % set of relaxed messages
+% Sets for the instantiation
+\newcommand{\SetInstanciationPublicKeysSign}{\mathsf{Pk}_{\mathsf{sign}}}
+\newcommand{\SetInstanciationSignaturesSign}{\R^2_{\pcomII} \times \R^2_{\pcomII} \times \R^3_{\pcomII}} % set of signatures
+\newcommand{\SetInstanciationMessSign}{\ZZ_{\pcomII}}
+\newcommand{\SetInstanciationRelMessSign}{{\SetDiffChallenges}^\II \times \ZZ_{\pcomII}}
+\newcommand{\SetInstanciationRelSignaturesSign}{{\big(\R^2_{\pcomII} \times \R^2_{\pcomII} \times \R^3_{\pcomII}\big)}^\II} % s
+% Elements
+\newcommand{\challenge}{c}
+\newcommand{\signature}{\sigma}
+\newcommand{\spk}{\mathsf{spk}} % signature public key
+\newcommand{\ssk}{\mathsf{ssk}} % signature secret key
+% Fonctions
+\newcommand{\projsign}{\proj[\mathsf{sign}]}
+
+% standard derivations for signature algorithm
+\newcommand{\standarddevSignI}{\standarddev^{\mathsf{sign}}_1}
+\newcommand{\standarddevSignII}{\standarddev^{\mathsf{sign}}_2}
+
+% 
+\newcommand{\DomEncRel}{\mathsf{DomEncRel}}
+
+% VERIFIABLE ENCRYPTION
+\newcommand{\EncScheme}{\underline{\mathsf{RelVerifEncScheme}}}
+% Problems
+\newcommand{\ProbCPAEnc}{\textsf{INDCPA} }
+% Algorithms
+\newcommand{\projW}{\proj[\mathcal{W}]}
+\newcommand{\projL}{\proj[\mathcal{L}]}
+\newcommand{\projlverifenc}{f^{L}_\mathsf{proj}}
+\newcommand{\EncParGen}{\mathsf{EncParGen}}
+\newcommand{\EncKeyGen}{\mathsf{EncKeyGen}}
+\renewcommand{\Enc}{\mathsf{Enc}}
+\newcommand{\EncRel}{\mathsf{EncRel}}
+\newcommand{\EncWit}{\mathsf{EncWit}}
+\newcommand{\CipherWitness}{\mathsf{CipherWitness}}
+\renewcommand{\Dec}{\mathsf{Dec}}
+\newcommand{\extractionmessage}{\epsilon_{\mathsf{message}}}
+\newcommand{\barextractionmessage}{\bar{\epsilon}_{\mathsf{message}}}
+\newcommand{\extractionpub}{\epsilon_{\mathsf{clearpub}}}
+\newcommand{\barextractionpub}{\bar{\epsilon}_{\mathsf{clearpub}}}
+\newcommand{\extractionpk}{\epsilon_{\mathsf{pk}}}
+\newcommand{\barextractionpk}{\bar{\epsilon}_{\mathsf{pk}}}
+\newcommand{\extractioncipherpub}{\epsilon_{\mathsf{cipherpub}}}
+\newcommand{\barextractioncipherpub}{\bar{\epsilon}_{\mathsf{cipherpub}}}
+\newcommand{\extractioncipher}{\epsilon_{\mathsf{cipher}}}
+\newcommand{\barextractioncipher}{\bar{\epsilon}_{\mathsf{cipher}}}
+\newcommand{\barextractionrelation}{\bar{\epsilon}_{\mathsf{relation}}}
+% Sets
+\newcommand{\SetParamsEnc}{\mathcal{P}_{\text{aramEnc}}}
+\newcommand{\SetPubEnc}{\mathcal{P}_{\mathsf{enc}}}
+\newcommand{\SetMessEnc}{\mathcal{M}_{\mathsf{enc}}}
+\newcommand{\SetRelMessEnc}{\overbar{\mathcal{M}}_{\mathsf{enc}}}
+\newcommand{\SetCipherEnc}{\mathcal{C}}
+\newcommand{\SetPublicKeysEnc}{\mathsf{Pk}_{\mathsf{enc}}}
+\newcommand{\SetSecretKeysEnc}{\mathsf{Sk}_{\mathsf{enc}}}
+\newcommand{\SetAuxEnc}{\mathsf{Aux}}
+% Elements
+\newcommand{\comsignature}{\mathbf{comsign}}
+\newcommand{\uu}{\nu} % to change...
+\newcommand{\epar}{\text{epar}}
+\newcommand{\esk}{\text{esk}}
+\newcommand{\epk}{\text{epk}}
+\newcommand{\cipher}{c}
+\newcommand{\cipherwitness}{w_c}
+\newcommand{\ciphernizk}{\pi_{cipher}}
+\newcommand{\encI}{\text{enc}_1}
+\newcommand{\encII}{\mathbf{enc}_2}
+% Functions
+\newcommand{\projenc}{\proj[\mathsf{mess}]}
+% Relations
+\newcommand{\relationclear}{\mathcal{R}_{\mathsf{clear}}} % relation
+\newcommand{\barrelationclear}{\overbar{\mathcal{R}}_{\mathsf{clear}}} % relation
+\newcommand{\projclear}{\proj[\mathsf{clear}]} % relation
+
+
+
+\newcommand{\relationcipher}{\mathcal{R}_{\mathsf{cipher}}} % relation
+\newcommand{\barrelationcipher}{\overbar{\mathcal{R}}_{\mathsf{cipher}}} % relation
+\newcommand{\projcipher}{\proj[\mathsf{cipher}]} % relation
+
+\newcommand{\relationclearbase}{\mathcal{R}^{\mathsf{base}}_{\mathsf{clear}}} % relation
+\newcommand{\barrelationclearbase}{\overbar{\mathcal{R}}^{\mathsf{base}}_{\mathsf{clear}}} % relation
+\newcommand{\relationcipherbase}{\mathcal{R}^{\mathsf{base}}_{\mathsf{cipher}}} % relation
+\newcommand{\barrelationcipherbase}{\overbar{\mathcal{R}}^{\mathsf{base}}_{\mathsf{cipher}}} % relation
+\newcommand{\relationclearaux}{\mathcal{R}^{\mathsf{aux}}_{\mathsf{clear}}} % relation
+\newcommand{\barrelationclearaux}{\overbar{\mathcal{R}}^{\mathsf{aux}}_{\mathsf{clear}}} % relation
+\newcommand{\relationcipheraux}{\mathcal{R}^{\mathsf{aux}}_{\mathsf{cipher}}} % relation
+\newcommand{\barrelationcipheraux}{\overbar{\mathcal{R}}^{\mathsf{aux}}_{\mathsf{cipher}}} % relation
+% A TRIER
+\newcommand{\psoundnesse}{P^{\textsf{enc}}_{\textsf{sound}}} % TO CHANGE
+% Sets for the instanciation
+\newcommand{\SetInstanciationPublicKeysEnc}{\SetPublicKeysEnc}
+\newcommand{\SetInstanciationCipherEnc}{{(\R_{\pcomI} \times \R_{\pcomII})}^2 \times \R_Q \times \R_Q^3} % set of signatures
+
+% COMMITMENT
+\newcommand{\ComScheme}{\underline{\mathsf{RelComScheme}}}
+% Problems
+\newcommand{\ProbBindingCom}{\mathsf{BindingCom} }
+\newcommand{\ProbHidCom}{\mathsf{HidingCom} }
+% Algorithms
+\newcommand{\ComParGen}{\mathsf{ComParGen}}
+\newcommand{\Com}{\mathsf{Com}}
+\newcommand{\ComVf}{\mathsf{ComVf}}
+% Sets
+\newcommand{\SetParamsCom}{\mathcal{P}_{\text{aramCom}}}
+\newcommand{\SetMessCom}{\mathcal{U}} % set of message to commit
+\newcommand{\SetRelMessCom}{\overbar{\mathcal{U}}} % set relaxed message that can be open
+\newcommand{\SetCommitsCom}{\mathcal{C}_{\text{om}}} % set of commits
+\newcommand{\SetOpeningsCom}{\mathcal{O}_{\text{pen}}} % set of openings
+\newcommand{\SetRelOpeningsCom}{\overbar{\mathcal{O}}} % set of relaxed opening
+% Elements
+\newcommand{\projcom}{\proj[\mathsf{com}]}
+\newcommand{\com}{\text{com}}
+\newcommand{\opening}{\text{o}}
+\newcommand{\cpar}{\text{cpar}}
+% Elements of the instance
+\newcommand{\instancecom}{\textbf{com}}
+
+
+% Diverse
+\newcommand{\Bverifenc}{
+	\begin{pmatrix}
+		\penclittlea           & \penclittle            & 0            & 0            & 0            & 0  & 0          & 0 \\
+		\penclittleb_1         & 0            & \penclittle            & 0            & 0            & 1  & 0          & 0 \\
+		\penclittleb_2         & 0            & 0            & \penclittle            & 0            & 0  & 1          & 0 \\
+		\penclittleb_2         & 0            & 0            & 0            & \penclittle            & 0  & 0          & 1 \\
+		\mathbf{0}^l & \mathbf{0}^l & \mathbf{0}^l & \mathbf{0}^l & \mathbf{0}^l & \: & \mathbf{B} &
+	\end{pmatrix}}
+
+\newcommand{\ElemLangrelationclear}{m, \alpha, \spk=(\mathbf{a}^t, \mathbf{b}^t, a_3)}
+\newcommand{\ElemWitrelationclear}{\signature}
+\newcommand{\ElemLangbarrelationclear}{(m, \alpha, {(\bar{c}_\iota)}_{\iota \in \II}), \spk}
+\newcommand{\ElemWitbarrelationclear}{{(\signature_\iota)}_{\iota \in \II}}
+
+\newcommand{\ElemLangrelationcipher}{\epk = (\mathbf{A}=\begin{pmatrix}\mathbf{A}_1 \pclb
+	\mathbf{A}_2\end{pmatrix}, a, \mathbf{b}), \mathbf{t}, \mathbf{t}',\text{enc}_1, \mathbf{enc}_2, \spk}
+\newcommand{\ElemWitrelationcipher}{m, \alpha, \mathbf{r}, \mathbf{r}',r,e_1,\mathbf{e}_2, \comsignature =(\uu_{\alpha, 1},\uu_{\alpha, 2}, \uu_{\alpha, 3})}
+\newcommand{\ElemWitbarrelationcipher}{m, \alpha, {(\bar{c}_\iota)}_\iota, \mathbf{r}, \mathbf{r}',{(r_\iota,e_{1, \iota},\mathbf{e}_{2, \iota}, \mathbf{r}_{\iota})}_\iota,
+({\comsignature})_\iota ={(\uu_{\alpha, 1, \iota},\uu_{\alpha, 2, \iota}, \uu_{\alpha, 3, \iota})}_\iota}
+
+\newcommand{\SetWitbarrelationclear}{
+\SetInstanciationMessSign \times \SetInstanciationPublicKeysEnc \times \SetInstanciationCipherEnc \times \SetInstanciationPublicKeysSign
+}
+\newcommand{\SetLangrelationcipher}{\SetInstanciationPublicKeysEnc \times \SetInstanciationCipherEnc \times \SetInstanciationPublicKeysSign}
+\newcommand{\SetWitrelationcipher}{\SetInstanciationMessSign \times \ballRoneinfty^3 \times \ballRoneinfty^3  \times \ballRoneinfty \times \ballRoneinfty \times
+\ballRoneinfty^3 \times \R^2_{\pcomII} \times \R^2_{\pcomII} \times \R^2_{\pcomII}}
+
+\newcommand{\SetWitbarrelationcipher}{
+\SetInstanciationMessSign \times \R^3 \times \R^3\times {\left(\R \times \R \times \R^3 \times \R^3\right)}^\II
+\times {\left(\R^2_{\pcomII} \times \R^2_{\pcomII} \times \R^2_{\pcomII}\right)}^\II}
+
+\newcommand{\ElemLanggeneralrelationclear}{
+	\epar, \spk, R, {(\com_i)}_{i\in R}, (\alpha_i)_{i \in R})}
+\newcommand{\ElemWitgeneralrelationclear}{
+	{(\opening_i,\signature_i)}_{i \in R}, \identity}
+\newcommand{\ElemWitbargeneralrelationclear}{
+{(\opening_i,\signature_i,\baridentity_i)}_{i \in R}}

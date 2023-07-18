@@ -1,0 +1,276 @@
+%\enote{idée}Ajouter que, le fait de travailler avec des nombres premiers $u$ tels que que l'anneau $\R_u$ se split en plus d'éléments permet
+%d'accélérer la multiplication de polynomes. Quand dans notre implémentation, la plupart des nombres
+%premiers ($\pcomI, \pcomII, Q$) sont choisis de sorte que chaque élément  de $\R_u$ soit réprésenté
+%comme 2048 polynomes modulo des polynomes de degre 4 (via la NTT), et que leur multiplicaations est alors la
+%multiplication "terme à terme" de ces polys, ce qui est bien plus rapide que si on faisait la multiplication
+%directement dans $\R_u$ (ce serait alors une seule multiplication entre polys modulo $X^{8196} + 1$).
+%Thomas dit qu'on peut utiliser le terme "partial-splitting", du fait que c'est pas completment split
+%(completmeent split, on aurait decompose $X^d+1$ en facteurs de degre 1).
+
+%\enote{idée}Preciser quelque part que nous, on va juste faire Anonymous credential qui dévoile des attributs
+%mais pas des propriétés des attributs? (Cependant, les attributs peuvent eux-meêm encoder des
+%propriétés : on peut avoir un attribut "mineur", un attribut "majeur".... Histoire d'un peu plus
+%préciser le cadre (l'intro 01 était trés générale sur cela).
+% CC: disons que c'est une omission
+
+%As explained in our abstract 
+%construction~\ref{sec:anonymous_credential_scheme}, It is possible to 
+%construct an anonymous credential scheme using a (relaxed) signature 
+%scheme and a (relaxed) verifiable encryption scheme that are compatible, 
+%a verifiable encryption scheme being simply an encryption scheme that 
+%allows to prove some properties about the clear message using the 
+%cipher, the properties being encoding\enote{encoded?} using relations : 
+%the proof being the proof of the existence of a witness for the element.
+
+We construct an anonymous credential scheme (the generic construction is 
+presented in Section~\ref{sec:anonymous_credential_scheme}) using a 
+(relaxed) signature scheme and a (relaxed) verifiable encryption scheme 
+that are compatible, a verifiable encryption scheme being simply an 
+encryption scheme that allows to prove some properties about the 
+cleartext using the ciphertext. These properties are encoded using 
+relations and we use non-interactive zero-knowledge proofs (NIZK) to 
+show the existence of a witness showing that an element fulfills the 
+relation (without revealing any other information).
+The relaxation aspect essentially means that:
+\begin{compactitem}
+
+	\item for the signature: we allow the verification of more 
+signatures that the ones that can be
+	 constructed by the signature algorithm $\Sign$. These are 
+called relaxed signatures, and are in relation with the
+	 ``normal'' signatures: each relaxed signature being associated 
+to a normal signature,
+	 and called its relaxation.
+	 For the forgery game, we forbid the adversary to send a 
+relaxation of a signature it obtained from the signature oracle.
+
+	\item for the NIZK proofs of the existence of a witness $w$ for
+an element $x$, we allow the
+		extractor to output a relaxed witness $\bar{w}$ of $x$, 
+a relaxed witness of $x$
+		being a witness of a relaxation of $x$, for a relation 
+associated to the first one,
+		called the relaxed relation.
+
+	\item for the verifiable encryption, we allow the decryption 
+algorithm applied to a
+		ciphertext $\cipher$ and a NIZK proof $\pi$ for this 
+cipher to either extract a witness, leading to a cleartext, which is a 
+relaxed message, or decrypt the ciphertext leading to a message $\mess$ 
+or relaxed message. These two distinct ways have to be compatible in the 
+sense that both relaxed messages obtained must lead to the same message.
+
+
+%	\item for the verifiable encryption, we allow the decryption 
+%algorithm applied to a
+%		ciphertext $\cipher$ and a NIZK proof $\pi$ for this cipher 
+%to lead to a
+%		relaxation of a message $\mess$ and the extraction of 
+%the relation to give a
+%		relaxed witness of $\mess$. 
+
+%\enote{cf rem~\ref{rem:eric_note_02_TechIntr_1}}
+
+\end{compactitem}
+
+The issuer public and secret keys are the public and secret keys of a 
+signature scheme and a verifiable encryption scheme.
+
+An improvement upon the protocol in~\cite{CCS:delLyuSei18} is that the 
+credential for an identity $\identity$ and attribute $\alpha$ is given 
+by a signature of both $\identity$ and $\alpha$, allowing us to use a 
+unique group signature for issuing a credential. In our construction,
+the signature is a short $(s_{1}, s_{2}, s_{3})$ such that 
+\begin{equation}\label{eq:02_TechIntro_sign} \big[\mathbf{a}^T \:\:|\:\: 
+\mathbf{b}^T + \identity \mathbf{g}^T \:\:|\:\: (1 \quad a_3)\:\big]
+	\begin{bmatrix} s_{1} \\ s_{2} \\ s_{3} \end{bmatrix} =
+\hashSIGN(\alpha) \mod  \pcomII
+\end{equation}
+where $(\mathbf{a},\mathbf{b})$ is the public key and $\mathbf{g} = (1\:\: \delta)$ a gadget matrix.
+
+A presentation of an attribute~$\alpha$ then consists of the encryption of 
+$\identity$ and of a zero-knowledge
+ proof of knowledge of $\identity$ and a (relaxed) signature of the 
+identity and~$\alpha$.
+
+%\ref{rem:eric_note_02_TechIntr_2}.
+
+% deja present plus bas :
+ 
+%In order to be able to use splitting rings (which is the key point 
+%allowing us to use NTT and gain in efficiency -- we get 2048 polynomials 
+%of degree~4 instead of 2 polynomials of degree~4096), we used the 
+%framework of~\cite{C:AttLyuSei20}. It is interesting to note
+% that most of the changes implied by this framework don't change the 
+%algorithms but only the security proofs of the scheme.
+
+ The verifiable encryption and associated proof need the introduction of 
+ a commitment (we choose the one of presented in~\cite{SCN:BDLOP18} and improved in~\cite{C:AttLyuSei20}) which will have two aims.
+%defined in (defined in 
+%Section~\ref{subsection:constrcom}). This commitment 
+First, it is the main tool in order to transform the signature of a 
+(visible) identity into a simple linear relation that hides the identity 
+and will be used for the NIZK proof (note that the attribute $\alpha$ is 
+still visible in the signature). To obtain this relation, the user 
+computes two commitments of $\identity$ and $\delta \identity$:
+%\ref{rem:eric_note_02_TechIntr_3}. To 
+\begin{align*} 
+&\mathbf{t} \gets \begin{bmatrix}t_1\\ t_2\end{bmatrix} = \mathbf{A}\mathbf{r} +
+\begin{bmatrix}\mathbf{0} \\ \identity \end{bmatrix} 
+\!\!\mod \begin{bmatrix}\pcomI \\ \pcomII \end{bmatrix}
+\\
+&\mathbf{t'} \gets \begin{bmatrix}t'_1\\ t'_2\end{bmatrix} = \mathbf{A}\mathbf{r'} + \begin{bmatrix}\mathbf{0} \\ \delta\identity \end{bmatrix}
+\!\!\mod \begin{bmatrix}\pcomI \\ \pcomII \end{bmatrix}
+\end{align*}
+where $\mathbf{A} = \begin{bmatrix} 1 & a_1 & a_2 \\ 0 & 1 & a_3 \end{bmatrix} \in \R^{3 \times 2}$
+and observes that, taking $\bar{\mathbf{r}}$ (resp. $\bar{\mathsf{r}}'$) the last two coordinates of
+$\mathbf{r}$ (resp. $\mathbf{r'}$),   $\comsignature = \begin{bmatrix} s_{1} \\ s_{2} \\ s_{3} -
+	[\bar{\mathbf{r}}\:\: \bar{\mathbf{r}}']s_{2}
+\end{bmatrix}$ is a short solution of : \begin{equation}\label{eq:02_TechIntro_comsign}
+\Big[\mathbf{a}^T\:|\: \mathbf{b}^T + \left[ t_2 \:\: t'_2\right] \:|\: \left(1 \:\: a_3\right)\Big] \comsignature = \hashSIGN(\alpha) \mod \pcomII
+\end{equation}
+
+Secondly, this $\comsignature$ element is used in two NIZK proofs: The 
+first one proves the knowledge of a small solution $\comsignature$, and 
+the second one shows (by considering the random coins) that the 
+committed value $\identity$ is the same as the encrypted value 
+(encrypted using an auxiliary verifiable encryption scheme, introduced 
+in\cite{EC:LyuNev17}).
+
+%\ref{rem:eric_note_02_TechIntr_6}).
+
+ Such a verifiable encryption and proof of knowledge was already present in the signature group
+ construction of~\cite{CCS:delLyuSei18}. The main differences are as follows :
+ \begin{itemize}
+	 \item Their signature did not contain the term $\hashSIGN(\alpha)$ :
+\begin{align*}
+&\big[\mathbf{a}^T \:\:|\:\: \mathbf{b}^T + \identity \mathbf{g}^T \:\:|\:\: (1 \quad a_3)\:\big] \begin{bmatrix} s_{1} \\ s_{2} \\ s_{3} \end{bmatrix} = 0 \mod \pcomII
+\end{align*}
+This term is present in our scheme, which allows to link the attribute and
+the identity, and thus optimize our protocol, by allowing to construct NIZK 
+proofs that hide the identity while leaving the attribute visible.
+
+%Preciser que cet $\alpha$ est important pour relier l'attribut � 
+%l'identité, d'une façon qui permettra de faire des preuves NIZK qui 
+%cachent l'identité mais laisse visible l'attribut.
+
+\item It was necessary that the nonzero differences of challenges were 
+invertible modulo multiple
+	primes involved in the scheme.
+	In order to ensure the existence of enough invertible nonzero 
+differences of challenges, 
+these primes numbers $u$ were taken in a such a way that $X^d + 1$
+	would split into (only) two components in the ring~$\R_u$. We consider 
+in this article the framework of~\cite{C:AttLyuSei20} that only
+        needs the nonzero differences of challenges to be ``sufficiently 
+often'' invertible. This allows to use prime numbers $u$ such that the rings 
+$\R_u$ split into (way) more components. This allows for faster polynomial 
+multiplications, and thus an efficiency gain. More precisely, when we 
+use ``partial splitting'', i.e. when we choose in our implementation 
+most prime numbers ($\pcomI, \pcomII, Q$) such that each element of 
+$\R_u$ is represented as 2048 polynomials of degree~4 via NTT (instead 
+of 2 polynomials of degree~4096 when $X^d+1$ split into two elements), we obtain a term-to-term 
+multiplication of these polynomials, which is way faster than a direct 
+multiplication in $\R_u$ (which would lead to a unique multiplication 
+between polynomials modulo $X^{8196} + 1$).
+It is interesting to note
+ that most of the changes implied by this framework do not change the 
+algorithms but only the security proofs of the scheme.
+ \end{itemize}
+
+%\textbf{Rendre un peu plus clair que on devait avoir que 2 composantes 
+%pour assurer que y'ait assez d'inversibles}
+
+%\enote{arranger suite phrase} 
+
+As for the anonymity of credentials and identities, the security of our 
+scheme relies on the zero-knowledge property of the NIZK proofs, the 
+hiding property of the commitment scheme and the IND-CPA security of the 
+encryption scheme.  As for the unforgeability and traceability, it 
+relies on the special soundness properties of the NIZK proofs and of the 
+unforgeability of the underlying signature scheme (formal lemmas and 
+proofs can be found in the full version).
+
+
+%The security of the schemes relies, for the anonymity of credentials and identities, on the
+%zero-knowledge of proofs (Lemmas~\ref{lemma:first_part_simulation},~\ref{lemma:second_part_simulation}), hiding of commitment and IND-CPA security of the cipher.
+
+%the security of the schemes relies, for the unforgeability and traceability, of the special soundness
+%properties of the NIZK proofs (Lemmas~\ref{lemma:first_part_extraction},
+%\ref{lemma:second_part_extraction}) and of the EUF-CMA security of the signature (Proposition~\ref{prop:unforgsign}).
+
+\iffalse
+\begin{verbatim}
+    _.~"(_.~"(_.~"(_.~"(_.~"(
+
+    Compléter le blabla, c'est sans doute la partie la plus 
+importante...
+
+Notes (explications d'Éric):
+
+* insister sur optimisations par rapport à 2018
+page 4 id, attribut alpha
+commitment éq 1 et 2
+ils cachent l'id mais ne la relient pas à l'attribut
+voir signature fin de page 3, cest la graine qui relie visiblement 
+id et alpha
+présentation = relation entre id invisible et alpha visible
+pour ça on committe id
+avec la relation linéaire de sig, on obtient une nouvelle 
+relation linéaire qui cache id
+on doit montrer qu'on connaît id, ie prouver id committée, 
+s1, s2, s3 connus
+-> on fait zk(s1 s2 s3 connus)
+on rajoute un enc(id) et on montre que c'est la même id 
+que celle qu'on a committée
+
+Page 22 (34 ? en fait 64), il y a les preuves zk
+première preuve "l'id committée est connue"
+lemme 8 page 24 "on peut ouvrir le commitment sur le message 
+chiffré"
+deuxième preuve "l'id committée c'est l'id dont je connais 
+une sig"
+comme le commitment est binding, on sait que c'est le même 
+message
+
+schéma
+la signature est une graine
+puis relation linéaire (signature cachant id mais pas attr)
+équation p4
+puis preuve...
+
+ppté de la signature = selectively secure puis vraie
+(-> adv divisé par nb identités, via un guess)
+
+ppté chiffr vérifiable = algo déchiffrement un peu 
+complexe
+
+page 10 subtilité: les deux identities relaxed ne sont pas 
+forcément la même, mais tombent sur la même identité
+tout court
+
+si on est capable d'extraire le witness, alors le message 
+dedans est bien celui qu'on a chiffré 
+
+----
+
+* CC: est-ce qu'il y a un avantage a utiliser 2018/779
++2020/517 plutot que Vadim 2022/284 ? En termes d'implem ?
+
+Eric: dans l'equation p3 on a un H(attribut)
+ils ne l'ont pas
+eux ont un u fixe
+nous c'est mieux car sinon on doit faire plusieurs
+signatures de groupe pour un AC
+-> nous, on peut mettre en une fois id et attr
+
+on fait 2 signatures : sign(id | attr) et sign(id)
+et preuve meme id
+
+c'est une optimisation
+
+Mais on pourrait le faire avec leur schema, donc pas
+un avantage en fait...
+
+\end{verbatim}
+\fi

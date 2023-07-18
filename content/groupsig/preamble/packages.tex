@@ -1,0 +1,45 @@
+\usepackage[T1]{fontenc}
+% \usepackage[utf8]{inputenc}
+% \usepackage[english]{babel}
+\usepackage{amsmath, amsfonts,} %%ARES amssymb}
+% note : amsthm was in conflict with the llncs style
+
+\usepackage{longtable} 
+
+\usepackage{placeins} % for FloatBarrier
+\usepackage{float}
+\usepackage{color} % for \color
+\usepackage{tikz}
+\usepackage{lscape}
+\usetikzlibrary{positioning, calc, math}
+\usepackage{tikz-cd} % to create commutative diagram
+\usepackage{listings} %  to write code 
+\usepackage{stmaryrd} % for double brackets \llbracket \rrbracket
+\usepackage{booktabs} % for toprule, bottomrule, midrule
+
+\definecolor{keywordsoneColor}{rgb}{0.800000, 0.360000, 0.27} % Dark coral 
+% color (see latexcolor.com)
+\definecolor{keywordstwoColor}{rgb}{0.000000, 0.00000, 0.55} % Dark coral 
+% color (see latexcolor.com)
+
+\lstdefinelanguage{pseudocode}[]{}{
+	morekeywords=[1]{if, then, else, end, while, pick, for, For, each, and, 
+return, for, restart, goto,
+			Restart, or, and, Accept, Abort, Reject, reject, Else},
+	morekeywords=[2]{Input, Output, Require},
+	keywordstyle=[1]\color{keywordsoneColor}\bfseries,
+	keywordstyle=[2]\color{keywordstwoColor}\bfseries,
+	comment=[l]{//},
+	commentstyle=\color{purple}\ttfamily
+}
+
+\usepackage{todonotes}
+
+\usepackage[lambda,
+            advantage,
+            adversary,
+            probability,
+            operators,
+            keys,
+            asymptotics,
+            sets]{cryptocode}

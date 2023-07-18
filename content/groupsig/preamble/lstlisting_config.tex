@@ -1,0 +1,30 @@
+% Next commands are from  an answer in the tex.stackexchange :
+% how-to-highlight-python-syntax-in-latex-listings-lstinputlistings-command
+
+% Python style for highlighting
+%style are in https://www.dickimaw-books.com/latex/novices/html/fontstyle.html#tab:fontsII
+\newcommand{\persocommentstyle}{\ttfamily\color{gray!70!black}}
+\newcommand\pythonstyle{\lstset{
+language=Python,
+basicstyle=\ttfamily,
+commentstyle=\persocommentstyle,
+keywordstyle=\bfseries,
+morekeywords={self},  % Add keywords here
+stringstyle=\normalfont\color{gray!50!black},
+frame=tb,             % Any extra options here
+showstringspaces=false
+}}
+% Python environment
+\lstnewenvironment{python}[1][]
+{
+\pythonstyle
+\lstset{#1}
+}
+{}
+% Python for external files
+\newcommand\pythonexternal[2][]{{
+\pythonstyle
+\lstinputlisting[#1]{#2}}}
+
+% Python for inline
+\newcommand\pythoninline[1]{{\pythonstyle\lstinline!#1!}}

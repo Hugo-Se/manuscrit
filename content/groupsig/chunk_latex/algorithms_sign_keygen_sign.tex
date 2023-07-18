@@ -1,0 +1,24 @@
+% \begin{figure}[htp!]
+\begin{pchstack}[center]
+    \procedure[bodylinesep=4pt]{$\SignKeyGen()$}{%
+a_3 \sample \R_{\pcomII} \\
+	 \mathbf{a} \sample \R^2_{q_{2}}  \\
+	    \mathbf{R} =\begin{pcmbox}\begin{pmatrix} r_1 \quad r_2 \\ e_1 \quad e_2 \end{pmatrix}\end{pcmbox} \sample \ballRoneinfty^{2\times 2} \subset \R^{2\times 2}  \\ 
+    \mathbf{b} = [b_1 \: b_2 ] \gets \mathbf{a}^T \mathbf{R}  \\
+\spk \gets (\mathbf{a}^t, \mathbf{b}^t, a_3)  \in \R^2_{\pcomII} \times \R^2_{\pcomII} \times \R_{\pcomII} \\
+\ssk \gets \mathbf{R} \in {\R}^{2\times 2}  \\
+	    \pcreturn (\spk, \ssk)}
+	    \pchspace
+	    \pchspace
+    \procedure[bodylinesep=4pt]{$\Sign(\spk, (m, \alpha))$}{%
+	    \mathbf{s}_3 \gets \mathcal{D}^2_{\R , \standarddevSignII}  \\ 
+	 \mathbf{g}^T = [1 \quad \delta] \pccomment{recall that we note  $\delta = \ceil{\sqrt{\pcomII}}$} \\
+    \text{Using GPV trapdoor, samples } \\(\mathbf{s}_1, \mathbf{s}_2) \gets D^2_{\R,
+    \standarddevSignI}\times D^2_{\R, \standarddevSignI} \\ 
+    \text{ such that} \colon \\
+	\hspace{0.2cm}\big[\mathbf{a}^T \:\:|\:\: \mathbf{b}^T + m \mathbf{g}^T \:\:|\:\: (1 \quad a_3)\:\big]
+	\begin{pcmbox}\begin{bmatrix} \mathbf{s}_1 \\ \mathbf{s}_2 \\ \mathbf{s}_3
+\end{bmatrix}\end{pcmbox}  \t= \hashSIGN(\alpha)}
+\end{pchstack}
+% \caption{\label{fig:signkeygen_sign}$\SignKeyGen$ and $\Sign$}
+% \end{figure}

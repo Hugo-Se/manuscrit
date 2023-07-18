@@ -1,0 +1,21 @@
+	\small
+	\begin{align*}
+&\relationclear = \Big\{
+		\big(\left(\ElemLangrelationclear\right), \signature \big) \\
+&\hspace{1cm}\in \SetInstanciationMessSign \times \SetInstanciationAttrAC \times
+	\SetInstanciationPublicKeysSign \times \SetInstanciationSignaturesSign \colon \\
+&\hspace{1cm}\SignVf(\spk, (m, \alpha), \signature)   = 1 \Big\} \\
+&\barrelationclear = \Big\{
+	\Big(\big(\ElemLangbarrelationclear\big), \big( ((\bar{m}, {(\tilde{c}_\iota)}_{\iota \in
+					\II}), \alpha), {(\signature_\iota)}_{\iota \in \II}\big)\Big) \\
+&\hspace{1cm}\in \SetInstanciationRelMessSign \times \SetInstanciationAttrAC \times 
+	\SetInstanciationPublicKeysSign \times \SetInstanciationRelSignaturesSign \colon \\ 
+&\hspace{1cm}\forall \iota \in \II \colon\SignVf(\spk, (\bar{m}, {(\tilde{c}_\iota)}_{\iota \in
+\II}), \alpha),  {(\signature_\iota)}_{\iota \in \II})  = 1 %\\
+%&\hspace{1cm}
+\land  m = \bar{m}
+\Big\} \\
+\end{align*}
+\normalsize
+%= (\mathbf{s}_{m, \alpha, 1},\mathbf{s}_{m, \alpha ,2}, s_{m, \alpha, 3})
+ %= (\mathbf{s}_{\bar{m}, \alpha, 1, \iota},\mathbf{s}_{\bar{m}, \alpha ,2, \iota}, s_{\bar{m}, \alpha, 3, \iota}))

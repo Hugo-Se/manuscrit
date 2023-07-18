@@ -1,0 +1,37 @@
+% \begin{figure}
+\begin{pchstack}[center]
+	   \procedure[headlinesep=2pt]{$\SignVf\left(\spk, (m, \alpha),
+	   \signature\right)$}{%
+		   \pccomment{Verification of the signature of a message}\\
+		   \pccomment{we note $\signature =(\mathbf{s}_{m,\alpha,1}, \mathbf{s}_{m,\alpha,2}, \mathbf{s}_{m,\alpha,2})$} \\
+	 \mathbf{g}^T = [1 \quad \delta] \pccomment{recall that we note  $\delta = \ceil{\sqrt{\pcomII}}$} \\
+	    \pcif \colon\\
+	    \t\big[\mathbf{a}^T \:\:|\:\: \mathbf{b}^T + m \mathbf{g}^T \:\:|\:\: (1 \quad a_3)\:\big]
+	    \begin{pcmbox}\begin{bmatrix} \mathbf{s}_{m,\alpha,1} \\ \mathbf{s}_{m,\alpha,2} \\
+	    \mathbf{s}_{m,\alpha,3} \end{bmatrix}\end{pcmbox} = \hashSIGN(\alpha)  \\
+ 	\t\land\norm{\left(\mathbf{s}_{m, \alpha, 1}, \mathbf{s}_{m,\alpha, 2}\right)} \leq 2\bsignone \\
+	\t\land \norm{\mathbf{s}_{m,\alpha, 3}}  \leq 2\bsigntwo  \pcthen\\
+	 \t\pcreturn 0 \\
+	 \pcelse  \\
+	 \t\pcreturn 1
+    }
+    \pchspace
+    \pchspace
+    \procedure[headlinesep=2pt]{$\SignVf\left(\spk,((m, \tilde{c}_{\iota}), \alpha),\bar{\signature}\right)$}{%
+		   \pccomment{Verification of the signature of a relaxed message}\\
+		   \pccomment{we note $\bar{\signature} = {\big(\mathbf{s}_{m,\alpha,1, \iota}, \mathbf{s}_{m,\alpha,2,\iota}, \mathbf{s}_{m,\alpha,3, \iota}\big)}_{\iota \in\II}$} \\
+	 \mathbf{g}^T = [1 \quad \delta] \pccomment{recall that we note  $\delta = \ceil{\sqrt{\pcomII}}$} \\
+			\pcif \forall \iota \in \II \colon\\
+	    \hspace{0.2cm}\big[\mathbf{a}^T \:\:|\:\: \mathbf{b}^T + m \mathbf{g}^T \:\:|\:\: (1 \quad a_3)\:\big]
+	    \begin{pcmbox}\begin{bmatrix} \mathbf{s}_{m,\alpha, 1, \iota} \\ \mathbf{s}_{m,\alpha,2, \iota} \\ \mathbf{s}_{m,\alpha, 3, \iota} 
+    \end{bmatrix}\end{pcmbox}  = \tilde{c}_{\iota}\hashSIGN(\alpha) \\
+	 \t\land \norm{\tilde{c}_\iota}_1 \leq 4\kappa^2     \\
+	 \t\land \norm{\left(\mathbf{s}_{m, \alpha, 1, \iota}, \mathbf{s}_{m,\alpha, 2, \iota}\right)} \leq 2\bsignone \\
+	 \t\land \norm{\mathbf{s}_{m,\alpha,3, \iota}}  \leq 2\bsigntwo  \\ 
+	 \t\land \tilde{c}_\iota \text{ invertible modulo } \phi_\iota \pcthen \\
+	 \t\pcreturn 0 \\
+	 \pcelse  \\
+ \t\pcreturn 1 }
+\end{pchstack}
+% \caption{\label{fig:signvf}$\SignVf$ for messages and relaxed messages.}
+% \end{figure}

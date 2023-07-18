@@ -1,0 +1,365 @@
+\subsubsubsection{Authentication techniques} The traditional way to 
+prove one's identity on the Internet is to ask an authority to provide a 
+credential. These techniques can deliver a high level of security; 
+However, the most commonly used ones introduce some privacy issues. By not 
+respecting the user's anonymity, they can make him be traced from server 
+to server. For instance, signature schemes suffer from an \emph{over 
+identification} issue, meaning that due to the static nature of public 
+keys, users have to reveal their identities (i.e., their public keys) to 
+be authenticated. \emph{Anonymous credentials}, initially proposed by 
+Chaum~\cite{DBLP:journals/cacm/Chaum85}, can be used to solve these 
+privacy issues by revealing only the attributes needed for the 
+authentication, or proving some properties on them, or answering 
+questions relatively to a subset of these attributes, without having to 
+reveal more information, such as the identity of the users.
+
+%allow the user to prove some 
+%properties on attributes without having to reveal them.
+
+An anonymous credential may be, for example, used to encode identity 
+documents issued by the government. Through this credential, the state 
+certifies attributes such as citizenship and date of birth. The citizen 
+can store this credential, for example, on his or her smartphone and use 
+it to prove statements about his or her certified attributes while 
+staying unlinkable across services. Nowadays, conventional anonymous 
+credential systems are used in more than 500 million trusted platform 
+modules embedding direct anonymous attestations and billions of Intel 
+processors implementing EPID systems. The IBM Identity Mixer and 
+Microsoft U-Prove are also based on conventional anonymous credentials.
+
+In an anonymous credential protocol, a user is collecting credentials 
+from various issuers. He or she can finely control which information 
+from which credentials he or she presents to which verifier by the means 
+of a \emph{presentation token}. 
+	An issuer issues credentials to users, thereby vouching for the 
+correctness of the attributes contained in the credential with respect 
+to the user to whom the credential is issued.
+	By verifying the presentation token that a user presents, a 
+verifier protects access to a resource or service that it offers by 
+imposing restrictions on the credentials that users must own and the 
+information from the attributes contained in these credentials that 
+users must present in order to access the service. Finally, an inspector 
+(or opener) is a trusted authority who can de-anonymize presentation 
+tokens under specific circumstances.
+
+%\enote{cf rem~\ref{rem:eric_note_01_Intro_1}}
+%\enote{cf rem~\ref{rem:eric_note_01_Intro_2}} 
+
+
+\subsubsubsection{Constructions of anonymous credentials} 
+	Due to their practical interest, these schemes have received a 
+lot of attention from the cryptographic community, for 
+instance~\cite{10.5555/517876,EC:CamLys01,C:CamLys02,SCN:CamLys02,C:CamLys04,TCC:BCKL08,DBLP:conf/ima/IzabacheneLV11,NDSS:GarGreMie14,AC:CDHK15,ISC:BosCamNev18}.
+
+%\enote{mal ecrit ptet}
+To the best of our knowledge, \cite{ISC:BosCamNev18} yields to the only  
+post-quantum scheme that has been proposed so far, but with no concrete
+instantiation nor implementation.
+Indeed, all the others schemes rely on classical assumptions, based for instance on discrete logarithm or Diffie-Hellman. 
+It raises concerns about their long-term security, as the emergence of 
+quantum computing in recent years threatens any cryptographic protocol 
+based on assumptions that are not assumed quantum-safe. Indeed, quantum 
+computers would potentially break, even retroactively, the mathematical 
+foundations of many current cryptographic systems including the 
+difficulty of the Diffie-Hellman problem. 
+In response to this potential threat to current cryptographic 
+systems, the National Institute of Standards and Technology (NIST) has 
+launched a standardization process for post-quantum cryptographic 
+primitives in 2016. The goal of this campaign is to provide new 
+post-quantum standards for two basic and crucial cryptographic building 
+blocks: Key Encapsulation Mechanisms and digital signatures. A few 
+families of mathematical problems are considered quantum-safe nowadays 
+and can be considered for the design of candidate algorithms like error 
+correcting codes or lattices. We focus in this article on lattice-based 
+constructions.
+
+% tres inspire de l'intro d'ACNS, je reecrirai si j'ai le temps.
+
+% Therefore, it is crucial to carefully consider the long-term security 
+% of anonymous credential protocols and design them accordingly.
+
+	The usual way of constructing an anonymous credential protocol 
+is either from a signature scheme with efficient protocols or from group 
+signatures. We focus here on the latter case. A group signature scheme, 
+first introduced by Chaum and van Heyst in 1991~\cite{EC:ChaVan91}, 
+allows a member of a group to anonymously sign a message on behalf of 
+the group. It can be used in settings where it is sufficient for a 
+verifier to know that a message was sent by a person from a certain 
+group, but without needing to know who in particular signed it. Such 
+schemes intrinsically allow for anonymity of the users. In our setting, 
+it allows to reveal an attribute but not the identity of the user. It 
+generally consists of a signature on a committed value, commitments 
+being an analogue of a sealed envelope, allowing one to hide a value 
+without being able to change his or her mind later on. Intuitively, the 
+choice of the signature scheme determines the efficiency and the 
+security of the resulting anonymous credential protocol. Each such 
+lattice-based signature schemes has its own strengths, but those with 
+tight reduction to standard lattice problems are not practical enough to 
+lead to practical anonymous credential protocols.
+
+%\enote{cf rem~\ref{rem:eric_note_01_Intro_3}} 
+%\enote{cf rem~\ref{rem:eric_note_01_Intro_4}}
+
+% todo
+
+
+\subsubsubsection{Properties for Anonymous Credentials}
+	Three notions capture the security of our anonymous credential 
+	protocol: \emph{anonymity}, \emph{unforgeability} and \emph{traceability}. For anonymity, 
+we consider a probabilistic polynomial-time adversary who has access to 
+all the credentials as well as to a quantum computer with polynomial 
+space. The adversary chooses policy rules for the attributes and two 
+credentials whose attributes pass the verification of this policy. The 
+challenger then returns a presentation token for one of these 
+credentials. The adversary's goal is to guess which credential has been 
+used to issue this presentation token, i.e. to distinguish between 
+presentation tokens for these credentials. 
+
+%The security proof is done by reduction, meaning that the idea is to 
+%prove that if an adversary breaks the anonymity of the anonymous 
+%credential protocol in quantum polynomial time with a non-negligible 
+%advantage, then there is an adversary who breaks the underlying 
+%computational problem (such as Ring-LWE or Ring-SIS) in polynomial time 
+%with a non-negligible advantage.
+
+% presentation policy -> policy rules
+% https://tsapps.nist.gov/publication/get_pdf.cfm?pub_id=919151
+%\enote{cf rem~\ref{rem:eric_note_01_Intro_7}} 
+Unforgeability captures the notion that an adversary cannot create a valid 
+presentation token without using a credential or restraining a valid 
+presentation token to a smaller subset of attributes.
+
+Traceability captures the notion that all presentation tokens, even 
+when computed by a collusion of users and inspectors, should trace to a 
+member of the forging coalition. For the traceability game, the 
+adversary has access to all the inspectors' decryption oracles, as well 
+as all the credentials for any subset of identities, and has access to a 
+quantum computer with polynomial space. The adversary's goal is to 
+produce a valid presentation token, i.e. which passes verification, such 
+that an inspection of this presentation token fails or traces to an 
+identity which is not in the given subset of identities. 
+
+
+%Full-traceability captures the notion that all presentation tokens, even 
+%when computed by a collusion of users and inspectors, should trace to a 
+%member of the forging coalition. For the full-traceability game, the 
+%adversary has access to all the inspectors' decryption oracles, as well 
+%as all the credentials for any subset of identities, and has access to a 
+%quantum computer with polynomial space. The adversary's goal is to 
+%produce a valid presentation token, i.e. which passes verification, such 
+%that an inspection of this presentation token fails or traces to an 
+%identity which is not in the given subset of identities. It is worth 
+%noting that, since the forgery game is a special case of the 
+%full-traceability game, the full-traceability implies both credential 
+%unforgeability and presentation token unforgeability.
+
+% secret keys\enote{cf rem~\ref{rem:eric_note_01_Intro_8}}
+
+%Similar to anonymity, the idea is to prove that if an adversary breaks 
+%the full-traceability of the anonymous credential protocol in quantum 
+%polynomial time with a non-negligible advantage, then there is an 
+%adversary who breaks Ring-LWE, Ring-SIS or NTRU in polynomial time with 
+%a non-negligible advantage.
+
+For all security properties, the proof is done by reduction, meaning 
+that the idea is to prove that if an adversary breaks either property of 
+the anonymous credential protocol in quantum polynomial time with a 
+non-negligible advantage, then one can construct an adversary which breaks 
+the underlying computational problem (such as $\MLWE$, $\MSIS$ or $\NTRU$) in polynomial time with a non-negligible advantage.
+
+\subsubsubsection{Our Contributions} Following the definitions given 
+in~\cite{ISC:BosCamNev18} and the framework presented in 
+\cite{CCS:delLyuSei18}, we give a generic framework for anonymous 
+credential schemes, which encompasses the construction given in 
+\cite{ISC:BosCamNev18}.
+
+Furthermore, we use this framework to give a concrete construction of 
+lattice-based anonymous credential system, which is instantiated with 
+the group signature from \cite{CCS:delLyuSei18} and zero-knowledge 
+arguments from \cite{C:AttLyuSei20} (further improved 
+in~\cite{C:LyuNguPla22}). We use the lattice 
+estimator~\cite{DBLP:journals/jmc/AlbrechtPS15} to estimate the security 
+of the resulting anonymous credential protocol and choose a concrete set 
+of parameters.
+
+We also give a concrete implementation of our protocol, using the NTT 
+along with other optimizations, thanks to the zero-knowledge arguments 
+from~\cite{C:AttLyuSei20}. As a result, our implementation of a 
+post-quantum anonymous credential is only an order of magnitude slower 
+and bandwidth consuming than previous anonymous credentials that are not 
+post-quantum. 
+
+%\enote{!}\textbf{NOTE :} ajouter le fait qu'on propose aussi un 
+%framework general pour creer des AC schemes, et qu'en plus de notre 
+%instanciation, \cite{ISC:BosCamNev18} rentre dans ce framework.
+
+%To build an anonymous credential system it is in addition necessary to 
+%append an encryption scheme with zero-knowledge proofs and two 
+%compatible zero-knowledge protocols to prove knowledge and equality of 
+%two committed values and knowledge of a signature on a committed value. 
+%\enote{cf rem~\ref{rem:eric_note_01_Intro_5}}
+%Cecilia Boschini, Jan Camenisch, and Gregory Neven present such a 
+%framework for lattice-based anonymous credentials in their article 
+%Relaxed Lattice-Based Signatures with Short Zero-Knowledge Proofs 
+%accepted at ISC 2018. We have followed their framework to implement our 
+%anonymous credential protocol.
+%\enote{cf rem~\ref{rem:eric_note_01_Intro_6}}
+
+%	Our code implements interactions involving anonymous credentials 
+%between a user and a verifier. We used the framework from 
+%~\cite{ISC:BosCamNev18} for our lattice-based anonymous credential 
+%system, instantiated with the group signature from 
+%\cite{CCS:delLyuSei18} and zero-knowledge arguments from 
+%\cite{C:AttLyuSei20} (further improved in~\cite{C:LyuNguPla22}). The 
+%zero-knowledge arguments from~\cite{C:AttLyuSei20} allowed us to use the 
+%NTT and other optimizations in our implementation. We also used the 
+%lattice estimator~\cite{DBLP:journals/jmc/AlbrechtPS15} to estimate the 
+%security of the resulting anonymous credential protocol and choose the 
+%parameters.
+
+\iffalse
+Our code implements interactions involving anonymous credentials between 
+a user and a verifier. We used the framework from [BCN18]\footnote{C. 
+Boschini, J. Camenisch, and G. Neven: Relaxed Lattice-Based Signatures 
+with Short Zero-Knowledge Proofs. ISC 2018} for our lattice-based 
+anonymous credential system, instantiated with the group signature from 
+[dPLS18]\footnote{R. del Pino, V. Lyubashevsky, G. Seiler: Lattice-Based 
+Group Signatures and Zero-Knowledge Proofs of Automorphism Stability. 
+CCS 2018} and zero-knowledge arguments from [ALS20]\footnote{T. Attema, 
+V. Lyubashevsky, G. Seiler: Practical Product Proofs for Lattice 
+Commitments. CRYPTO 2020}. The zero-knowledge arguments from [ALS20] 
+allowed us to use the NTT and other optimizations in our implementation. 
+We also used the lattice estimator\footnote{
+    Martin R. Albrecht, Rachel Player and Sam Scott. On the concrete 
+hardness of Learning with Errors.
+    Journal of Mathematical Cryptology. Volume 9, Issue 3, Pages 
+169–203, ISSN (Online) 1862-2984,
+    ISSN (Print) 1862-2976 DOI: 10.1515/jmc-2015-0016, October 2015
+https://github.com/malb/lattice-estimator} to estimate the security of 
+the resulting anonymous credential protocol and choose the parameters.
+\fi
+
+%As a result, our implementation of a post-quantum anonymous credential 
+%is only an order of magnitude slower and bandwidth consuming than 
+%previous anonymous credentials that are not post-quantum.
+
+\iffalse
+\subsection{Related Work}
+
+The traditional way to prove one's identity on the Internet is to ask an 
+authority to provide a credential, but usually without respecting the 
+user's anonymity, making him be traced from server to server. Anonymous 
+credentials, initially proposed by 
+Chaum~\cite{DBLP:journals/cacm/Chaum85} allow the user to prove some 
+properties on attributes without having to reveal them. Due to their 
+practical interest, these schemes have received a lot of attention from 
+the cryptographic community, for 
+instance~\cite{10.5555/517876,EC:CamLys01,C:CamLys02,SCN:CamLys02,C:CamLys04,TCC:BCKL08,DBLP:conf/ima/IzabacheneLV11,NDSS:GarGreMie14,AC:CDHK15}. 
+But to the best of our knowledge, no post-quantum scheme has been 
+proposed so far.
+\fi
+
+
+\iffalse
+\begin{verbatim}
+    _.~"(_.~"(_.~"(_.~"(_.~"(
+
+    Notes:
+* reprendre le brouillon de Thomas et compléter
+
+* intro generique d'AC + ajouter references AC non 
+post-quantiques
+
+* related work ? Cf commentaires ci-dessous
+
+* directement AC (pas insister sur sig groupe), et implem
+
+* CC: est-ce qu'il y a un avantage à utiliser 2018/779
++2020/517 plutôt que Vadim 2022/284 ? En termes d'implém ?
+
+Éric: dans l'équation p3 on a un H(attribut) 
+ils ne l'ont pas
+eux ont un u fixé
+nous c'est mieux car sinon on doit faire plusieurs 
+signatures de groupe pour un AC 
+-> nous, on peut mettre en une fois id et attr
+
+on fait 2 signatures : sign(id | attr) et sign(id) 
+et preuve même id
+
+c'est une optimisation
+
+Mais on pourrait le faire avec leur schéma, donc pas 
+un avantage en fait... 
+\end{verbatim}
+\fi
+
+\iffalse
+La mani�re traditionnelle de prouver son identit� sur Internet consiste � 
+deman- der une accr�ditation � une autorit�, souvent aux d�pens de l'anonymat 
+de l'utili- sateur, qui peut au minimum �tre trac� de serveur en serveur. Les 
+accr�ditations anonymes, initialement propos�es par Chaum [12], permettent 
+d'�viter cet �cueil
+
+en autorisant l'utilisateur � prouver des propri�t�s sur des attributs sans 
+les r�v�- ler. En raison de leur int�r�t pratique, ces sch�mas ont re�u une 
+forte attention de la communaut� cryptographique, par exemple [5, 7, 8, 9, 10, 
+3, 15, 14, 6].
+
+[3] Mira Belenkiy, Melissa Chase, Markulf Kohlweiss, and Anna Lysyanskaya.
+P-signatures and noninteractive anonymous credentials. In Ran Canetti, edi-
+tor, Theory of Cryptography, Fifth Theory of Cryptography Conference, TCC
+2008, New York, USA, March 19-21, 2008., volume 4948 of Lecture Notes in
+Computer Science, pages 356-374. Springer, 2008.
+
+[5] Stefan A. Brands. Rethinking Public Key Infrastructures and Digital Certifi-
+cates : Building in Privacy. MIT Press, Cambridge, MA, USA, 2000.
+
+[6] Jan Camenisch, Maria Dubovitskaya, Kristiyan Haralambiev, and Markulf
+Kohlweiss. Composable and modular anonymous credentials : Definitions
+and practical constructions. In Tetsu Iwata and Jung Hee Cheon, editors,
+Advances in Cryptology - ASIACRYPT 2015 - 21st International Conference on
+the Theory and Application of Cryptology and Information Security, Auckland,
+New Zealand, November 29 - December 3, 2015, Proceedings, Part II, volume
+9453 of Lecture Notes in Computer Science, pages 262-288. Springer, 2015.
+
+[7] Jan Camenisch and Anna Lysyanskaya. An efficient system for non-
+transferable anonymous credentials with optional anonymity revocation. In
+Birgit Pfitzmann, editor, Advances in Cryptology - EUROCRYPT 2001, Interna-
+tional Conference on the Theory and Application of Cryptographic Techniques,
+Innsbruck, Austria, May 6-10, 2001, Proceeding, volume 2045 of Lecture
+Notes in Computer Science, pages 93-118. Springer, 2001.
+
+[8] Jan Camenisch and Anna Lysyanskaya. Dynamic accumulators and applica-
+tion to efficient revocation of anonymous credentials. In Moti Yung, editor,
+Advances in Cryptology - CRYPTO 2002, 22nd Annual International Crypto-
+logy Conference, Santa Barbara, California, USA, August 18-22, 2002, Pro-
+ceedings, volume 2442 of Lecture Notes in Computer Science, pages 61-76.
+Springer, 2002.
+
+[9] Jan Camenisch and Anna Lysyanskaya. A signature scheme with efficient
+protocols. In Stelvio Cimato, Clemente Galdi, and Giuseppe Persiano, edi-
+tors, Security in Communication Networks, Third International Conference,
+SCN 2002, Amalfi, Italy, September 11-13, 2002. Revised Papers, volume
+2576 of Lecture Notes in Computer Science, pages 268-289. Springer, 2002.
+
+[10] Jan Camenisch and Anna Lysyanskaya. Signature schemes and anonymous
+credentials from bilinear maps. In Matthew K. Franklin, editor, Advances in
+Cryptology - CRYPTO 2004, 24th Annual International CryptologyConference,
+Santa Barbara, California, USA, August 15-19, 2004, Proceedings, volume
+3152 of Lecture Notes in Computer Science, pages 56-72. Springer, 2004.
+
+[14] Christina Garman, Matthew Green, and Ian Miers. Decentralized anony-
+mous credentials. In 21st Annual Network and Distributed System Security
+Symposium, NDSS 2014, San Diego, California, USA, February 23-26, 2014.
+The Internet Society, 2014.
+
+[15] Malika Izabach�ne, Beno�t Libert, and Damien Vergnaud. Block-wise p-
+signatures and non-interactive anonymous credentials with efficient attri-
+butes. In Liqun Chen, editor, Cryptography and Coding - 13th IMA Interna-
+tional Conference, IMACC 2011, Oxford, UK, December 12-15, 2011. Procee-
+dings, volume 7089 of Lecture Notes in Computer Science, pages 431-450.
+Springer, 2011.
+
+
+\fi

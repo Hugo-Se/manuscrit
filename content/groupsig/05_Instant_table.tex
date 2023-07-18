@@ -1,0 +1,99 @@
+\begin{table*}%[!hb]
+\begin{center}
+%	\begin{longtable}{lll}
+	\begin{tabular}{lll}
+		\toprule
+		Element                                                      & Description                                                                       & Value                                       \\
+		\midrule
+		d                                                            & such that $\R =
+		\ZZ[X]\left(X^d + 1\right)$                                       & 8192                                        \\
+		$\theta$                                                     & \begin{tabular}{l}number
+			of irreducible divisor of $X^d + 1$ in \\ $\R_q$ for
+		$q\in\{Q,p_1,p_2\}$\end{tabular}
+									     &  2048                                           \\
+		\midrule
+		$\tausign$                                                   & 
+		\begin{tabular}{l} number of questions asked for each challenges \\ in the second part
+			of the NIZK proof\end{tabular}                                   & 1
+		\\ $\taudec$ & \begin{tabular}{l}number of questions asked for each challenges \\ in
+			the first part of the NIZK proof\end{tabular}
+			     &       1                                                                                                                          \\ 
+		\midrule
+		$\standarddevSignI$                                          & standard deviation
+		for the GPV trapdoor                                           & $6\sqrt{d\pcomII}
+		\approx  2^{84.5}$      \\
+		$\standarddevSignII$                                         & standard deviation
+		for the NTRU trapdoor                                          & $2 1.17
+		\sqrt{\pcomII} \approx 2^{76.7}$ \\
+		\midrule
+		$p$                                                          & prime modulus for
+		clears in verifiable encryption                                  & $ \approx 2^{75.4}$ (p33, 8.1)              \\
+		$Q$                                                          & prime modulus for
+		ciphertexts in verifiable encryption                             & $\approx 2^{85.1}$ (p33, 8.1)               \\
+		\midrule
+		$\pcomI$                                                     & prime modulus for the
+		upper part of commitment                                     & $\pcomI \approx
+		2^{40.1}$           \\
+		$\pcomII$                                                    & prime modulus for the
+		lower part of commitment                                     & $\pcomII \approx 2^{150.9}$                    \\
+		$\delta$                                                     & $\ceil{\sqrt{\pcomII}}$                                                           & $\pcomII\approx 2^{80}$                     \\
+		\midrule
+		$\standarddevnizkI$
+		                                                             &
+		\begin{tabular}{l}standard deviation for discrete gaussian in \\ the NIZK proof \end{tabular}
+		                                                             & $11\kappa
+									     \sqrt{17}\:d \approx 2^{20}$
+		\\ $\standarddevnizkII$
+		                                                             & \begin{tabular}{l}standard
+			deviation for discrete
+			gaussian in \\ the  NIZK proof
+		\end{tabular}                                                        & $22
+		\kappa \sqrt{2d}\:\standarddevSignI \approx 2^{103.9}$                                                                                                                                                           \\ $\standarddevnizkIII$
+		                                                             & \begin{tabular}{l}standard
+			deviation for discrete
+			gaussian in \\ the NIZK proof
+		\end{tabular}                                                        &
+		$11\sqrt{6} \kappa \left(\sqrt{d}\standarddevSignII + 4d\standarddevSignI\right)
+		\approx 2^{112.2}$                                                                                                              \\ \midrule $\BoundNizkSignOne$   & bound used in NIZK proof              & $88 \kappa d s$                                  \\
+		$\BoundNizkSignTwo$                                          & bound used in NIZK
+		proof                                                        & $66 \kappa d \left( \standarddevSignII + 4 \sqrt{d} \: \standarddevSignI \right)$                                               \\
+		$\bsignone$                                                  & bound used in
+		verification of signatures                                      & $88 \kappa d
+		\standarddevSignI$                                                                                                                                                                             \\
+		$\bsignone$                                                  & bound used in verification of signatures                                          & $11\kappa\sqrt{102}\:d$                     \\
+		$\BoundNizkDecTwo$                                           & bound used in NIZK proof                                                          & $11\kappa\sqrt{170}\:d$                     \\
+		$\bcom$                                                      &
+		\begin{tabular}{l}bound used in verification of commitments \\ and in NIZK proof.  \end{tabular}                                                                                                                                                                     \\
+		\midrule
+		$\SetChallenges$                                             & space of challenges                                                               & $\ballRoneinfty$                            \\
+		$\SetDiffChallenges$                                         & $\{ c - c' : (c,c') \in \SetChallenges, c \neq c'\}$                              &                                             \\
+		% $\SetDiffChallenges(\phitau{\tau})$ ($\phitau{\tau} \in \R$) & $\{ \bar{c}\in
+		% \SetDiffChallenges\::\: \bar{c} \neq 0 \mod \phitau{\tau}\}$ &                                                                                                                                 \\
+		% $\SetDiffChallenges^{\times2}$                               & $\{ \bar{c}\bar{c}'\::\:(\bar{c}, \bar{c}') \in
+		% \SetChallenges^2\}$                                          &                                                                                                                                 \\
+		% $\SetDiffChallenges(\phitau{\tau})^{\times2}$                & $\{ \bar{c}\bar{c}' :  (\bar{c}, \bar{c}')
+		% \in \SetChallenges(\phitau{\tau})^2\}$                       &                                                                                                                                 \\
+		$\rho$                                                       & 
+		\begin{tabular}{l} probability used to define the distribution of \\ the choice of
+		challenges  \end{tabular} & 63/64    \\
+		$\distchall{\rho}$,                                            & \begin{tabular}{@{}l@{}} distribution on $\SetChallenges$ : each coefficient is chosen independently \\ 0 with a probability $\rho$, -1 and 1 with a probability
+			$(1-\rho)/2$\end{tabular}                                                        &                                             \\
+		$\kappa$                                                     & \begin{tabular}{@{}l@{}}  bound such that the distribution
+			$\distchall{\rho}$ output elements  \\
+		$c \in \SetChallenges$ such that	$\onenorm{c} \leq \kappa$ with an overwhelming
+			probability\end{tabular}                                                        &
+		240                                                                                                                                                                                   \\
+		\midrule
+		$\hashSIGN$                                                  & hash function for the
+		signature.                                                  & $\hashSIGN : \{0,1\}^*
+		\rightarrow \R_{q_2}$        \\
+		$\hashZK$                                                    & hash function for the
+		NIZK proofs                                                 & $\hashZK : \{0,1\}^*
+		\rightarrow \SetChallenges$          \\
+	\end{tabular}
+%	\end{longtable}
+\end{center}
+%\end{verbatim}
+		\caption{\label{tab:parameters_ac_scheme}Parameters of the Anonymous Credential Scheme}
+\end{table*}
+

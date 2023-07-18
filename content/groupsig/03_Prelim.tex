@@ -1,0 +1,191 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsubsubsection{Notation}
+Throughout the paper, we will write $\R = \ZZ[X]/(X^d + 1)$ for a $d$ that 
+will be a power of two, in order for $X^d + 1$ to be cyclotomic. For a prime 
+$q$, we will note $\R_q = \ZZ_q[X]/(X^d + 1)$.
+
+We will work with the usual norms, 
+	for $w \in \R$, $w = \sum_{i=1}^d w_i X^i$,
+	\begin{align*}
+		&\norm{w} = \sqrt{\sum_{i=0}^{d-1} |w_i|^2} \quad
+		\norm{w}_1 = \sum_{i\in\llbracket 0, d-1 \rrbracket} |w_i| \quad
+		\norm{w}_\infty = \max_{i\in\llbracket 0, d-1 \rrbracket} |w_i|
+	\end{align*}
+	for $\mathbf{w} \in \R^n$, $\mathbf{w} = (w_1, \cdots, w_n)$ we note
+	\begin{align*}
+	\norm{\mathbf{w}} = \sqrt{\sum_{i = 1}^n \norm{w_i}^2}\quad
+	 \norm{\mathbf{w}}_{1} = \max_{i\in\llbracket 1,n \rrbracket} \norm{w_i}_{1} \quad
+	 \norm{\mathbf{w}}_{\infty} = \max_{i\in\llbracket 1,n \rrbracket} \norm{w_i}_{\infty}
+	\end{align*}
+
+	We will also use the norms modulo multiples primes $u$, defined as the previous norms for
+	the representative with coefficients taken in $\rrbracket-(u-1)/2, (u-1)/2\rrbracket$. The
+	prime will be indicated as is $\norm{\cdot}_{u},\norm{\cdot}_{u,1},\norm{\cdot}_{u,\infty}$,
+	unless if the context is clear enough to remove it.
+	% For $w = \sum_{i=0}^{d-1} w_i X^i \in \mathcal{R}_q$ (or $\R$), we define the support of $w$, as
+	% $\supp{w} = |\{i \in \llbracket 0, d-1\rrbracket\::\: w_i \neq 0\}|$
+	% and for $\mathbf{w} = (w_1, \ldots, x_w) \in \R^n_q$ (or $\R^n$), we define the support of $\mathbf{w}$, as
+	% $\supp{\mathbf{w}} = \sum_{i=1}^n \supp{w_i}$.
+	% For $\mathbf{A} \in \R^{l\times k}$, we define $s_1(\mathbf{A}) = \max_{\norm{x}\neq0}\frac{\norm{\mathbf{A}x}}{\norm{x}}$.
+%
+	For $\beta > 0$, we will note $\ballRinfty{\beta} = \{ a \in \R : \norm{a}_\infty \leq \beta\}$.
+%
+	For a product of spaces $X \times Y$, we will note $\proj_X$ the projection on $X$.
+	We write $x \sample X$ the uniform sampling of an element $x \in X$.
+
+	For $\sigma > 0$, we denote by $\mathcal{D}_{\R , \sigma}$ the discrete Gaussian
+	distribution on $\R$ with standard deviation $\sigma$. More precisely, each
+	coordinate is taken by a discrete Gaussian distribution on $\ZZ$, of standard deviation~$\sigma$. The $\R$ will be omitted when it is clear from context.
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsubsubsection{Prime Splitting and Galois Automorphisms}
+As in~\cite{C:AttLyuSei20}, we take $\tau$, $\theta$, $d$ powers of two such that $\tau \mid \theta \mid d$ and
+we will consider primes numbers $\pcomI$, $\pcomII$, $\pencbig$ such that
+\begin{equation}\label{eq:primes_rel_517}
+	\forall u \in \{\pcomI, \pcomII, \pencbig\}\colon u - 1 \equiv 2 \theta \mod 4\theta.
+\end{equation}
+
+% We then define $\R_q = \ZZ_q[X]/(X^d + 1)$.
+\cite{C:AttLyuSei20} shows that for each $u \in \{\pcomI, \pcomII, \pencbig\}$, there exist a
+primitive $2\theta$ root of unity $\zeta_u \in {\ZZ}_u$.
+Using the Chinese remainder theorem we know that there is a $\zeta \in \ZZ,\: \zeta \leq \pcomI\cdot \pcomII\cdot \pencbig$,
+such that $\zeta \mod u = \zeta_u$ for $u\in\{\pcomI,\pcomII,\pencbig\}$.
+Let $\II = \ZZ^\times_{2d}/\langle2\theta + 1\rangle$ and $\phi_i = 
+X^{d/\theta} - \zeta^i$.
+
+%	\begin{align*}
+%		 & \II = \ZZ^\times_{2d}/\langle2\theta + 1\rangle \\
+%		 & \phi_i = X^{d/\theta} - \zeta^i            \\
+%	\end{align*}
+	As shown in~\cite[Section2.2]{C:AttLyuSei20}, the $\phi_i$ form the irreducible decomposition of $X^d + 1$ modulo $u$:
+		$X^d + 1 \mod q = \prod_{i\in \II}\phi_i$.
+	
+Following the work of~\cite{C:AttLyuSei20}, we will note:
+	\begin{align*}
+		 \Itau{\tau}= \ZZ^\times_{2\theta/\tau}\times \llbracket 0, \tau -
+		 1\rrbracket \qquad &
+		  \automorphismtau{\tau} := \automorphism_{2(\theta/\tau) + 1}                                   \\
+		 \Phitau{\tau}_i = X^{\tau d / \theta} - \zeta^{i \tau} \qquad &
+		  \phitau{\tau}_{i,j} = \automorphismtau{\tau}^j(X^{d/\theta} - \zeta^i)               \\
+	\end{align*}
+
+% We will now see a useful lemma that allow to ``stick'' multiples linear relations into one relation.
+% \begin{proposition} \label{lemma:ctrcondition}
+% 	Let $(q_l)_{i = 1}^v$ a finite number of distinct primes that all satisfy 
+% 	$q_l - 1 \equiv 2 \theta \mod 4 \theta$,  a constant $B > 0$ and elements
+% 		$\mathbf{A} \in \R^{x \times l}$, 
+% 		$(\mathbf{z}_{i,j})_{(i, j) \in \Itau{\tau}} \subset \R^{l}$,
+% 		$\mathbf{s} \in \R_{\pcomI}^x$ ,
+% 		${(c_i)}_{i \in \ZZ^\times_{2\theta/\tau}} \in \R$ 
+% 	such that:
+% 	\begin{align*}
+% 		&\forall (i,j) \in \Itau{\tau} \colon\: \mathbf{A} \mathbf{z}_{i,j} = \automorphismtau{\tau}^j\left(c_i\right) \mathbf{s}\!\!\!\mod \pcomI
+% 		 \land \norm{\mathbf{z}_{i,j}} \leq B \\
+% 		&\forall i \in \ZZ^{\times}_{2\theta/\tau}\colon\:  c_i \neq 0 \mod
+% 		\Phitau{\tau}_i \land \norm{c_i}_1 \leq C \\
+% 	\end{align*}
+% 	Then, we can efficient construct a $\mathbf{z} \in \R^{l}$ such that either :
+% 		      \begin{align*}
+% 			                             & \mathbf{A} \mathbf{z} = \mathbf{s} \!\!\!\mod
+% 						     \pcomI   \quad
+% 			                             & \norm{\mathbf{z}}_{\infty} < \left(\prod_{l=1}^{v} q_l \right) /2   \\
+% 			      \forall i,j\::\:\:\:\: & \automorphismtau{\tau}^j(c_i)\:\mathbf{z} =
+% 			      \mathbf{z}_{i,j} \mod \left(\prod_{l=1}^{u} q_l \right)
+% 		      \end{align*}
+% 		      or $\mathbf{A} \mathbf{z} = 0 \land \norm{\mathbf{z}} < 2 B C$.
+% \end{proposition}
+
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsubsubsection{MSIS, MLWE and NTRU problems}
+We consider the same definitions than in~\cite{ISC:BosCamNev18}.
+\begin{definition}
+	The $\MSIS_{q,n,m,\beta}$ problem (over an implicit ring $\R$) is defined as
+	follows. Given $\mathbf{A} \in \R_q^{n\times m}$ sampled uniformly at random. Find
+	$\mathbf{s}\in\R^m$ such that $\mathbf{A}\mathbf{s} = 0$ and $0 < \norm{\mathbf{s}} \leq
+	\beta$.
+\end{definition}
+
+\begin{definition}
+	The decision $\MLWE_{q, m, n}$ problem (over an implicit ring $\R$) is defined as
+	follows. Given $\mathbf{s}  \xleftarrow{\$} \ballRoneinfty^n$, let $A_{q,\mathbf{s}}$ the distribution
+	obtained by sampling $\mathbf{a} \xleftarrow{\$} \R^n_q$, $e \xleftarrow{\$} \ballRoneinfty$,
+	and returning $(\mathbf{a}, \left<\mathbf{a},\mathbf{s}\right> + e) \in \R^n_q \times
+		\R_q$. The goal is to distinguish between $m$ samples from either $A_{q,
+				\mathbf{s}}$ or the uniform distribution in $\R^n_q\times \R_q$.
+\end{definition}
+
+\begin{definition}
+	The $\NTRU_{q,r}$ problem (over an implicit ring $\R$) is defined as
+	follows.  The distribution A is defined by sampling ring elements $f, g \xleftarrow{\$} D_r$
+	and outputting $h = f/g$ if $g$ is invertible in $\R_q$ (otherwise, re-sample g).
+	The goal is to distinguish $h$ from a random element in $\R_q$.
+\end{definition}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsubsubsection{Relations, relaxed sets and relaxed relations}
+	A relaxed set is a triplet $(X,\bar{X}, \projX)$ where $X$, $\bar{X}$ are sets and $\projX$
+	is a surjection $\bar{X} \rightarrow X$. We will sometimes call $\bar{X}$ the relaxation of
+	$X$ and see $\projX$ as a function $\bar{X} \sqcup X \rightarrow X$ that is
+	the identity on X.
+
+	An element $\bar{x}$ will be called a relaxation of $x$ if 
+$\projX(\bar{x}) = x$ or if
+	$\bar{x} = x$. If $\bar{x} \neq x$, we will speak of 
+strict relaxation.
+	The elements of $\bar{X}$ will be called the relaxed elements.
+
+	% Conversely, $x$ will be called a basis of $\bar{x}$.
+
+	We define the language and the witness associated to a relation $\R$ as usual by setting
+	$\Language{\R} = \{ x : \exists y, \R(x, y)\}$ and $\Witness{\R} = \{ y : \exists x, \R(x, y)\}$.
+
+	For an element $x = (a,b) \in \relation$, we will write $a=\projL(x)$ its projection in
+	$\Language{\relation}$ and $b=\projW(x)$ its projection in $\Witness{\R}$.
+
+	A relaxed relation is a triplet $(\relation,\barrelation, \proj_R)$ where 
+	$\relation$ and $\barrelation$ are relations and
+	$(\Language{\relation},\Language{\barrelation}, \proj_R)$ is a relaxed set.
+	We will call $\barrelation$ the relaxation of $\relation$.
+	A relaxed witness of an element $x$ will be any witness of $\bar{x}$ such that
+	$\bar{x}$ is a relaxation of $x$. We will sometime speak of strict witness if $\bar{x}$
+	is a strict relaxation of $x$.
+	% The elements of $\barrelation$ will sometimes be called the relaxed elements.
+
+
+% sections suivantes -> annexe
+
+
+
+
+
+
+\iffalse
+    \begin{verbatim}
+        _.~"(_.~"(_.~"(_.~"(_.~"(
+
+Enfin juste la partie initiale definissant les AC,
+le reste dans une annexe qui va sauter (pour l'avoir sous la main).
+
+Ajouter l'annexe E, mais juste un blabla dans le corps, 
+les figures dans une annexe qui va sauter. 
+   
+Olivier: J'ai juste mis le fichier initial, le ajouter mais non 
+mais si c'est pas clair :p
+
+\end{verbatim}
+\fi
+

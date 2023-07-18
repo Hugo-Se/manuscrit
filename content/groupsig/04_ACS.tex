@@ -1,0 +1,406 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Definition}\label{sec:AC:definition}
+
+
+An \textit{anonymous credential scheme} for a set of identities $\SetIdAC$ and 
+a set of attributes $\SetAttrAC$ is a tuple of algorithms $(\ParGen, 
+\IKeyGen,\allowbreak \OKeyGen, \Issue, \Present, \Open, 
+\VerifyCred,\allowbreak \VerifyPt, \ExtractAttr)$:
+
+\begin{compactitem} 
+\item The \textbf{parameter generation algorithm $\bm{\ParGen}$}
+	returns the public parameters $\acpar$.
+
+\item The \textbf{issuer key generation algorithm $\bm{\IKeyGen(\acpar)}$}
+returns an issuer (public, secret) key pair $(\ipk, \isk)$.
+
+\item The \textbf{opener key generation algorithm $\bm{\OKeyGen(\acpar, \ipk)}$}
+returns an opener (public, secret) key pair $(\opk, \osk)$.
+% \enote{cf rem~\ref{rem:eric_note_03_Prelim_1}}; 
+
+\item The \textbf{credential issuance algorithm $\bm{\Issue(\isk, \identity, 
+(\attralphaR))}$} creates a credential $\cred$ associated to an identity 
+$\identity$ and a set of attributes $\attralphaR$. It is possible to recover 
+the set of attribute $\attralphaR$ from $\cred$ computing 
+$\ExtractAttr(\cred)$. We call $\attralphaR$ the attributes associated to 
+$\cred$.
+
+\item The \textbf{presentation algorithm $\bm{\Present(\acpar, \ipk, \opk, \cred, S)}$} creates a presentation token $\pt$ using a credential $\cred$ with associated attributes $\attralphaR$ and $S \subset R$. It is 
+	possible to recover the subset of attributes $(\alpha_i)_{i \in S}$ from $\pt$ computing 
+$\ExtractAttr(\pt)$. We call $(\alpha_i)_{i \in S}$ the attributes associated to $\pt$.
+
+\item The \textbf{opening algorithm $\bm{\Open(\acpar, \ipk, \osk, \pt)}$} returns the 
+identity of the credential used to create the presentation (or~$\bot$).
+
+%. This algorithm can also return $\bot$.
+
+\item The \textbf{credential verification algorithm 
+$\bm{\VerifyCred(\acpar,\allowbreak \ipk, \cred)}$} checks the validity of the 
+credential for the associated attributes $(\alpha_i)_{i \in R}$ it contains and returns $1$ (if valid) or $0$.
+
+\item The \textbf{presentation token verification algorithm 
+$\bm{\VerifyPt(\acpar,\allowbreak \ipk, \opk, \pt)}$} checks the validity of the 
+presentation token for the associated attributes $(\alpha_i)_{i \in S}$ it contains and 
+returns $1$ (if valid) or~$0$. \end{compactitem}
+
+We consider the following security properties (formally stated 
+in~\cite[Appendix G.1]{ISC:BosCamNev18})
+
+\begin{compactitem}
+
+\item \textbf{Anonymity:} A user cannot distinguish from which credential a 
+presentation is made.
+
+\item \textbf{Unforgeability:} A user cannot create a valid presentation 
+token without using a credential or restraining a valid presentation 
+token to a smaller subset of attributes.
+
+\item \textbf{Traceability:} All presentations should trace to an issuer.
+If computed by a collusion of users, it should trace to a member of this 
+collusion.
+
+\end{compactitem}
+
+%\enote{cf rem~\ref{rem:eric_note_03_Prelim_2}}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Construction}
+
+Our anonymous credential scheme builds upon a relaxed signature scheme and a 
+relaxed verifiable encryption scheme that are compatible, along with 
+associated (relaxed) NIZK proofs. We state in the following subsections our definitions 
+for such schemes before presenting our generic scheme.
+
+%of relaxed  signature scheme and relaxed verifiable encryption.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsubsubsection{Relaxed Signature 
+Scheme}\label{sec:relaxed_signature_scheme}
+	We use the same definition as in~\cite[Section 5.1]{ISC:BosCamNev18}. The 
+only difference is our different definition of a relaxed set: instead of using 
+a function $g: X \rightarrow 2^{\bar{X}}$, we consider a surjection $\bar{X} 
+\rightarrow X$. One can easily switch from one vision to the other.
+
+A relaxed signature scheme  associated with a relaxed message 
+space $(\SetMessSign,\SetRelMessSign, \projsign)$ consists of 
+the following algorithms:
+
+%a relaxed space $(\SetMessSign, \projsign, \SetRelMessSign)$ and 
+
+\begin{compactitem}
+	\item The \textbf{key generation algorithm $\bm{\SignKeyGen()}$} returns a 
+couple of (public, secret) signature keys $(\ssk, \spk)$.
+	\item The \textbf{signature algorithm $\bm{\Sign(\ssk, m)}$} computes the 
+signature $\signature$ of a	message $m$ with secret key $\ssk$.
+	\item The \textbf{verification algorithm $\bm{\SignVf(\ssk, \signature, 
+m)}$} verifies if $\signature$ is a valid signature of $m \in \SetMessSign 
+\sqcup \SetRelMessSign$ for the public key $\spk$. It returns $1$ if it is 
+valid and $0$ otherwise.
+\end{compactitem}
+
+The idea is to create signatures for messages, but verify both messages and 
+relaxed messages.
+	 
+In the definition of the forgery game, we forbid the adversary to send a 
+signature of a relaxation of a message it obtained the signature from the signature oracle. The 
+detailed game is described in~\cite[Section 5.1]{ISC:BosCamNev18}.
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsubsubsection{Relaxed NIZK proofs (in the random oracle model)}
+	Our general scheme uses the notion of non-interactive zero-knowledge 
+(NIZK) proof system for a relaxed relation $(\relation,\barrelation, \proj_R)$.
+Their definition is a slight adaption 
+ of the one stated in~\cite[Section 3.1]{ISC:BosCamNev18}. It is 
+important to note that such a protocol
+only allows to compute proofs for elements $x \in \Language{\relation}$, 
+when a witness $w$ is known,
+ and that the relaxed special soundness property applied for proofs of 
+$x$ only allows to extract a
+ relaxed witness $\bar{w}$ of $x$, so that $(x, \bar{w}) \in 
+\barrelation$.
+
+% "Pour des raisons de place, on laisse le lecteur interessé voir~\cite[Section
+% 3.1]{ISC:BosCamNev18}"
+
+As a side note, the challenges for the NIZK proofs are not chosen 
+uniformly but according to a distribution $\distchall{\rho}$ (see
+ Table~\ref{tab:parameters_ac_scheme}), which is thus also the case for the
+hash function $\hashZK$.
+
+% \enote{traduire}Notons que pour les preuves NIZK les challenges ne sont 
+%pas choisis uniforméments dans
+% $\SetChallenges$ mais via une distribution $\distchall{\rho}$ (voir
+% Table~\ref{tab:parameters_ac_scheme}). La fonction de hash $\hashZK$ 
+%utilisée est donc soumise �
+% l'hypothèse ROM avec cette distribution plutôt que la distribution 
+%uniforme.
+
+% and refer the interested reader to~\cite{ISC:BosCamNev18} for details. 
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
+\subsubsubsection{Relaxed Verifiable 
+Encryption}\label{sec:relaxed_verifiable_encryption} Even if our 
+instantiation makes use of the verifiable encryption 
+described in~\cite{EC:LyuNev17}, our definition of a verifiable encryption is 
+slightly different and its instantiation  actually uses both the 
+verifiable encryption of~\cite{EC:LyuNev17} and the commitment scheme 
+of~\cite{C:AttLyuSei20}. This is explained by the fact that a 
+verifiable encryption does not only encrypt an element, but a relation 
+fulfilled by the element.
+
+%our use of a different 
+%definition of a verifiable encryption, that emphasizes the fact that a 
+%verifiable encryption doesn't only encrypt an element, but a relation 
+%"dans laquelle il est"\enote{..}.
+
+We consider a relaxed space of clear messages $(\SetMessEnc, 
+\SetRelMessEnc,\allowbreak \projenc)$ and probabilistic algorithms $(\EncKeyGen, 
+\Enc, \Dec)$ such that
+	\begin{compactitem}
+
+		\item $\EncKeyGen$ outputs a couple of (public, secret)
+keys $(\epk, \esk) \in \SetPublicKeysEnc \times \SetSecretKeysEnc$.
+
+		 \item For $(\epk, \mess) \in \SetPublicKeysEnc \times 
+\SetMessEnc$, $\Enc(\epk, \mess)$ outputs a ciphertext $\cipher \in 
+\SetCipherEnc$.
+
+		 \item For a ciphertext $\cipher \in \SetCipherEnc$ and a 
+secret key $\esk \in \SetSecretKeysEnc$, $\Dec(\esk, \cipher)$ outputs a 
+message $\mess \in \SetMessEnc \sqcup \SetRelMessEnc \sqcup \{\bot\}$. 
+We say that the decryption fails if $\mess = \bot$.
+
+	\end{compactitem}
+
+	We require that $(\EncKeyGen \Enc, \Dec)$ is a IND-CPA 
+encryption scheme with message space $\SetMessEnc$ and ciphertext space 
+$\SetCipherEnc$.
+
+Moreover, we consider 
+	\begin{compactitem}
+		\item two relaxed relations $(\relationclear, \barrelationclear,
+\projclear)$, $(\relationcipher, \barrelationcipher,\allowbreak \projcipher)$ 
+			with:
+		$\Language{\relationclear} = \SetMessEnc \times \SetPubEnc$,
+		$\Language{\barrelationclear} = \SetRelMessEnc \times \SetPubEnc$, $\projclear =
+	(\idfunction, \projenc)$. 
+		$\Language{\relationcipher} = \Language{\barrelationcipher} = \SetPublicKeysEnc \times \SetCipherEnc \times
+	\SetPubEnc$ and $\projcipher = \idfunction$.
+
+	\item a NIZK proof system for the relaxed relation 
+$(\relationcipher, \barrelationcipher,\allowbreak \projcipher)$,
+
+%\enote{a definir?} 
+
+ \item a subset $\DomEncRel \subset \SetPublicKeysEnc \times \relationclear$,
+
+\item a probabilistic algorithm $\EncRel : \DomEncRel \rightarrow 
+\relationcipher$ that extends the function $\Enc$ to relation thanks to 
+the requisite $\projL \circ \EncRel = (\Enc, \id) \circ (\id, \projL)$,
+
+\item a relaxed extraction of relation function $\barextractionrelation 
+:\barrelationcipher \rightarrow \barrelationclear$ such that the 
+following diagram commutes:
+
+\[ \begin{tikzcd}
+	\barrelationcipher \arrow{rr}{\barextractionrelation}
+	\arrow[swap]{drr}{\proj_{\SetPubEnc}}
+	 &&\barrelationclear \arrow{d}{\proj_{\SetPubEnc}} \\
+	&& \SetPubEnc\end{tikzcd} \]
+\end{compactitem}
+	Finally, we ask the following property, that expresses
+	the compatibility of the decryption algorithm and of the definition of the witness of
+	$\barrelationcipher$.
+	\begin{compactitem}
+	\item For $(\epk, \esk) \xleftarrow{\$} \EncKeyGen, \cipher \in \SetCipherEnc$ and for all $X \in \barrelationcipher$ such
+		that \[\epk = \proj[\SetPublicKeysEnc](\projL(X)),\:\: \cipher = \proj_{\SetCipherEnc}(\projL(X))\]
+	the probability to not have
+	\[ \projenc\big(\Dec(\esk, \cipher)\big) = \projenc(\proj_{\SetRelMessEnc}\big(\barextractionrelation(X)\big))\]
+	is negligible. Here, we take the convention that $\projenc(m) = m$ if $m \in \SetMessEnc$.
+\end{compactitem}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsubsubsection{Anonymous Credential}\label{sec:general_AC}
+Our generic construction will need to use relaxed signature and relaxed verifiable encryption schemes
+with the following requirements:
+\begin{compactitem}
+	\item $\SetMessSign = \SetMessEnc \times \SetAttrAC$, $\SetRelMessSign = \SetRelMessEnc \times \SetAttrAC$
+	\item The relaxed function of the signature scheme preserves the attributes : $\proj{\SetAttrAC} \circ \projsign = \proj{\SetAttrAC}$.
+	\item The relations of the relaxed verifiable encryption are such that :
+%		\tiny
+		  \begin{align*}
+\relationclear    & := \Big\{\left(\left(\identity, \spk, R, 
+{(\alpha_i)}_{i \in R}\right),\left({(\sigma_i)}_{i \in R}\right)\right)\::\:
+\hspace{0.1cm} \\ &\forall i \in R,\, \SignVf(\spk, (\identity,\alpha_i),
+\signature_i) = 1 \Big\}                                                                                                                   \\ \barrelationclear & := \Big\{\left(\left(\baridentity, \spk, R, {(\alpha_i)}_{i \in R}\right),
+\left({(\baridentity_i)}_{i \in R}, {(\signature_i)}_{i \in R}\right)\right)\::\:
+\hspace{0.1cm} \\ &\forall i \in R, 
+\SignVf(\spk, (\identity,\alpha_i), \signature_i) = 1 \\
+%\hphantom{\barrelationclear  := \Big\{\left(\left(\baridentity, \spk, R, {(\alpha_i)}_{i \in R}\right),
+%\left({(\baridentity_i)}_{i \in R}, {(\signature_i)}_{i \in R}\right)\right)\::\:
+%\hspace{0.1cm}} \\
+& \hspace{7mm}\wedge \projsign(\baridentity_i) = \projsign(\baridentity) \Big\}
+      \end{align*}
+      \normalsize
+	\item For simplicity, we suppose that  $\DomEncRel = \SetPublicKeysEnc
+		\times \relationclear$. In the
+		practical instantiation of Section~\ref{sec:Instanciation}, the keygens for Issuer and
+		Opener will be made such that the keys $\ipk$ and $\opk$ share an element (this is why
+		 $\OKeyGen$ have $\ipk$ in input),
+		$\DomEncRel$ will thus only contain the couples such that $\ipk$ and $\opk$ contain this element.
+\end{compactitem}
+
+%\todoC{pas compris la parenthese}
+
+The complete scheme can be found in Figure~\ref{fig:general_construction_AC}.
+\begin{figure*}
+\begin{pcvstack}[center]
+	\begin{pchstack}
+		\procedure[headlinesep=2pt,bodylinesep=2pt]{$\ParGen()$}{%
+			\acpar \gets \bot \\
+			\pcreturn \acpar
+		}
+		\procedure[headlinesep=2pt,bodylinesep=2pt]{$\IKeyGen(\acpar)$}{%
+			(\spk, \ssk) \gets \SignKeyGen()\\
+			\ipk \gets \spk \\
+			\isk \gets \ssk \\
+			\pcreturn (\ipk, \isk)
+		}
+		\procedure[headlinesep=2pt,bodylinesep=2pt]{$\OKeyGen(\acpar, \ipk)$}{%
+			(\epk, \esk) \gets \EncKeyGen() \\
+			\opk \gets \epk \\
+			\osk \gets \esk \\
+			\pcreturn (\opk, \osk)
+		}
+		\procedure[headlinesep=2pt,bodylinesep=2pt]{$\Issue(\isk, \identity,\attralphaR)$}{%
+			\pcfor i \in R \colon\\
+			\t\signature_{i} \gets \Sign\big(\ipk,(\identity, \alpha_i\sqcup i)\big) \\
+			\cred \gets \left(\identity,{(\alpha_i)}_{i \in R},{(\signature_{i})}_{i \in R}\right) \\
+			\pcreturn \cred
+		}
+	\end{pchstack}
+	\pcvspace
+	\begin{pchstack}
+		\procedure[headlinesep=2pt,bodylinesep=2pt]{$\Present\big(\acpar, \ipk,\opk, \cred = \left(\identity,{(\alpha_i)}_{i \in R},{(\signature_{i})}_{i \in R}\right), S\big)$}{%
+			x \gets \left(\left(\identity, \spk, S, {(\alpha_i)}_{i \in  S}\right),\left({(\sigma_i)}_{i \in S}\right)\right) \\
+			\pccomment{$(\epk, x) \in \DomEncRel$ by hypothesis} \\
+			C = \EncRel(\epk, x) \\
+			\text{creates a NIZK proof $\nizkproof$ for $C$}\\
+			\pcreturn  ({(\alpha_i \sqcup i)}_{i \in S}, \projL(C), \pi)
+		}
+		\procedure[headlinesep=2pt,bodylinesep=2pt]{$\Open\big(\acpar, \ipk,\osk, \pt\big)$}{%
+			c \dgets \text{the cipher included in the presentation } \pt \\
+			\identity \gets \Dec(\esk, c)\\
+			\pcreturn \identity
+		}
+	\end{pchstack}
+	\pcvspace
+	\begin{pchstack}
+		\procedure[headlinesep=2pt,bodylinesep=2pt]{$\VerifyCred\big(\acpar, \ipk, \cred = \left(\identity,{(\alpha_i)}_{i \in R},{(\signature_{i})}_{i \in R} \right)\big)$}{%
+			\pcfor i \in R \colon \\
+			\t \pcif \SignVf(\spk, \signature_i, \alpha_i \sqcup i) = 0 \pcthen \pcreturn 0 \\
+			\pcreturn 1
+		}
+		\pchspace[2em]
+		\procedure[headlinesep=2pt,bodylinesep=2pt]{$\VerifyPt\big(\acpar, \ipk, \opk, \pt)$}{%
+			\text{Verify the proof $\nizkproof$} \\
+			\pcif \text{the proof is valid} \pcthen \pcreturn 1 \\
+			\pcelse \pcreturn 0
+		}
+	\end{pchstack}
+\end{pcvstack}
+\caption{\label{fig:general_construction_AC}General construction of Anonymous Credentials}
+\end{figure*}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Sketch of proofs}\label{sec:sketch_proof_secu_AC}
+
+We now informally show why this is a secure anonymous credential scheme, 
+for each of the security properties explained in 
+Section~\ref{sec:AC:definition} and that are formally defined in 
+\cite[Appendix G.1]{ISC:BosCamNev18}.
+
+%\label{sec:preliminaries}
+
+\begin{compactitem} 
+\item \textbf{Anonymity:} We can replace the NIZK 
+proofs by simulations and the ciphertext by the encryption of any
+	fixed clear message. This shows that
+	$\Adv{\ProbAnomCredAC}{\adv} \leq \Adv{\ProbCPAEnc}{\adv} + 
+\Adv{\ProbNIZKAC}{\adv}$
+	where $\ProbAnomCredAC$ is the anonymity game of the anonymous 
+credential, $\ProbCPAEnc$ the
+	IND-CPA game of the encryption scheme $(\EncKeyGen, \Enc, \Dec)$ 
+and $\ProbNIZKAC$ the game of distinction of a NIZK proof and its 
+simulation.
+
+\item \textbf{Unforgeability:} If a user can forge with a sufficiently good 
+advantage an anonymous
+	credential, one can extract a witness from the proof and use the 
+function
+	$\barextractionrelation$ to obtain an element 
+$\left(\left(\baridentity, \spk, R, {(\alpha_i)}_{i \in R}\right),
+		      \left({(\baridentity_i)}_{i \in R}, 
+{(\signature_i)}_{i \in R}\right)\right)
+	      \in \barrelationclear$. The conditions for winning of the 
+game then imply that one of
+	      the signatures $\signature_i$ is a forgery for the relaxed 
+signature scheme.
+
+%\enote{clair?}
+
+      \item \textbf{Traceability:} If a user can forge with a sufficiently good 
+advantage an anonymous credential, opened in an element 
+$\tilde{\identity}$ that is not the relaxation of the identity of the 
+collusion (note that $\tilde{\identity}$ can even be equal to 
+$\bot$), one can extract a witness from the proof and use
+the function
+	$\barextractionrelation$ to obtain an element 
+$\left(\left(\baridentity, \spk, R, {(\alpha_i)}_{i \in R}\right),
+		      \left({(\baridentity_i)}_{i \in R}, 
+{(\signature_i)}_{i \in R}\right)\right)
+	      \in \barrelationclear$.  Moreover, the compatibility of 
+the decryption algorithm and the definition of the witness of
+	$\barrelationcipher$ implies that $\tilde{\identity}$ is a 
+relaxation of $\baridentity$ (in particular, it is not equal to $\bot$).
+	      This means that each $\baridentity_i$ is a relaxation of 
+an identity that is not
+	      in the collusion. The conditions for winning of the game then
+imply that one of the
+	      signatures $\signature_i$ is a forgery of the relaxed 
+signature scheme. \end{compactitem}
+
+
+\iffalse
+\begin{verbatim}
+    _.~"(_.~"(_.~"(_.~"(_.~"(
+
+    copier-coller depuis new_version_article le début de la section 4, avant 4.1 ?
+copier-coller l'annexe K dans une annexe qui va sauter ?
+
+Notes:
+
+* Éric m'a parlé de l'annexe I page 55, mais pas la place ? 
+
+Olivier: Mis le main... le reste bleh
+\end{verbatim}
+\fi

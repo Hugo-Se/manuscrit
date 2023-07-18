@@ -1,0 +1,48 @@
+% Generic Algorithms 
+\newcommand{\Sign}{\mathsf{Sign}}
+\newcommand{\KeyExt}{\mathsf{KeyExt}}
+\renewcommand{\KeyGen}{\mathsf{KeyGen}}
+\newcommand{\Setup}{\mathsf{Setup}}
+\newcommand{\Verify}{\mathsf{Verify}}
+
+% roles
+\renewcommand{\prover}{\mathcal{P}}
+\renewcommand{\verifier}{\mathcal{V}}
+
+% Generic Elements links to algorithms
+\newcommand{\mess}{\mu} % a message
+\renewcommand{\sign}{\mathsf{sign}} % a signature
+\newcommand{\mpk}{\mathsf{mpk}} % master public key
+\newcommand{\msk}{\mathsf{msk}} % master secret key
+\newcommand{\id}{\mathsf{id}} % an identity
+\newcommand{\skid}{\mathsf{sk}_\id} % an identity secret key
+\newcommand{\cpt}{\mathsf{cpt}} % a counter
+
+% Generic functions
+\newcommand{\Hash}{\mathsf{H}} % Hash function 
+
+% Generic Oracles 
+\newcommand{\Oracle}{\mathcal{O}} % Common oracle name
+\newcommand{\OSign}{\Oracle_{\mathsf{Sign}}} % Give signature of a message and an identity
+\newcommand{\OCorrupt}{\Oracle_{\mathsf{Corrupt}}} % Gives the secret key of an identity
+
+% Generic Security  Problems 
+\newcommand{\EUFCMA}{{\mathsf{EUF}\mhyphen\mathsf{CMA}}}
+\newcommand{\EUFnaCMA}{{\mathsf{EUF}\mhyphen\mathsf{naCMA}}}
+\newcommand{\GameEUFCMA}[2]{\mathsf{EUFCMA}_{#1}^{#2}}
+\newcommand{\GameEUFnaCMA}[2]{\mathsf{EUFnaCMA}_{#1}^{#2}}
+
+% cryptocode improvements/additions
+\newcounter{pcdoublecolumnlinenumber} % for cryptocode procedures writen two colown, to
+					    %remenber the line number at the begin of the second column
+\newcommand{\mode}{\mathsf{mode}}
+\newcommand{\dgets}{:=} % determinist \gets
+\newcommand{\pcrequire}{\mathsf{Require:}}
+\newcommand{\pcensure}{\mathsf{Ensure:}}
+\newcommand{\pcrestart}{\text{\textbf{restart}}}
+\newcommand{\Advname}{\mathsf{Adv}} % Advantage name 
+\newcommand{\Dist}{\mathsf{Dist}} % Common name for a distribution 
+\renewcommand{\Adv}[2]{\Advname^{#1}_{#2}} % Advantage 
+\renewcommand{\Game}[1]{{\mathsf{G}_{#1}}} % for vectors of the ring. Lower-case!
+\providecommand{\tGame}[1]{{\tilde{\mathsf{G}}_{#1}}} % for vectors of the ring. Lower-case!
+\newcommand{\fail}{\mathsf{fail}}

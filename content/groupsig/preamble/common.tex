@@ -1,0 +1,12 @@
+% Shorter than subsubsection
+\newcommand{\subsubsubsection}[1]{\medskip\noindent\textbf{#1.~}} % TODO ERIC LE FAIT
+
+%Latin
+\renewcommand{\ie}{\textit{i.e.} }
+\renewcommand{\eg}{\textit{e.g.} }
+\newcommand{\ea}{\textit{et al.} }
+\newcommand{\resp}{\textit{resp.} }
+
+% To write ref and eqref inside sections
+\newcommand{\refinsec}[1]{\texorpdfstring{\ref{#1}}{\ref*{#1}}} % a ref without  hyperref warnings, to use in sections..
+\newcommand{\eqrefinsec}[1]{\texorpdfstring{\eqref{#1}}{\eqref*{#1}}} % a eqref without  hyperref warnings, to use in sections..

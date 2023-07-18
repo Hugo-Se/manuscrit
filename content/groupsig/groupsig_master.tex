@@ -1,0 +1,58 @@
+{
+
+%\subimport{./}{preamble/packages.tex}
+\subimport{./}{preamble/meta.tex}
+\subimport{./}{preamble/common.tex}
+\subimport{./}{preamble/crypto_common.tex}
+\subimport{./}{preamble/math_common.tex}
+\subimport{./}{preamble/math_probabilities.tex}
+\subimport{./}{preamble/math_lattices.tex}
+\subimport{./}{preamble/specific_notations.tex}
+\subimport{./}{preamble/ARES.tex}
+
+
+
+\chapterquote{Efficient Implementation of a Post-Quantum Anonymous Credential 
+Protocol}{TODO}{}{TODO} \label{cha:groupsig}
+
+
+\enluminure{A}{uthentication on the Internet} usually has the drawback of 
+leaking the identity of the users, or at least allowing to trace them from a 
+server to another. Anonymous credentials overcome this issue, by allowing 
+users to reveal the attributes necessary for the authentication, without 
+revealing any other information (in particular not their identity). In this 
+chapter, we provide a generic framework to construct anonymous credential 
+schemes and use it to give a concrete construction of post-quantum 
+(lattice-based) anonymous credential protocol. Our protocol thus allows for 
+long-term security even when one considers the emergence of quantum computers 
+able to break widely used traditional computational assumptions, such as RSA, 
+the discrete logarithm or Diffie-Hellman. We also give a concrete 
+implementation of our protocol, which is only one order of magnitude slower 
+and bandwidth consuming than previous anonymous credentials that are not 
+post-quantum.
+
+\section{Introduction}\label{sec:introduction}
+\subimport{./}{01_Intro.tex}
+
+\section{Technical Overview}\label{sec:technical_details}
+\subimport{./}{02_TechIntr.tex}
+
+\section{Preliminaries}\label{sec:preliminaries}
+\subimport{./}{03_Prelim.tex}
+
+\section{Anonymous Credential Scheme}\label{sec:anonymous_credential_scheme}
+\subimport{./}{04_ACS.tex}
+
+\section{Instantiation and Parameters}\label{sec:instanciation_parameters}
+\label{sec:Instanciation}
+\subimport{./}{05_Instant.tex}
+
+\section{Implementation}\label{sec:implementation}
+\subimport{./}{06_Implem.tex}
+
+\iffalse
+
+
+\fi
+
+}

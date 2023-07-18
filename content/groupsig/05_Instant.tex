@@ -1,0 +1,346 @@
+\subsection{Instanciation}
+
+For lack of space, we do not present the whole instanciation of the 
+protocol here. It follows the generic construction presented 
+above and we now informally describe the necessary building blocks.
+
+%On ne va pas decrire tout l'algorithme, mais celui-ci suit la construction 
+%generale presentee plus haut, et on presente informellement les briques 
+%utilisees.
+
+\subsubsubsection{Relaxed Signature} 
+\label{sec:instanciation_relaxed_signature_scheme} As explained in 
+Section~\ref{sec:technical_details}, the relaxed signature scheme that 
+we use is a generalization of the scheme used in~\cite{CCS:delLyuSei18}.
+
+	The algorithms are presented in 
+Figure~\ref{fig:signature_algorithms}. They use the same GPV and NTRU 
+trapdoors than the original scheme~\cite{CCS:delLyuSei18}, the NTRU 
+trapdoor being only used in security proofs.
+
+
+\begin{figure*}[htp!]
+\input{chunk_latex/algorithms_sign_keygen_sign.tex}
+\input{chunk_latex/algorithms_sign_verif.tex}
+\caption{\label{fig:signature_algorithms}Signature algorithms}
+\end{figure*}
+
+
+%\scalebox{0.8}{\vbox{
+%\input{chunk_latex/algorithms_sign_keygen_sign.tex}
+%}
+%}
+%\vspace{0.1cm}
+%\scalebox{0.8}{\vbox{
+%\input{chunk_latex/algorithms_sign_verif.tex}
+%}
+%}
+
+\subsubsubsection{Verifiable Encryption}
+\label{sec:instanciation_relaxed_verifiable_encryption}
+	Our scheme is based on the verifiable encryption scheme 
+presented in~\cite{EC:LyuNev17} and adapted to~\cite{C:AttLyuSei20}. 
+The most interesting part is the $\EncRel$ algorithm (presented in 
+Figure~\ref{fig:keygen_encryption_algorithm}), due to our new formalism 
+for verifiable encryption. As shown in 
+Section~\ref{sec:technical_details}, this algorithm builds upon the 
+verifiable encryption scheme from~\cite{EC:LyuNev17} and the commitment 
+from~\cite{CCS:delLyuSei18}, in order to obtain a short element 
+$\comsignature$ satisfying Equation~\eqref{eq:02_TechIntro_comsign}.
+
+Note that according to the way the one-shot verifiable encryption is 
+used in the $\EncRel$ algorithm, it does not encrypt the message $m$ but 
+the random coin $\textbf{r}$ used to commit 
+to~$m$. This is completely equivalent, since one only needs to 
+recover~$\textbf{r}$ by using the decryption algorithm and then open the
+commitment to get the message~$m$.
+
+%\todoC{corriger notations} 
+
+Furthermore, the decryption algorithm (presented in 
+Figure~\ref{fig:decryption_algorithm}) decrypts as in the scheme 
+presented in~\cite{EC:LyuNev17} (adapted to the formalism 
+of~\cite{C:AttLyuSei20}), then uses the decrypted value to open the commitment
+$\mathbf{t}$ and obtain the message.
+
+For a unique attribute, the relations $\relationclear$ et 
+$\barrelationclear$ are defined as follows:
+\input{chunk_latex/relations_dec.tex}
+We focus on the algorithms $\KeyGen$ and $\EncRel$ since the other algorithms
+are based on~\cite{EC:LyuNev17} and adapted to~\cite{C:AttLyuSei20}.
+
+We define $\DomEncRel \subset \SetPublicKeysEnc \times \relationclear$ 
+as the subset of public keys of encryption and relation elements that 
+share the same element $a_3$.
+
+\input{chunk_latex/algorithms_enc.tex}
+
+As explained in Section~\ref{sec:technical_details}, the associated NIZK 
+proof then is the union of two NIZK proofs, linked by the commitment:
+
+\begin{compactitem}
+
+	\item a proof of knowledge of a short element
+$\comsignature$ satisfying the non-homogeneous linear equation
+\eqref{eq:02_TechIntro_comsign},
+
+	\item a proof of knowledge of an element $r$ which is the cleartext
+and which opens the commitment on a message $m$.
+
+\end{compactitem}
+These two proofs were already used in~\cite{CCS:delLyuSei18} but we adapted 
+them to~\cite{C:AttLyuSei20} and also took into account the more general
+definition of the signature.
+
+\iffalse
+Ainsi, notre algorithme n'effectue pas juste le chiffrement 
+
+Dire que, notre algorithme est basé sur lalgorithme  de chiffrement vérifiable~\cite{EC:LyuNev17} (+
+adaptation a 517). La partie la plus interessante est l'algorithme $\EncRel$
+(Figure~\ref{fig:keygen_encryption_algorithm}), dû a notre formalisme
+différent de la notion de chiffrement vérifiable. 
+Comme expliqué dans la section~\ref{sec:technical_details} \enote{j'ai pas 
+vrmt checké}, cet
+algorithm mélange le chiffrement vérifiable de~\cite{EC:LyuNev17} et le commitment
+de~\cite{CCS:delLyuSei18}, afin de pouvoir obtenir un élémént court $\comsignature$
+satisfaisant l'équation~\eqref{eq:02_TechIntro_comsign}. 
+
+On peut aussi ajouter que le déchiffrement (Figure~\ref{fig:decryption_algorithm}) effectue le déchiffrement de~\cite{EC:LyuNev17}
+(version adapté au formalisme 517) puis utilise la valeur déchiffrée pour ouvrir le commitement $\mathbf{t}$ et obtenir le message.
+
+Note : Le one shot verifiable encryption, tel qu'il est utilise dans l algo EncRel, 
+il ne chiffre pas le message m, mais la random coin (r gras) utilisee pour 
+commit m. Toutefois, cela revient au meme, car il suffit dans l algo de 
+decryption associe, de retrouver r en dechiffrant, puis d ouvrir le commitment 
+pour obtenir le message m.
+
+
+Les relations $\relationclear$ et $\barrelationclear$ (pour un seul attribut) sont, :
+\input{chunk_latex/relations_dec.tex}
+
+On montre le keygen et le encrel (les autres algorithmes sont des adaptations de 
+\cite{EC:LyuNev17} à 517:
+
+We define $\DomEncRel \subset \SetPublicKeysEnc \times \relationclear$ as the subset of public keys of
+encryption and relation element that share the same element $a_3$.
+
+\input{chunk_latex/algorithms_enc.tex}
+
+Comme expliqué dans la section~\ref{sec:technical_details}, la preuve NIZK 
+associée est alors une
+union de deux preuves NIZK, liées entre elles par le commitment
+\begin{itemize}
+	\item Une preuve de connaissance d'un élément court $\comsignature$  satisfaisant l'équation
+		linéaire non-homogène \eqref{eq:02_TechIntro_comsign}. 
+	\item Une preuve de connaissance d'un $r$ qui est le message clair et qui ouvre le
+		commitment sur un message $m$
+\end{itemize}
+Ces deux preuves étaient déjà utilisées dans~\cite{CCS:delLyuSei18} mais nous les avons adaptés pour
+517 et nous avons aussi pris en cmopte la définition plus générale de la signature.
+\fi
+
+\subsection{Parameters}
+
+%\fullversion{The}{As shown in Section~\ref{sec:security_proofs_ac_scheme}, the} 
+
+The security of the anonymous credential relies on the security of the 
+primitives it uses, that are the signature and verifiable encryption scheme, 
+defined in 
+Section~\ref{sec:instanciation_relaxed_signature_scheme}.
+
+%respectively defined in 
+%sections~\ref{sec:instanciation_relaxed_signature_scheme} 
+%and~\ref{sec:instanciation_relaxed_verifiable_encryption} .
+
+We list in this section the main conditions needed for these primitives and 
+the choices we made. The meaning of the parameters, and the values we 
+choose, are indicated in Table~\ref{tab:parameters_ac_scheme}. 
+
+%\fullversion{Details and justifications for these conditions can be 
+%found in the full version.}{}
+
+First, a forgery of the signature (with bounds $\bsignone$, $\bsigntwo$) led 
+to a solution of $\MSIS_{\pcomII, 1, 4, \bforgsign}$ with
+\[  \bforgsign =  8\kappa^2 \sqrt{d}\:\standarddevSignI + \bsignone +
+24\sqrt{2}\:d\kappa^2 \standarddevSignI +
+    3\sqrt{d}\bsignone + 4 \kappa^2 \sqrt{6d}\:\standarddevSignII + \bsigntwo 
+\] 
+	The security of the signature scheme thus needs $\MSIS_{\pcomII, 1, 4, 
+\bforgsign}$ to be hard, as well as $\NTRU_{\pcomII,\standarddevSignII}$ and 
+$\MLWE_{\pcomII,1,\standarddevSignI}$, and a few other conditions.
+
+Then, the security of the verifiable encryption
+% The equation~\eqref{eq:condition_verifiable_encryption_com_sign} 
+requires that
+\begin{equation} \begin{split}
+        &4 \kappa \BoundNizkSignOne  \leq \bsignone \\
+        &4\kappa \BoundNizkSignOne + 8 \BoundNizkSignTwo \bcom \leq \bsigntwo
+    \end{split} \end{equation}
+
+As for the security of the auxiliary commitment scheme used by 
+the verifiable encryption, the binding property needs
+$\MSIS_{\pcomI, 1,3,8\kappa\bcom}$ to be hard.
+The hiding property behaves the same way as in~\cite{CCS:delLyuSei18}, so 
+that we need $\MLWE_{\pcomI,X,d}$ and $\MLWE_{\pcomII, X, d}$ to be hard for a 
+little number X of samples, with errors sampled in $\ballRoneinfty^d$.
+	For the IND-CPA propriety of the underlying encryption scheme of the 
+verifiable encryption, we need, as shown in~\cite{EC:LyuNev17}, 
+$\MLWE_{Q,1,s}$ hard with a little $s$, and this is already true if $\MLWE$ is 
+hard with $\pcomII > Q$.
+
+For the first part of the NIZK proof, using the notations $\bsone = 
+2\sqrt{2d}s$ and $\bstwo = \sqrt{6}\left( \sqrt{d} r + 4 d s\right)$, we need
+$\MSIS_{\pcomI, 1,3, 4\BoundNizkDecOne}$ to be hard and also the following 
+conditions fulfilled:
+\begin{equation*}
+    \begin{split}
+        & \standarddevSignI \geq 11 \kappa \sqrt{17 d \:}  \\
+        & \BoundNizkDecOne \geq \sqrt{6 d\:} \standarddevSignI\quad
+        \BoundNizkDecTwo \geq \sqrt{10 d\:}\: \standarddevSignI\\
+        &\BoundNizkDecOneInfty \geq 12\standarddevSignI\quad
+        \BoundNizkDecTwoInfty \geq 12\standarddevSignI  \\
+        & 2p \BoundNizkDecTwoInfty (1 + 6d) + p/4\kappa \leq \pencbig /4 
+\kappa \\
+        & 8 \kappa \BoundNizkDecOneInfty \leq p
+    \end{split}
+\end{equation*}
+
+For the second part of the NIZK proof, the conditions are as follows:
+\begin{align*}
+     & \standarddevnizkII \geq 11 \kappa \bsone = 22\kappa \sqrt{2d} \: 
+    \standarddevSignI                                                 \\
+     & \standarddevnizkIII \geq 11 \kappa \bstwo = 11 \sqrt{6}\: \kappa \left(  
+\sqrt{d} \standarddevSignII + 4 d \standarddevSignI\right) \\
+     & \BoundNizkSignOne \geq \sqrt{8 d\: }\:\standarddevnizkII \quad 
+\BoundNizkSignTwo \geq \sqrt{6 d\: }\: \standarddevnizkIII
+\end{align*}
+
+To ensure the correctness of the zero knowledge proofs, we need to consider 
+the inversion of the challenges in four rings : $\R_p$, $\R_{\pcomI}$,
+$\R_{\pcomII}$, $\R_Q$.
+
+We use~\cite[Lemma~2.1]{CCS:delLyuSei18} with $k=2$ to ensure that 
+each $\bar{c} \in \SetDiffChallenges$ is invertible in $\R_p$. We thus
+ask $p = 5 \mod 8$.
+
+We also use the framework of~\cite{C:AttLyuSei20} for $Q, \pcomI$ and 
+$\pcomII$, with multiple computations of answers by the prover, depending on
+the NIZK proofs. This is why we ask the equation~\eqref{eq:primes_rel_517}.
+
+Finally, all these conditions lead to the table of 
+parameters presented in~Table~\ref{tab:parameters_ac_scheme}. 
+The precise values are chosen using
+the lattice estimator~\cite{DBLP:journals/jmc/AlbrechtPS15} to assess
+the security of the computational problems based on lattices.
+
+%\enote{traduire}Les valeurs précises étant choisies en utilisant
+%the lattice estimator~\cite{DBLP:journals/jmc/AlbrechtPS15}
+%pour assurer la sécurité des problèmes de réseaux.
+
+%on explique les conditions qui relient aux pbs de base, puis
+%dire qu'on a utilise le LWE/lattice estimator pour estimer/evaluer la 
+%difficulte de ces problemes (il est cite en intro 
+%\cite{DBLP:journals/jmc/AlbrechtPS15})
+
+
+\iffalse
+\begin{table*}
+\begin{center}
+%	\begin{longtable}{lll}
+	\begin{tabular}{lll}
+		\toprule
+		Element                                                      & Description                                                                       & Value                                       \\
+		\midrule
+		d                                                            & such that $\R =
+		\ZZ[X]\left(X^d + 1\right)$                                       & 8192                                        \\
+		$\theta$                                                     & \begin{tabular}{l} number
+			of irreducible divisor of $X^d + 1$ in \\ $\R_u$ for
+		$u\in\{Q,p_1,p_2\}$\end{tabular}
+									     &  2048                                           \\
+		\midrule
+		$\tausign$                                                   & 
+		\begin{tabular}{l} number of questions asked for each challenges \\ in the second part
+			of the NIZK proof\end{tabular}                                   & 1
+		\\ $\taudec$ & \begin{tabular}{l}number of questions asked for each challenges \\ in
+			the first part of the NIZK proof\end{tabular}
+			     &       1                                                                                                                          \\ 
+		\midrule
+		$\standarddevSignI$                                          & standard deviation
+		for the GPV trapdoor                                           & $6\sqrt{d\pcomII}
+		\approx  2^{84.5}$      \\
+		$\standarddevSignII$                                         & standard deviation
+		for the NTRU trapdoor                                          & $2 1.17
+		\sqrt{\pcomII} \approx 2^{76.7}$ \\
+		\midrule
+		$p$                                                          & prime moduli for
+		clears in verifiable encryption                                  & $ \approx 2^{75.4}$ (p33, 8.1)              \\
+		$Q$                                                          & prime moduli for
+		ciphertexts in verifiable encryption                             & $\approx 2^{85.1}$ (p33, 8.1)               \\
+		\midrule
+		$\pcomI$                                                     & prime moduli for the
+		upper part of commitment                                     & $\pcomI \approx
+		2^{40.1}$           \\
+		$\pcomII$                                                    & prime moduli for the
+		lower part of commitment                                     & $\pcomII \approx 2^{150.9}$                    \\
+		$\delta$                                                     & $\ceil{\sqrt{\pcomII}}$                                                           & $\pcomII\approx 2^{80}$                     \\
+		\midrule
+		$\standarddevnizkI$
+		                                                             &
+		\begin{tabular}{l}standard deviation for discrete gaussian in \\ the NIZK proof \end{tabular}
+		                                                             & $11\kappa
+									     \sqrt{17}\:d \approx 2^{20}$
+		\\ $\standarddevnizkII$
+		                                                             & \begin{tabular}{l}standard
+			deviation for discrete
+			gaussian in \\ the  NIZK proof
+		\end{tabular}                                                        & $22
+		\kappa \sqrt{2d}\:\standarddevSignI \approx 2^{103.9}$                                                                                                                                                           \\ $\standarddevnizkIII$
+		                                                             & \begin{tabular}{l}standard
+			deviation for discrete
+			gaussian in \\ the NIZK proof
+		\end{tabular}                                                        &
+		$11\sqrt{6} \kappa \left(\sqrt{d}\standarddevSignII + 4d\standarddevSignI\right)
+		\approx 2^{112.2}$                                                                                                              \\ \midrule $\BoundNizkSignOne$   & bound used in NIZK proof              & $88 \kappa d s$                                  \\
+		$\BoundNizkSignTwo$                                          & bound used in NIZK
+		proof                                                        & $66 \kappa d \left( \standarddevSignII + 4 \sqrt{d} \: \standarddevSignI \right)$                                               \\
+		$\bsignone$                                                  & bound used in
+		verification of signatures                                      & $88 \kappa d
+		\standarddevSignI$                                                                                                                                                                             \\
+		$\bsignone$                                                  & bound used in verification of signatures                                          & $11\kappa\sqrt{102}\:d$                     \\
+		$\BoundNizkDecTwo$                                           & bound used in NIZK proof                                                          & $11\kappa\sqrt{170}\:d$                     \\
+		$\bcom$                                                      &
+		\begin{tabular}{l}bound used in verification of commitments \\ and in NIZK proof.  \end{tabular}                                                                                                                                                                     \\
+		\midrule
+		$\SetChallenges$                                             & space of challenges                                                               & $\ballRoneinfty$                            \\
+		$\SetDiffChallenges$                                         & $\{ c - c' : (c,c') \in \SetChallenges, c \neq c'\}$                              &                                             \\
+		% $\SetDiffChallenges(\phitau{\tau})$ ($\phitau{\tau} \in \R$) & $\{ \bar{c}\in
+		% \SetDiffChallenges\::\: \bar{c} \neq 0 \mod \phitau{\tau}\}$ &                                                                                                                                 \\
+		% $\SetDiffChallenges^{\times2}$                               & $\{ \bar{c}\bar{c}'\::\:(\bar{c}, \bar{c}') \in
+		% \SetChallenges^2\}$                                          &                                                                                                                                 \\
+		% $\SetDiffChallenges(\phitau{\tau})^{\times2}$                & $\{ \bar{c}\bar{c}' :  (\bar{c}, \bar{c}')
+		% \in \SetChallenges(\phitau{\tau})^2\}$                       &                                                                                                                                 \\
+		$\rho$                                                       & 
+		\begin{tabular}{l} probability used to define the distribution of \\ the choice of
+		challenges  \end{tabular} & 63/64    \\
+		$\distchall{\rho}$,                                            & \begin{tabular}{@{}l@{}} Distribution on $\SetChallenges$ : each coefficient is chosen independently \\ 0 with a probability $\rho$, -1 and 1 with a probability
+			$(1-\rho)/2$\end{tabular}                                                        &                                             \\
+		$\kappa$                                                     & \begin{tabular}{@{}l@{}}  bound such that the distribution
+			$\distchall{\rho}$ output elements  \\
+		$c \in \SetChallenges$ such that	$\onenorm{c} \leq \kappa$ with an overwhelming
+			probability\end{tabular}                                                        &
+		240                                                                                                                                                                                   \\
+		\midrule
+		$\hashSIGN$                                                  & Hash function for the
+		signature.                                                  & $\hashSIGN : \{0,1\}^*
+		\rightarrow \R_{q_2}$        \\
+		$\hashZK$                                                    & Hash function for the
+		NIZK proofs                                                 & $\hashZK : \{0,1\}^*
+		\rightarrow \SetChallenges$          \\
+	\end{tabular}
+%	\end{longtable}
+\end{center}
+%\end{verbatim}
+		\caption{\label{tab:parameters_ac_scheme}Parameters of the Anonymous Credential Scheme}
+\end{table*}
+
+\fi

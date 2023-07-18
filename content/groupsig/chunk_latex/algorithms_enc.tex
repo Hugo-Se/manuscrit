@@ -1,0 +1,76 @@
+\begin{figure}[htp!]
+\begin{pchstack}[center]
+\procedure[headlinesep=2pt, bodylinesep=2pt]{$\EncKeyGen$}{%
+a_1, a_2\sample \R_{\pcomI}\\
+a_3 \sample \R_{\pcomII} \\
+\mathbf{A}_1 \gets \begin{pcmbox}\begin{pmatrix} 1 \quad a_1 \quad a_2\end{pmatrix}\end{pcmbox}\\
+\mathbf{A}_2 \gets \begin{pcmbox}\begin{pmatrix} 0 \quad 1 \quad a_3\end{pmatrix}\end{pcmbox}\\
+\mathbf{A} \gets \begin{pcmbox}\begin{pmatrix} \mathbf{A}_1 \\ \mathbf{A}_2 \end{pmatrix}\end{pcmbox}\\
+a \sample \R_Q\\
+\mathbf{s} \sample \ballRoneinfty^3\\
+\mathbf{e} \sample \ballRoneinfty^3\\
+\mathbf{b} \gets a \mathbf{s} + \mathbf{e} \in \R^3_Q\\
+\epk \gets (\mathbf{A}, a,\mathbf{b})\\
+\esk \gets \mathbf{s}\\
+\pcreturn (\epk,  \esk)
+	}
+\pchspace[2em]
+\procedure[headlinesep=2pt, bodylinesep=2pt]{$\EncRel(\epk, x\in \relationclear)$}{%
+\pccomment{we note $x =\left(\left(\ElemLangrelationclear\right), \signature \right)$} \\
+\omega \sample \ballRoneinfty \\
+r, e_1 \sample \ballRoneinfty \\
+\mathbf{e}_2 \sample \ballRoneinfty^3\\
+\mathbf{r} = (\mathbf{r}_1, \mathbf{r}_2, \mathbf{r}_3) \sample \ballRoneinfty^3\\
+\mathbf{r'} = (\mathbf{r'}_1, \mathbf{r'}_2, \mathbf{r'}_3) \sample \ballRoneinfty^3\\
+\encI \gets p(ar + e_1)\\
+\encII \gets p(\mathbf{b}\omega + \mathbf{e}_2) + \mathbf{r}\\
+\mathbf{t} \gets \mathbf{A}\mathbf{r} + \begin{pcmbox}\begin{bmatrix} 0 \\
+m\end{bmatrix}\end{pcmbox} \!\!\mod\begin{pcmbox}\begin{bmatrix} \pcomI \\ \pcomII \end{bmatrix}\end{pcmbox}\\
+\mathbf{t'} \gets \mathbf{A}\mathbf{r'} + \begin{pcmbox}\begin{bmatrix} 0 \\ \delta m \end{bmatrix}\end{pcmbox} 
+ \!\!\mod\begin{pcmbox}\begin{bmatrix} \pcomI \\ \pcomII \end{bmatrix}\end{pcmbox} \\
+\pccomment{we note $\signature = (\mathbf{s}_{m, \alpha, 1},\mathbf{s}_{m, \alpha ,2}, s_{m, \alpha, 3})$} \\
+\bar{\mathbf{r}} = (\mathbf{r}_2, \mathbf{r}_3); \bar{\mathbf{r}}' = (\mathbf{r'}_2, \mathbf{r'}_3)\\
+	\comsignature \gets \begin{pcmbox}\begin{bmatrix} \mathbf{s}_{m,\alpha,1} \\
+		\mathbf{s}_{m,\alpha,2} \\
+	\mathbf{s}_{m,\alpha,3} - [\bar{\mathbf{r}}\:\: \bar{\mathbf{r}}'] \mathbf{s}_{m,\alpha,2}\end{bmatrix}\end{pcmbox} \in
+	{\R_{q_2}}^{7\times 1}\\
+\cipher \gets (\mathbf{t}, \mathbf{t'} , \encI, \encII) \\
+\cipherwitness \gets  (m, \alpha, \mathbf{r}, \mathbf{r}',r,e_1,\mathbf{e}_2, \comsignature) \\
+\pcreturn ((\epk, \cipher, \spk=(\mathbf{a}^t, \mathbf{b}^t, a_3), \cipherwitness)
+}
+\end{pchstack}
+\caption{\label{fig:keygen_encryption_algorithm}Encryption and encryption of relations algorithms}
+\end{figure}
+
+\begin{figure*}[htp!]
+	    \procedure[headlinesep=2pt,bodylinesep=2pt]{$\Dec\big(\esk = \mathbf{s},\epk = (\mathbf{A}, a, \mathbf{b}),
+	  \cipher = (\mathbf{t}, \mathbf{t}',\encI, \encII)\big)$}{%
+\mathbf{tmp\_dec} \gets (\encII - \encI \mathbf{s})
+\< \t  \text{set\_index} \gets \{ j \notin J : \overbar{c} \neq 0 \mod \phi_j \}    \\
+\pcif \norm{\mathbf{tmp\_dec}}_{\infty} < Q/4\kappa \pcthen \pccomment{ if no $\bar{c}$ is needed}
+\<\pccomment{we will use the $\overbar{c}$ for each $i\notin J$ where  it works}\\
+\t\pcreturn  (\mathbf{tmp\_dec}, t_2 - \mathbf{A}_2 \:\mathbf{tmp\_dec})
+\< \t  \pcfor \iota \in \text{set\_index}\\
+	    J \gets \varnothing
+\< \t  \t \overbar{c}_\iota \gets \overbar{c}\\
+\pcwhile I \neq J \pcdo
+\< \t  \t  \mathbf{r}_\iota \gets \overbar{c}\: \mathbf{tmp\_dec}\\
+	    \t \iota^* \gets J - I \pccomment{ Can be taken in any prefered order}
+\< \t  J \gets J\:\cup \text{set\_index}\\
+\t \text{c\_found} \gets \pcfalse
+\< \pcendwhile \\
+\t  \pcwhile \text{c\_found} \gets \pcfalse
+\< \textbf{construct } \mathbf{r} \in \R \text{ such that :}\\
+\t  \t  c' \sample \SetChallenges \text{ such that } c \neq c' \mod \phi_{\iota^*}
+\< \t \norm{\mathbf{r}}_\infty \leq \pcomI \pcomII Q /2\\
+\t  \t  \overbar{c} \gets c - c'
+\< \t \forall \iota \in \II\colon\\
+\t  \t   \pcif \norm{ \overbar{c}\:\mathbf{tmp\_dec}}_{\infty} \leq Q/4\kappa   \pcthen
+\< \t \mathbf{r} \mod \phi_\iota \!\!\mod \pcomI \pcomII Q = \frac{\mathbf{r}_\iota}{\bar{c}_\iota}\mod \phi_\iota \!\!\mod \pcomI \pcomII Q \\
+\t  \t   \t  \text{c\_found} \gets \pctrue 
+\< m \gets t_2 - \mathbf{A}_2 \mathbf{r}\\
+\t \pcendwhile
+\< \pcreturn (\mathbf{r}, (m, (c_\iota)_{\iota\in\II}))
+	    }
+\caption{\label{fig:decryption_algorithm}Decryption algorithm}
+\end{figure*}

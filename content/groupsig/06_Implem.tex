@@ -1,0 +1,137 @@
+In order to assess the performance of our anonymous credential protocol, we have implemented in C its most time and bandwidth critical operations : the presentation token generation and the presentation token verification. The source code of our implementation is attached to the submission for easy reproducibility.
+
+\subsubsubsection{Polynomial arithmetic}
+The NTT is a fast Fourier transform algorithm commonly used in lattice-based cryptography to efficiently compute polynomial products over $\mathbb{Z}_q[X]/(X^d+1)$. The NTT algorithm has a time complexity of $O(d \log d)$, which is significantly faster than other known polynomial multiplication algorithms.
+
+Our moduli are chosen such that there exists a primitive $2\ell$-th root of unity modulo $q \in \{Q, q_1, q_2\}$. Thus, we use the \emph{partial-splitting} Number Theoretic Transform (NTT) to speed up polynomial multiplications in our implementation. Cooley-Tukey butterflies are used in the forward transform and Gentleman-Sande butterflies in the inverse transform, and most of the polynomials are represented in NTT.
+
+\subsubsubsection{Modular arithmetic}
+Our code uses the low-level GMP~\cite{gmp} functions for single and multi-precision modular arithmetic. Low-level GMP functions manipulate \emph{limbs} to perform basic arithmetic operations. They are highly optimized and then significantly improve the efficiency of our implementation.
+
+\subsubsubsection{Pseudo-random generator}
+We use the NIST AES256 CTR DRBG software\footnote{\url{https://csrc.nist.gov/csrc/media/Projects/post-quantum-cryptography/documents/example-files/source-code-files-for-kats.zip}} as pseudo-random generator in our implementation. The AES256 CTR DRBG is a deterministic random bit generator, based on the AES block cipher, specified in NIST Special Publication 800-90A\footnote{\url{http://dx.doi.org/10.6028/NIST.SP.800-90Ar1}}.
+
+The NIST AES256 CTR DRBG software calls the OpenSSL AES implementation, which in our architecture uses the AES-NI instructions. AES-NI instructions significantly reduce the random generation time compared to non-hardware-based implementations of AES while providing a high level of security for our anonymous credential system.
+
+\subsubsubsection{Gaussian sampling}
+We use the DGS Gaussian sampler~\cite{dgs} implementation to generate samples from Gaussian distributions. More precisely we use the \texttt{DGS\_DISC\_SIGMA2\_LOGTABLE} algorithm which is based on~\cite[Algorithm 12]{C:DDLL13}.
+
+It is worth noting that unlike the rest of our implementation, DGS uses the random number generators from GMP~\cite{gmp} and MPFR~\cite{mpfr}. These generators are not as fast as the AES256 CTR DRBG used in the rest of our implementation.
+
+\subsubsubsection{Performance}
+We have performed timing experiments with our implementation on a AMD® Ryzen 7 5800h CPU. The results are presented in Table~\ref{tab:gperf} for the generation and in Table~\ref{tab:vperf} for the verification. They include the minimum, median and mean number of CPU cycles and time of 1000 executions needed for each operation. The code was compiled with gcc 9.4.0.
+
+\begin{table}[h!]
+\centering
+\caption{Performance of the presentation generation.}
+\label{tab:gperf}
+\begin{tabular}{lrr}
+\toprule
+\multicolumn{3}{c}{\textbf{Presentation token generation}} \\
+\midrule
+ & Time (s) & Cycles ($\times 1000$) \\
+\midrule
+Lowest  & 0.67297  & 1216651  \\
+Median  & 1.28102  & 4091981  \\
+Average & 1.84276  & 5887531  \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+The significant gap between the minimum and median time for the presentation generation operation is explained by the rejection sampling step at the end of the generation which requires to restart the generation procedure in case of rejection.
+
+\begin{table}[h!]
+\centering
+\caption{Performance of the presentation verification.}
+\label{tab:vperf}
+\begin{tabular}{lrr}
+\toprule
+\multicolumn{3}{c}{\textbf{Presentation token verification}} \\
+\midrule
+ & Time (s) & Cycles ($\times 1000$) \\
+\midrule
+Lowest  & 0.16554  & 528951  \\
+Median  & 0.17174  & 548732  \\
+Average & 0.17187  & 549226  \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsubsubsection{Call-graph profiling}
+Our code has been profiled using callgrind~\cite{callgrind} in order to obtain the CPU time spent in each funstion. Results are presented in Table~\ref{tab:gprof} for the presentation generation, and in Table~\ref{tab:vprof} for the presentation verification.
+
+\begin{table}[h!]
+\centering
+\caption{Generation call-graph profiling.}
+\label{tab:gprof}
+\begin{tabular}{lr}
+\toprule
+\multicolumn{2}{c}{\textbf{Presentation token generation}} \\
+\midrule
+ Function & Time \\
+\midrule
+Gaussian sampling  & 39.36 \% \\
+NTT forward transform & 16.93 \% \\
+NTT inverse transform & 14.73 \% \\
+Rejection sampling & 6.84 \% \\
+Golomb-Rice encoding & 4.72 \% \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+For the generation of a presentation token, one can observe that Gaussian sampling is the most time consuming operation. Actually, 73.61 \% of the time spent sampling Gaussian samples corresponds to the generation of the random bits needed for the Gaussian sampling. Thus, an optimization would consist in replacing the DGS pseudo-random number generators by the AES256 CTR DRBG.
+
+\begin{table}[h!]
+\centering
+\caption{Verification call-graph profiling.}
+\label{tab:vprof}
+\begin{tabular}{lr}
+\toprule
+\multicolumn{2}{c}{\textbf{Presentation token verification}} \\
+\midrule
+ Function & Time \\
+\midrule
+NTT forward transform & 50.90 \% \\
+Golomb-Rice encoding & 20.52 \% \\
+NTT multiplication & 20.35 \% \\
+NTT inverse transform & 5.02 \% \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Obviously, the verification can be speeded up by removing the compression step, but at the cost of a significant increase in bandwidth usage due to sending uncompressed presentation tokens.
+
+\subsubsubsection{Golomb-Rice coding}
+Golomb-Rice coding is a lossless data compression method that is particularly well-suited for compressing Gaussian samples as explained in~\cite{C:ETWY22}. The basic idea behind Golomb-Rice coding for integers is to use a variable-length unary prefix code to represent the quotient and a fixed-length binary code to represent the remainder of the integer divided by a chosen parameter~$\sigma$, the standard deviation of the distribution in our case.
+
+More specifically, suppose we have a discrete Gaussian sample~$z$, and we want to compress it using Golomb-Rice coding with parameter $\sigma$. We first compute the quotient $c$ and remainder $r$ of~$z$ divided by $\sigma$, i.e., $z = c\sigma + r$, where $c$ and $r$ are integers and $0 \leq r < \sigma$. We then use a variable-length prefix code to represent $c$ and separately represent $r$ in binary.
+
+The code for $z$ is constructed as follows. We first define a unary code, which represents a non-negative integer $n$ as a sequence of $n$ 1's followed by a 0. For example, the unary code for 3 is 1110. We then represent the absolute value of $c$ using its unary code and $r$ or $-r$, according to the sign of $c$, using its binary representation with a fixed number of bits $b$, which depends on the value of $\sigma$. The value of $b$ is chosen so that $2^{b+1} \geq \sigma$, and $b$ is typically chosen to be the smallest value that satisfies this condition.
+
+\subsubsubsection{Bandwidth usage}
+The presentation token is the only data that is sent by a user to prove the possession of a credential with the right attribute values. Without encoding or compressing, the size of a presentation token in our protocol is about 3.7 MB. For this reason, presentation tokens are compressed in our implementation with the Golomb-Rice coding described above. The precise minimum, maximum and average sizes for a presentation token are given in Table~\ref{tab:size}.
+
+\begin{table}[h!]
+\centering
+\caption{Size of a presentation token.}
+\label{tab:size}
+\begin{tabular}{ccc}
+\toprule
+\multicolumn{3}{c}{\textbf{Presentation token size in bytes}} \\
+\midrule
+ Lowest & Average & Highest \\
+\midrule
+1 922 876 & 1 923 044 & 1 923 107 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+% pour 11 pages...
+%\vspace*{-2mm}
+\vspace*{-4mm} % autre ordi
+\input{05_Instant_table.tex}
+
+Gaussian elements and the trinary challenge benefit greatly from the Golomb-Rice compression. Using this, the size of a compressed presentation token in less than 2 MB with little variation due to those elements that follow non-uniforme probability distributions.
+
+%\enlargethispage{5mm}
+%\pagebreak[4]
