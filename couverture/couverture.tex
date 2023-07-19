@@ -40,19 +40,88 @@
 
 %\frabstract{Pour parer à la menace que représenterait l’essor de calculateurs quantiques puissants sur nombre de systèmes cryptographiques [ayant cours].}
 \frabstract{
-Pour parer à la menace que représenterait l’essor des calculateurs quantiques sur nombre de systèmes cryptographiques ayant cours actuellement, d’importants efforts sont fait pour que voient le jour et se développent des systèmes dits « post-quantiques » de chiffrement, d’authentification et d’identification, analogues aux systèmes classiques mais qui résisteraient à des attaques rendues possibles par de tels calculateurs, devenus suffisamment puissants.
+Afin de parer à la menace que représenterait l’essor des calculateurs quantiques sur nombre de
+systèmes cryptographiques (et non des moindres) en usage actuellement, d’importants efforts sont
+faits pour que voient le jour et se développent des systèmes dits « post-quantiques » de chiffrement, d’authentification et d’identification, analogues aux systèmes classiques mais qui résisteraient à des attaques rendues possibles par de tels calculateurs, y compris si ces derniers venaient à devenir particulièrement puissants.\par
 
 %Les accréditations anonymes, qui permettent de vérifier les droits d’un individu à accéder à un service
 
 %Les systèmes d’accréditations anonymes permettent la préservation du secret de l’identité à tout utilisateur.
 
-Dans cet esprit, mes collègues et moi-même nous sommes penchés sur les systèmes d’accréditations anonymes, qui permettent à un fournisseur de services de vérifier les droits d’un utilisateur à certains de ces services en vertu de la garantie, donnée antérieurement par une autorité, du fait que cet utilisateur possède bien les attributs requis pour en bénéficier, tout en préservant le secret des autres attributs, comme par exemple l’identité de l’utilisateur, dont l’autorité aurait eu à prendre connaissance.
-Nous nous sommes employés à étudier certains des systèmes d’accréditations anonymes les plus avancés décrits dans la littérature, à partir desquels nous avons construit et mise en œuvre au niveau informatique notre système, en apportant à nos programmes diverses optimisations en temps et en mémoire.
+%Dans cet esprit, participant à ces efforts, souhaitant apporter ma pierre à l’édifice
+C’est avec l’intention de m’associer à ces efforts que je me suis penché sur les systèmes
+d’accréditations anonymes. Ces systèmes permettent à un fournisseur de services de vérifier les
+droits d’un utilisateur à bénéficier de ces services en vertu de la garantie --~donnée antérieurement
+par une autorité de confiance~-- du fait que cet utilisateur possède bien les attributs requis, cela
+en préservant le secret des autres attributs, tels que l’identité de
+l’utilisateur, dont l’autorité aurait eu à prendre connaissance, cela en permettant aussi la levée
+de l’anonymat de l’utilisateur par un autre agent, disposant d’une clef secrète spéciale.
+Je me suis employé à étudier les systèmes d’accréditations anonymes décrits dans la
+littérature et j’ai participé à l’élaboration d’un schéma d’accréditations anonymes post-quantiques
+optimisé, fondé sur les problèmes difficiles liés aux réseaux euclidiens, pour ensuite contribuer au
+développement du premier programme informatique à sources ouvertes d’accréditations anonymes
+post-quantiques qui soit une démonstration directe de la compatibilité d’un tel schéma avec des cas
+d’usages concrets.
 
-Le protocole Signal, sur lequel se fondent nombre de systèmes de messagerie instantanée actuels, est lui aussi appelé à connaître une adaptation post-quantique. Dans un article, nous en proposons une preuve formelle réalisée avec Tamarin avec un accent mis sur les deux principales composantes, le protocole d’échange de clefs X3DH et le protocole du double cliquet.
+% utilisable en pratique.
+% mis en œuvre au niveau informatique notre système, en apportant à nos programmes diverses optimisations en temps et en mémoire.\par
+% accréditation anonymes au pluriel
+
+% des dits services
+% requis
+% comme par exemple
+% post-quantiques avec un s
+% ne pas répéter avec
+
+
+
+Le protocole Signal, sur lequel se fondent de nombreux systèmes de messagerie instantanée actuels, est lui aussi appelé à connaître une adaptation post-quantique. Dans un article, nous en proposons une vérification formelle réalisée avec Tamarin en mettant l’accent sur ses deux principales composantes, le protocole d’échange de clefs X3DH et le protocole du « double cliquet » de gestion des clefs de session.\par
 
 %, que nous avons ensuite mise en œuvre de façon fine sur le plan informatique, avec des optimisations de nos programmes en mémoire et en temps.
 %à apporter notre pierre à l’édifice
 
+% !!!! ayant cours -> en usage
+% ça porte sur la cryptographie asymétrique
+
+% l’objet de cette thèse, je me suis penché
+% dans cet esprit -> pour amener ce type de système
+% réseaux euclidens
+% afin de proposer les meilleures garanties de sécurité dans le respect des meilleures
+% penché -> un peu léger
+% changer l’emploi du mot certains
+% pas de subordonnées, système d’accréditations anonymes
+% autorité de confiance
+% parler d’ouverture
+
+% nous avons développer un nouveau framework pour construire un schéma d’accréditation anonyme fondé sur les réseaux euclidens qui permet d’améliorer l’efficacité de ces derniers.
+% utilisé en pratique
+% seule implémentation disponible !
+% amélioration de l’efficacité d’un schéma d’accréditation pour disposer du premier schéma accessible utilisable en pratique
+
+% objectif : améliorer l’efficacité, nous avons réussi à le faire
+
+% le côté théorique pour le rendre plus efficace NTT-friendly… NON, NE PAS EN PARLER
+% les schémas d’accréditations ne sont pas très efficaces, nous avons des choses utilisables en pratique.
+% j’ai proposer la première implémentation
+
+
+% Meilleure corrélation du troisième paragraphe avec le second.
+
 }
 \frkeywords{Cryptographie post-quantique, accréditations anonymes, cryptographie asymétrique, chiffrement vérifiable, preuves à divulgation nulle de connaissance, réseaux euclidiens.}
+%\enabstract{In response to the threat posed by the rise of quantum computers on many cryptographic systems (and not the least significant) currently in use, substantial efforts are being made to develop and promote so-called ``post-quantum'' encryption, authentication, and identification systems. These systems are like the classic ones, but would resist attacks made possible by such computers, even if they were to become particularly powerful.
+
+%With the intention of joining these efforts, I turned my attention to anonymous accreditation systems. These systems allow a service provider to verify a user's rights to benefit from these services by virtue of a guarantee, previously given by a trusted authority, stating that the user indeed possesses the required attributes. All this while preserving the secrecy of other attributes, such as the user's identity, which the authority may have become aware of, and allowing the anonymity of the user to be lifted by another agent holding a special key. I have dedicated myself to studying post-quantum anonymous accreditation systems from the literature, and I have participated in the development of a post-quantum anonymous accreditation scheme based on difficult problems related to lattices. This allowed me, along with my colleagues, to develop the first complete, practical use post-quantum anonymous accreditation program.
+
+%The Signal protocol, which many current instant messaging systems are based on, is also expected to undergo a post-quantum adaptation. In an article, we propose a formal proof of this adaptation, carried out with Tamarin, with a focus on the two main components, the X3DH key agreement protocol and the double ratchet protocol.}
+
+% consentis
+% résistant
+
+\enabstract{In order to mitigate the potential threat that the rise of quantum computers could pose to many of the cryptographic systems currently in use, significant efforts are being made to develop so-called ``post-quantum'' encryption, authentication, and identification systems. These systems are analogous to classical ones but would withstand attacks made possible by such quantum computers, even if these were to become particularly powerful.
+
+It was with the intention of contributing to these efforts that I delved into anonymous credential systems. These systems allow a service provider to verify a user's rights to access these services, based on a guarantee previously given by a trusted authority, that the user indeed possesses the required attributes, while preserving the secrecy of other attributes such as the user's identity which the authority would have had to acknowledge, and also allowing for the user's anonymity to be lifted by another actor, possessing a special secret key. I have endeavoured to study anonymous credential systems described in the literature and participated in the development of an optimized post-quantum anonymous credential scheme, based on hard problems related to lattices, and then contributed to the first open-source implementation of a post-quantum anonymous credential system that is a direct demonstration of the compatibility of such a scheme with real use cases.
+
+The Signal protocol, upon which many current instant messaging systems are based, is also expected to undergo a post-quantum adaptation. In a paper, we propose a formal verification carried out with Tamarin, placing emphasis on its two main components, the X3DH key agreement protocol and the ``double ratchet'' session key management protocol.}
+
+\enkeywords{Post-quantum cryptography, anonymous credentials, public-key cryptography, verifiable encryption, zero-knowledge proofs, lattices.}
