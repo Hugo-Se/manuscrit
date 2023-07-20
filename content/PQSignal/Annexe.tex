@@ -1,0 +1,190 @@
+\section{Tamarin Security Lemmas}
+\label{ann:lemmas}
+In this section we present the Tamarin lemmas corresponding to security properties presented in section~\ref{sec:tamform} and defined in our formal verification of the PQ-X3DH and KEM-Double-Ratchet protocols.
+
+\subsection{PQ-X3DH Security Properties}
+
+\begin{Verbatim}
+lemma integrity_first_exchange:
+    "
+    All A B exch1 exch2 sess #i #j #l1 #l2.
+    SessA(A, B, sess)@#i & SessB(B,A,sess)@#j
+    & Send(A, '1', exch1)@#l1
+    & Recv(B,A, '1', exch2)@#l2
+    ==> 
+    exch1 = exch2
+    "
+\end{Verbatim}
+
+\begin{Verbatim}
+lemma integrity_second_exchange:
+    "
+    All A B exch1 exch2 #i #j.
+    Send(B, '2', exch1)@#i & Recv(A,B, '2', exch2)@#j
+    & not(Ex #k. RevealE(A)@#k & #k<#j)
+    & not(Ex #k. RevealL(B)@#k & #k<#j)
+     ==> exch1 = exch2
+    "
+\end{Verbatim}
+
+\begin{Verbatim}
+lemma explicit_authentication:
+    "
+    All A B #i.
+    ExplicitAuth(B,A)@#i & not(Ex #r. RevealL(B)@#r & #r<#i)
+    ==> 
+    (Ex #k #l. SendSign(B,A)@#k & RecvConnect(A,B)@#k 
+    & SendConnect(A)@#l &#k<#i & #l<#k)
+    "
+\end{Verbatim}
+
+\begin{Verbatim}
+lemma weak_forward_secrecy:
+    "
+    All A B ss1 ss2 #i.
+    WeakFS(A, B, ss1, ss2)@#i 
+    & not(Ex #k. RevealL(B)@#k & #k<#i)
+    & not(Ex #k. RevealE(A)@#k) 
+    ==> not(Ex #r. KU(ss1)@#r) & not(Ex #r. KU(ss2)@#r)	
+    "
+\end{Verbatim}
+
+\begin{Verbatim}
+lemma key_compromise_attack_resistance:
+    "
+    (
+    All A S B sess #i #j #k.
+    SessA(A,S, sess)@#i & RevealL(A)@#k & SessB(B, A, sess)@#j
+    ==> S=B
+    )
+    &
+     (
+    All A S B sess #i #j #k.
+    SessA(A,B, sess)@#i & RevealL(B)@#k & SessB(B, S, sess)@#j
+    ==> S=A
+    )
+    "
+\end{Verbatim}
+
+\begin{Verbatim}
+lemma unknown_keyshare_resistance:
+    "
+    All A C S B sess #i #j.
+    SessA(A,S, sess)@#i & SessB(B,C, sess)@#j ==> S=B & C=A
+    "
+\end{Verbatim}
+
+\subsection{KEM-Double-Ratchet Security Properties}
+
+\begin{Verbatim}
+lemma Integrity:
+	    "
+	    All l x y s #i #j.
+	    IntegS(l, x, s)@#i & IntegR(l, y, s)@#j 
+	    & not(Ex #k. K(s)@#k)
+	    ==>
+	    x=y
+	    " 
+\end{Verbatim}
+
+\begin{Verbatim}
+lemma Post_Compromise_Security:
+    	"
+    	All A B state #i #j.
+	    Healed(A, B, state)@#i & Reveal(B, '0')@#j & #i<#j 
+	    ==> 
+	    not(Ex #k. K(state)@#k) | 
+	    (Ex #k. Reveal(B, '2')@#k) | (Ex #k. Reveal(A, '1')@#k)
+	    "
+\end{Verbatim}
+
+\begin{Verbatim}
+lemma Forward_Secrecy:
+	    "
+	    All A B state #i #j. 
+	    FS(A, B, '0', state)@#i & Reveal(A, '1')@#j & #i<#j     
+	    ==>     
+	    not(Ex #k. K(state)@#k) | (Ex #k. Reveal(B, '0')@#k)
+    	"
+\end{Verbatim}
+
+
+% \section{Proofs of Theorems~\ref{thm:PCS} and~\ref{thm:wsFS}}
+
+% \subsection{Proof of Theorem~\ref{thm:PCS} (Post Compromise Security, State Healing)}
+% \label{app:thm-PCS}
+
+% (As a reminder) \\
+% \[
+% \begin{split}
+% & \forall n\in \mathbb{N}^*, \texttt{ Compromise}(State_n) \land \lnot\texttt{Reveal}(State_{n+1}) \land \lnot \texttt{Reveal}(State_{n+2}) \\
+% & \implies \texttt{Heal}_{n}(State_{n+2}) 
+% \end{split}
+% \]
+
+
+% \begin{proof}
+% We will use the contraposed to prove this property by recurrence. The base case being handled by Tamarin. \\
+% We suppose the property ( $P_k$) true $\forall k, 0<k<n \mbox{ with }n \in \mathbb{N^*}$. \\
+% Now let's suppose that we have: 
+% \[\lnot \ \texttt{Heal}_{n+1}(State_{n+3})\quad\mbox{with}\quad \lnot \  \texttt{Compromise}(State_{n+3})\] 
+% By definition of Heal: 
+% \[\forall n>2, \texttt{ Heal}(State_n) \iff \exists k<n,\ \  \texttt{Reveal}(k)\  \land \  \lnot \ \texttt{Compromise}(State_n) \]
+% Therefore:
+% \[ \lnot \ \texttt{Heal}(State_{n+3})) \implies \forall k<n+3 \texttt{ Reveal}(State_k)\  \lor \  \texttt{Compromise}(State_{n+3}) \]
+% Since: $\quad \texttt{Reveal}(State_k) \implies \texttt{Compromise}(State_k)\ \land \  \texttt{Compromise}(State_{k+1})$\\
+% (because the adversary has access to the next secret key used for the KEM decapsulation) we have:
+% \[
+% \begin{split}
+% & \lnot \ \texttt{Heal}(State_{n+3}) \implies \forall k<n+3,\\  
+% & \texttt{ Compromise}(State_k)\ \land \  \texttt{Compromise}(State_{k+1})\ \lor \  \texttt{Compromise}(State_{n+3})
+% \end{split}
+% \]
+% By hypothesis we apply $P_k$ leading to: 
+% \[
+% \begin{split}
+% & \lnot \ \texttt{Heal}(State_{n+1})) \implies \lnot \ \texttt{Compromise}(State_{n+1})\ \lor \  \texttt{Reveal}(State_{n+2}) \\
+% & \lor \ \texttt{Reveal}(State_{n+3})
+% \end{split}
+% \]
+% Thus by contraposed $P_{n+1}$ is true. 
+% \qed
+% \end{proof}
+
+% \subsection{ Proof of Theorem~\ref{thm:wsFS} (weak state Forward Secrecy)}
+% \label{app:thm-wsPS}
+
+% As a reminder:
+
+% \[
+% \begin{split}
+% & \forall n\geq 2 , \ \texttt{Compromise}(State_{n}) \land \forall k < n,\ S \in B_h(State_k)\mbox{, } \lnot \ \texttt{Reveal(S)}\\
+% & \implies \lnot \ \texttt{Compromise}(State_k)\\
+% \end{split}
+% \]
+% \begin{proof}We assume property $P_n$ true for a $n \in \mathbb{N}$ (the base case has been handled by Tamarin).\\
+% We now assume that $State_{n+1}$ has been compromised. Furthermore: 
+% \[
+% \forall n > 2, \texttt{Compromised}(State_n) \implies \texttt{Reveal}(State_{n-1}) \mbox{ or } \texttt{Reveal}(State_n) \]
+% and by definition \[\forall n \in \mathbb{N^*}, \texttt{Reveal}(State_n) \implies \texttt{Compromise}(State_n) \]
+% In case $State_n$ has been revealed and not $State_{n+1}$. We apply $P_n$ and therefore $P_{n+1}$ holds.\\
+% Now let's suppose that $State_{n+1}$ has been revealed.\\
+% We suppose that $State_n$ remains hidden. Since:
+% \begin{itemize}
+%     \item $I_{n+1} = KEM.decaps(c_n, \gamma_{n})$
+%     \item $(\sigma_{n+1}, stemp_{s,n+1}) = P-up(\sigma_n, I_{n+1})$
+%     \item $(s_{s, n+1}, K_{n+1}) = PRG(stemp_{s, n+1})$
+%     \item $\gamma_{n+1} = \$$
+% \end{itemize}
+% $State_{n+1}$ is a deterministic function of $State_n$ apart from $\gamma_{n+1}$ that is not needed for backward analysis. Indeed the KEM is supposed ideal for the formal proof therefore KEM.decaps is deterministic (equally for the pseudo random functions using seeds). Furthermore $c = \texttt{Encaps}(pk(\gamma_{n-1}))[1]$ and both c and pk($\gamma_{n-1}$) are public parameters sent in clear on the network. Therefore: 
+% \[
+% \begin{split}
+% & (\quad  \forall n > 2,\ \  \texttt{Reveal}(State_n) \implies \forall k < n, \ \ \texttt{Compromised}(State_k) \quad )\\
+% & \implies \texttt{Reveal}(State_{n-1}) 
+% \end{split} 
+% \]
+% Hence by contraposed $P_{n+1}$ holds.
+
+% Now we suppose that both states have been revealed. As stated before $State_{n+1}$ is a deterministic function of $State_n$. Therefore we can apply $P_n$ and then $P_{n+1}$ holds.
+% \qed
+% \end{proof}

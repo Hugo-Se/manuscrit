@@ -1,0 +1,46 @@
+{
+
+\newcommand{\vs}[1]{\vspace*{-#1mm}}
+
+\subimport{./}{macros.tex}
+
+\chapterquote{Formal Verification of a Post-Quantum Signal Protocol with Tamarin}{TODO}{}{TODO} \label{cha:PQSignal}
+
+
+\enluminure{T}{he Signal protocol} is used by billions of people for instant 
+messaging in applications such as Facebook Messenger, Google Messages, Signal, 
+Skype, and WhatsApp. However, advances in quantum computing threaten the 
+security of the cornerstone of this protocol: the Diffie-Hellman key exchange. 
+There actually are resistant alternatives, called post-quantum secure, but 
+replacing the Diffie-Hellman key exchange with these new primitives requires a 
+deep revision of the associated security proof. While the security of the 
+current Signal protocol has been extensively studied with hand-written proofs 
+and computer-verified symbolic analyses, its quantum-resistant variants lack 
+symbolic security analyses.
+
+In this work, we present the first symbolic security model for post-quantum 
+variants of the Signal protocol. Our model focuses on the core state machines
+of the two main sub-protocols of Signal: the X3DH handshake, and the so-called
+\emph{\dr} protocol. Then we show, with an automated proof using the Tamarin
+prover, that instantiated with the Hashimoto-Katsumata-Kwiatkowski-Prest
+post-quantum Signal's handshake from PKC'21, and the Alwen-Coretti-Dodis
+KEM-based \dr from EUROCRYPT'19, the resulting post-quantum Signal protocol
+has equivalent security properties to its current classical count\-er\-part.
+
+\section{Introduction}\label{PQSignal:sec:introduction}
+\subimport{./}{introduction.tex}
+
+\section{A KEM-Based Signal Protocol}
+\label{sec:pqsignal}
+\subimport{./}{model}
+
+%\subsection{KEM-Signal}
+%\input{instantiation.tex}
+
+\section{Tamarin Formal Verification}
+\label{sec:verif}
+\subimport{./}{security_properties}
+
+\subimport{./}{Annexe.tex}
+
+}

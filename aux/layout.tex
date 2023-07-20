@@ -157,15 +157,26 @@
 \chapter{#1}
 }
 
-\newcommand{\chapterquoteNoStar}[4]%
+% Celine, pour groupsig
+\newcommand{\chapterquoteNoStar}[5][]%
 {%
 \cleartoevenpage[\thispagestyle{empty}]%
 \thispagestyle{empty}
 \hbox{}
-\myepigraph{#2}{#3}{#4}
+\myepigraph{#3}{#4}{#5}
 
-\chapter{#1}
+\ifthenelse{\equal{#1}{}}{\chapter{#2}}{\chapter[#1]{#2}}
 }
+
+%\newcommand{\chapterquoteNoStar}[4]%
+%{%
+%\cleartoevenpage[\thispagestyle{empty}]%
+%\thispagestyle{empty}
+%\hbox{}
+%\myepigraph{#2}{#3}{#4}
+%
+%\chapter{#1}
+%}
 
 \newcommand{\chapternoquoteStar}[1]%
 {%

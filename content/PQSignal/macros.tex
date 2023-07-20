@@ -1,0 +1,105 @@
+%% Algorithm style %%
+\newcommand{\KEM}{\pcalgostyle{KEM}}
+\newcommand{\wKEM}{\pcalgostyle{wKEM}}
+\newcommand{\Sig}{\pcalgostyle{Sig}}
+\renewcommand{\KeyGen}{\pcalgostyle{KeyGen{}}}
+\newcommand{\wKEMKeyGen}{\wKEM.\KeyGen}
+\newcommand{\KEMEncap}{\KEM.\pcalgostyle{Encaps}}
+\newcommand{\wKEMEncap}{\wKEM.\pcalgostyle{Encaps}}
+\newcommand{\KEMDecap}{\KEM.\pcalgostyle{Decaps}}
+\newcommand{\wKEMDecap}{\wKEM.\pcalgostyle{Decaps}}
+\newcommand{\HKDF}{\pcalgostyle{HKDF}}
+\renewcommand{\HMAC}{\pcalgostyle{HMAC}}
+\newcommand{\macroS}{\pcalgostyle{S}}
+\newcommand{\AEAD}{\pcalgostyle{AEAD}}
+
+%% Key style %%
+\renewcommand{\s}{\pckeystyle{s}}
+\newcommand{\ppKEM}{\pckeystyle{pp_\KEM}}
+\newcommand{\ppwKEM}{\pckeystyle{pp_\wKEM}}
+\newcommand{\ppSig}{\pckeystyle{pp_\Sig}}
+\newcommand{\lpkA}{\pckeystyle{lpk_\adv}}
+\newcommand{\epkA}{\pckeystyle{epk_\adv}}
+\newcommand{\ltpkA}{\pckeystyle{ltpk_\adv}}
+\newcommand{\lskA}{\pckeystyle{lsk_\adv}}
+\newcommand{\eskA}{\pckeystyle{esk_\adv}}
+\newcommand{\ltkA}{\pckeystyle{ltk_\adv}}
+\newcommand{\lpkB}{\pckeystyle{lpk_\bdv}}
+\newcommand{\epkB}{\pckeystyle{epk_\bdv}}
+\newcommand{\ltpkB}{\pckeystyle{ltpk_\bdv}}
+\newcommand{\lskB}{\pckeystyle{lsk_\bdv}}
+\newcommand{\eskB}{\pckeystyle{esk_\bdv}}
+\newcommand{\ltkB}{\pckeystyle{ltk_\bdv}}
+\newcommand{\epkT}{\pckeystyle{epk_T}}
+\newcommand{\eskT}{\pckeystyle{esk_T}}
+\renewcommand{\K}{\pckeystyle{K}}
+\renewcommand{\C}{\pckeystyle{C}}
+\newcommand{\KT}{\pckeystyle{K_T}}
+\newcommand{\CT}{\pckeystyle{C_T}}
+\newcommand{\kroot}{\pckeystyle{k_{root}}}
+\newcommand{\ktilde}{\pckeystyle{\tilde{k}}}
+\newcommand{\sidA}{\pckeystyle{sid_\adv}}
+\newcommand{\sidB}{\pckeystyle{sid_\bdv}}
+\newcommand{\macrosigma}{\pckeystyle{\sigma}}
+\newcommand{\macroc}{\pckeystyle{c}}
+\newcommand{\KeyBatch}{\pckeystyle{KeyBatch}}
+\newcommand{\eskAone}{\pckeystyle{esk_{\adv, 1}}}
+\newcommand{\rd}{\pckeystyle{r_d}}
+\newcommand{\kd}{\pckeystyle{k_d}}
+\newcommand{\epkBtwo}{\pckeystyle{epk_{B, 2}}}
+\newcommand{\eskBtwo}{\pckeystyle{esk_{B, 2}}}
+\newcommand{\macrots}{\pckeystyle{ts}}
+\newcommand{\macrom}{\pckeystyle{m}}
+\newcommand{\macroE}{\pckeystyle{E}}
+
+
+% Edition
+\newcommand{\todo}[1]{}
+\renewcommand{\todo}[1]{{\color{red} TODO: {#1}}}
+
+
+% Crypto
+\renewcommand{\sk}{\textsf{sk}}
+\renewcommand{\pk}{\textsf{pk}}
+\renewcommand{\key}[1]{\ensuremath{\textsf{k}^{\textsf{#1}}}}
+\newcommand{\cta}[1]{\ensuremath{\textsf{ct}^{\textsf{a,#1}}}}
+\newcommand{\ctb}[1]{\ensuremath{\textsf{ct}^{\textsf{b,#1}}}}
+\renewcommand{\sig}{\textsf{sign}}
+\newcommand{\kem}{\textsf{kem}}
+\renewcommand{\enc}{\textsf{enc}}
+\renewcommand{\dec}{\textsf{dec}}
+\newcommand{\kdf}{\textsf{hkdf}}
+\renewcommand{\mac}{\textsf{hmac}}
+\newcommand{\del}{\textsf{delete}}
+\newcommand{\kkg}{\ensuremath{\textsf{keygen}_\kem}}
+\newcommand{\skg}{\ensuremath{\textsf{keygen}_\sig}}
+\newcommand{\ec}{\textsf{encaps}}
+\newcommand{\dc}{\textsf{decaps}}
+\newcommand{\vr}{\textsf{verify}}
+\newcommand{\sg}{\textsf{sign}}
+\newcommand{\ska}[1]{\ensuremath{\textsf{sk}^{\textsf{a,#1}}}}
+\newcommand{\pka}[1]{\ensuremath{\textsf{pk}^{\textsf{a,#1}}}}
+\newcommand{\skb}[1]{\ensuremath{\textsf{sk}^{\textsf{b,#1}}}}
+\newcommand{\pkb}[1]{\ensuremath{\textsf{pk}^{\textsf{b,#1}}}}
+\newcommand{\sgm}{\ensuremath{\sigma}}
+\newcommand{\lp}{\ensuremath{\left(}}
+\newcommand{\rp}{\ensuremath{\right)}}
+\newcommand{\dr}{double ratchet\xspace}
+
+
+\newenvironment{code}%
+   {\par\noindent\adjustbox{margin=1ex,bgcolor=shadecolor,margin=0ex \medskipamount}\bgroup\varwidth\linewidth\verbatim}%
+   {\endverbatim\endvarwidth\egroup}
+
+\newenvironment{code2}%
+   {\par\noindent\adjustbox{margin=1ex,bgcolor=shadecolor,margin=0ex \medskipamount}\bgroup\minipage\linewidth\verbatim}%
+   {\endverbatim\endminipage\egroup}
+   
+\newlist{todolist}{itemize}{2}
+\setlist[todolist]{label=$\square$}
+%\usepackage{pifont}
+\renewcommand{\cmark}{\ding{51}}%
+\renewcommand{\xmark}{\ding{55}}%
+\newcommand{\done}{\rlap{$\square$}{\raisebox{2pt}{\large\hspace{1pt}\cmark}}%
+\hspace{-2.5pt}}
+\newcommand{\wontfix}{\rlap{$\square$}{\large\hspace{1pt}\xmark}}

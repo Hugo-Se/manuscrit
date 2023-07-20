@@ -1,0 +1,60 @@
+% Instant messaging context
+%Instant messaging applications have been proliferating for several years. To provide these applications while maintaining a high degree of privacy and efficiency, an efficient protocol has to be used. Many instant messaging appli\-ca\-tions are using the Signal protocol such as Facebook Messenger, Si\-gnal, Skype and WhatsApp. It provides many important security properties (weak forward secrecy, post-compromise security, etc.) and is regarded as a standard for Secure Instant Messaging (SIM).
+
+The Signal protocol is divided into two sub-protocols: X3DH ~\cite{X3DH}, and the \dr protocol~\cite{double_ratchet}.
+The X3DH protocol can be seen as an Authenticated Key Exchange (AKE) protocol. It ensures the authenticity of an initial key shared between two users. It is an asynchronous protocol, which means that there is no need for users to be online at the same time to initialize the protocol. To use the X3DH protocol, each user must first generate a long-term static pair of public and private keys for them to be authenticated, as well as a batch of ephemeral pairs of public and private keys. Both long-term public keys and ephemeral key batches are then stored on an honest intermediate server which acts as a buffer. When Bob wants to start a conversation with Alice, he sends a request to the server, and then receives the Alice's long-term public key and a fresh Alice's ephemeral public key from her batch. These two public keys enable Bob to perform the X3DH handshake protocol by sending a message to Alice, which will enables her to derive their X3DH pre-shared secret key when she is online.
+
+The \dr protocol is used to encrypt messages to send through the Signal protocol with an Authenticated Encryption with Associated Data (AEAD) scheme and a session key that is shared between the two parties. The session key is renewed each time a message is sent, using symmetric and asymmetric mechanisms called ratchets. The \dr protocol is initialized with the X3DH pre-shared key as session key, and an ephemeral public key from the corresponding batch as public key. Then, to send a message, the public key is used to exchange a fresh secret key, from which the new session key is derived with the output of a one-way function applied to the current session key. In addition, a new ephemeral key pair is generated whose public key is encrypted then sent with the message, using this new session key. This protocol is repeated for each message sent to ensure strong security properties such as forward secrecy and post-compromise recovery against passive adversaries.
+
+% Post-quantum context
+The current Signal protocol heavily uses the well-known, flexible, and efficient, but vulnerable to quantum attacks, Diffie-Hellman (DH) key exchange protocol. However, with the threat of upcoming quantum computers, post-quantum alternatives are subject to extensive analysis in order to gain assurance in their security. In 2016, the NIST initiated a process to evaluate and standardize quantum-resistant key-establishment and signature schemes, but all remaining candidates in the key-establishment category are key encapsulation mechanisms (KEMs) like RSA, and not key exchanges like DH. Consequently, the integration of post-quantum KEMs in cryptographic protocols is quite challenging due to the differences between KEMs and DH, which requires some fundamental adjustments to these protocols to maintain the same security guarantees.
+
+% Tamarin context
+Aside from that, the active area of formal protocol verification is increasingly accompanying protocol specifications. Designing cryptographic protocols is known to be hard to get right and hand-written proofs remain highly complex and error-prone. At the design level, automatic verification aims to manage the complexity of security proofs and even reveal subtle flaws or as-yet-unknown attacks as the historic example of the man-in-the-middle attack~\cite{Lowe96}. Efficient automatic verification tools as Tamarin~\cite{MeierSCB13} or 
+ProVerif~\cite{Blanchet16} have been used to analyze large, real-world 
+protocols. For instance, ProVerif has been used to analyze TLS 
+1.3~\cite{BhargavanBK17} and Signal~\cite{KobeissiBB17} and Tamarin as been used to analyze the 5G AKE protocol~\cite{BasinDHRSS18} and TLS 1.3~\cite{CremersHHSM17}.
+
+\paragraph{Related Works.} The security of the (EC)DH-based Signal protocol 
+has been extensively studied using hand-written 
+proofs~\cite{DBLP:journals/joc/Cohn-GordonCDGS20}. Those proofs were completed 
+with a symbolic analysis~\cite{KobeissiBB17} using the ProVerif prover. 
+Regarding the transition to post-quantum cryptography, there are KEM-based 
+alternatives to the Signal sub-protocols 
+X3DH~\cite{DBLP:conf/pkc/HashimotoKKP21,DBLP:conf/sacrypt/BrendelFGJS20} 
+(the security properties in \cite{DBLP:conf/pkc/HashimotoKKP21} being closer 
+to that of X3DH, in particular thanks to the encryption of the signature) and 
+\dr~\cite{EC:AlwCorDod19}, with hand-written proofs for the same security 
+properties as the current Signal protocol. Such KEM-based protocols can be 
+instantiated with post-quantum KEMs from the NIST competition such as 
+Kyber~\cite{Kyber}, which will be the first NIST PQC standard for 
+key-establishment. However, those potential replacements for X3DH and \dr have 
+so far lacked computer-verified symbolic analyses which results in a limited 
+trust in these protocols. By contrast, some other protocols, such as 
+WireGuard~\cite{SP:HNSWZ21} and 
+(KEM)TLS~\cite{DBLP:conf/ccs/SchwabeSW20,ESORICS:CHSW22}, already have 
+computer-verified symbolic analyses for post-quantum variants, both using the 
+Tamarin prover.
+
+%of Signal using has been presented prior to that in  as been in which they acknowledge the formal verification of Signal in \cite{KobeissiBB17} using the ProVerif prover. Post-quantum variants of Signal 
+
+
+%is a widely used instant messaging protocol because of its security properties such as different type of Authentication, Forward Secrecy, Post-Compromise Recovery, Key Compromise Impersonation Resistance or Unknown KeyShare resistance. It has been completely studied recently using reduction proofs \cite{DBLP:journals/joc/Cohn-GordonCDGS20} in which they acknowledge the formal verification of Signal in \cite{KobeissiBB17} using ProVerif as the formal prover. 
+%As it is the finest secure instant messaging proved at the moment big applications such as Facebook Messenger, Signal, Skype and WhatsApp are using it. However this is not the only secure instant messaging protocol used. Telegram \cite{MTProto} is using another protocol name MTProto.
+%The major effort, made worldwide by research organizations and high tech companies, to design and build more powerful quantum computers is the reason why developing quantum-resilient protocols is critical. %%%
+%Since they compete together, towards the breakthrough in quantum-computers, the importance of having a possible quantum-resilient protocol is becoming more than relevant. 
+%As a matter of fact,
+
+% Since Key Exchange Protocols are trying to find their place in a post-quantum world and the same applies to Signal.
+% Additionally some KEM based X3DH are starting to appear~\cite{DBLP:conf/pkc/HashimotoKKP21,DBLP:journals/iacr/BrendelF0JS19} as it is initially based on the ECDH protocol.
+% Double Ratchet is not left behind, an improvement has been proposed~\cite{cryptoeprint:2018:1037} so that Double Ratchet can be used with three different modes: Diffie-Hellman, KEM and LWE. 
+% Therefore the two core protocols of Signal have a KEM base evolution. 
+% However, to our knowledge, there are no formal proof of the protocols presented in~\cite{cryptoeprint:2018:1037,DBLP:conf/pkc/HashimotoKKP21,DBLP:journals/iacr/BrendelF0JS19}, hence we chose to formally prove mandatory security properties of the KEM X3DH depicted in~\cite{DBLP:conf/pkc/HashimotoKKP21} and the KEM Double Ratchet in~\cite{cryptoeprint:2018:1037} to create an assembled post-quantum Signal.
+
+\paragraph{Contributions.} We present the first symbolic proof of a post-quantum variant of the Signal protocol. Our model focuses on the core state machines of the two main sub-protocols of this variant: the Hashimoto-Katsumata-Kwiatkowski-Prest post-quantum X3DH handshake~\cite{DBLP:conf/pkc/HashimotoKKP21} which we refer to as \emph{PQ-X3DH}, and the Alwen-Coretti-Dodis KEM-based \dr~\cite{EC:AlwCorDod19} that we call \emph{KEM-Double-Ratchet}. Then we show, using the Tamarin prover, that these two protocols meet the same security properties as classical X3DH and \dr protocols. In addition, we prove the well-formedness of the two models, which informally means that their behavior is as expected.
+
+Our PQ-X3DH Tamarin symbolic analysis ensures the integrity of the two exchanged messages, the authentication of users, the resistance to unknown key-share attacks and replay attacks, and other properties, such as the weak forward secrecy~\cite{DBLP:conf/crypto/Krawczyk05} and the key compromise attack resistance, to mitigate the leak of secret information.
+
+With regard to KEM-Double-Ratchet, our Tamarin model ensures the integrity of all the messages, the forward secrecy, and the post-compromise recovery~\cite{EC:AlwCorDod19}. It is worth noting that in the particular case of Signal, post-compromise recovery is met only if the adversary is passive during the recovering process. While within the \dr protocol two parties can exchange a potentially infinite number of messages, we model only three exchanges, which represents the minimum number of exchanges for each security property to hold. A simple induction argument then enables us to generalize these properties to any number of exchanges. To our knowledge, our formal verification model is the first one that covers the post-compromise recovery security property.
+
+\paragraph{Outline.} In section~\ref{sec:pqsignal} we present the two sub-protocols of the considered variant of the Signal protocol and their Tamarin model. Then we present in section~\ref{sec:verif} the Tamarin formalism used in our symbolic analysis, the different security properties verified, and the results of our formal verification.

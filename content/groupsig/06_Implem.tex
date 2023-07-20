@@ -21,7 +21,7 @@ It is worth noting that unlike the rest of our implementation, DGS uses the rand
 \subsubsubsection{Performance}
 We have performed timing experiments with our implementation on a AMD® Ryzen 7 5800h CPU. The results are presented in Table~\ref{tab:gperf} for the generation and in Table~\ref{tab:vperf} for the verification. They include the minimum, median and mean number of CPU cycles and time of 1000 executions needed for each operation. The code was compiled with gcc 9.4.0.
 
-\begin{table}[h!]
+\begin{table}[!ht]
 \centering
 \caption{Performance of the presentation generation.}
 \label{tab:gperf}
@@ -40,7 +40,7 @@ Average & 1.84276  & 5887531  \\
 
 The significant gap between the minimum and median time for the presentation generation operation is explained by the rejection sampling step at the end of the generation which requires to restart the generation procedure in case of rejection.
 
-\begin{table}[h!]
+\begin{table}[!ht]
 \centering
 \caption{Performance of the presentation verification.}
 \label{tab:vperf}
@@ -60,7 +60,7 @@ Average & 0.17187  & 549226  \\
 \subsubsubsection{Call-graph profiling}
 Our code has been profiled using callgrind~\cite{callgrind} in order to obtain the CPU time spent in each funstion. Results are presented in Table~\ref{tab:gprof} for the presentation generation, and in Table~\ref{tab:vprof} for the presentation verification.
 
-\begin{table}[h!]
+\begin{table}[!ht]
 \centering
 \caption{Generation call-graph profiling.}
 \label{tab:gprof}
@@ -81,7 +81,7 @@ Golomb-Rice encoding & 4.72 \% \\
 
 For the generation of a presentation token, one can observe that Gaussian sampling is the most time consuming operation. Actually, 73.61 \% of the time spent sampling Gaussian samples corresponds to the generation of the random bits needed for the Gaussian sampling. Thus, an optimization would consist in replacing the DGS pseudo-random number generators by the AES256 CTR DRBG.
 
-\begin{table}[h!]
+\begin{table}[!ht]
 \centering
 \caption{Verification call-graph profiling.}
 \label{tab:vprof}
@@ -111,7 +111,7 @@ The code for $z$ is constructed as follows. We first define a unary code, which 
 \subsubsubsection{Bandwidth usage}
 The presentation token is the only data that is sent by a user to prove the possession of a credential with the right attribute values. Without encoding or compressing, the size of a presentation token in our protocol is about 3.7 MB. For this reason, presentation tokens are compressed in our implementation with the Golomb-Rice coding described above. The precise minimum, maximum and average sizes for a presentation token are given in Table~\ref{tab:size}.
 
-\begin{table}[h!]
+\begin{table}[!ht]
 \centering
 \caption{Size of a presentation token.}
 \label{tab:size}

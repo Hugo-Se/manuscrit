@@ -1,0 +1,378 @@
+%In this section we present the Tamarin formalism used in our symbolic security analysis and the different security properties considered. Then we present the results obtained on PQ-X3DH and KEM-Double-Ratchet.
+
+%Tamarin uses rules to describe allowed transitions of a protocol.
+In Tamarin, a protocol is seen as a state machine. A state is a multiset of facts, and rules are transitions which shift the state when some conditions are fulfilled.
+%
+A rule consists of three sets of facts: \emph{premise}, \emph{action facts}, and \emph{conclusion}. If all the premise facts exist, then the rule is applied. Applying a rule means \emph{consuming} premise facts to produce conclusion facts while recording action facts in the protocol \emph{trace}.
+
+%vecos The following example rule has two facts in its premise: \texttt{Premise\_1} and \texttt{!Premise\_2}, respectively a \emph{linear} fact and a \emph{persistent} fact. A linear fact can be consumed only one time, while persistent facts can be consumed any number of times. Once the rule is applied, the fact \texttt{Premise\_1} is consumed and the fact \texttt{Out(z)} is produced, i.e., \texttt{z} is made public and then the adversary knows it.
+
+%vecos \vs{2}
+%vecos \begin{Verbatim}
+%vecos rule Rule_Example:
+%vecos     [ Premise_1(x,y), !Premise_2(z) ] --[ Leak(z) ]-> [ Out(z) ]
+%vecos \end{Verbatim}
+%vecos \vs{2}
+
+Some facts are native in Tamarin such as \texttt{In()} and \texttt{Out()} to model inputs and outputs of the protocol following the Dolev-Yao model~\cite{DolevY83}. Moreover, the \texttt{Fr()} fact is used to produce fresh or unique variables.
+
+Tamarin proposes a set of \emph{built-ins} cryptographic primitives to model protocols, including sy\-mme\-tric and asymmetric encryption, hash function, and signature. It also allows to define new primitives, via \texttt{functions} and \texttt{equations} commands. In the context of this work, we define a KEM as an asymmetric encryption scheme encrypting a fresh random key, and we consider the following AEAD Tamarin formalization from~\cite{SP:HNSWZ21}.
+
+%vecos \vs{2}
+%vecos \begin{verbatim}
+%vecos functions: aead/3, decrypt/2, verify/3, true/0
+%vecos equations: decrypt(aead(key, text, tag), key) = text
+%vecos equations: verify(aead(key, text, tag), tag, key) = true
+%vecos \end{verbatim}
+%vecos \vs{2}
+
+In some cases, we need to restrict some transitions in the protocol, e.g., to check the equality of two terms as shown below. Hence, when a rule has the restriction \texttt{Eq(x,y)} in its action facts, then the rule is applied if and only if $x = y$.
+
+\vs{2}
+\begin{Verbatim}
+restriction Eq: "All x y #i. Eq(x,y) @ #i ==> x = y"
+\end{Verbatim}
+\vs{2}
+
+Tamarin uses the logic of first order to formalize security properties as \emph{lemmas}. The keyword \texttt{All} stands for $\forall$, \texttt{Ex} for $\exists$ and \texttt{@} represents a marker for chronological events.  Lemmas use \emph{action facts} produced by the rules to prove or disprove properties. A trivial lemma is given below, it means that if \texttt{Action1()} happened then \texttt{Action2()} happened too.
+
+\vs{2}
+\begin{Verbatim}
+lemma example:
+   " All x #i. Action1(x) @ #i ==> Ex y #k. Action2(y) @ #k "
+\end{Verbatim}
+\vs{2}
+
+In order to verify that a protocol has given security property, Tamarin takes as input the protocol model, with all its possible transitions as rules, and a lemma corresponding to this security property. Then, if Tamarin completes its verification process, it will either output a proof of the property or an attack trace which falsifies it.
+
+%First, we list desired security properties for both KEM-X3DH and KEM-Double-Ratchet protocols. Then, we explain their Tamarin formalization.
+
+\subsection{Security Properties}
+
+The security properties verified in our symbolic analysis of PQ-X3DH and KEM-DR are the same properties as those considered in the formal verification of classical X3DH and Double-Ratchet protocols~\cite{KobeissiBB17}.
+
+\paragraph{\underline{Integrity.}} Integrity is an important property for key 
+exchange protocols. It allows the receiver of a message to have the assurance 
+that the message has come unaltered from the intended sender. We separate the 
+integrity of a message that can be verified upon receipt, called instantaneous 
+integrity, and that which can be verified upon receipt of a subsequent 
+message, called delayed integrity.
+
+\paragraph{\underline{Authentication.}} We consider two authentication notions: the \emph{partial authentication} from definition~\ref{def:partial-auth} and the \emph{full authentication} from defintion~\ref{def:full-auth}.
+
+\begin{definition}[Partial Authentication{}]
+\label{def:partial-auth}
+A user $\:U$ is partially authenticated to another user $\:V$ if $\:V$ can prove that the message she receives comes from the same user as the one with whom she has initialized the session.
+\end{definition}
+{}
+\begin{definition}[Full Authentication]
+\label{def:full-auth}
+A user $\:U$ is fully authenticated to another user $\:V$ if $\:U$ is partially authenticated to $\:V$ and $\:V$ can prove the identity of $\:U$.
+\end{definition}
+
+\paragraph{\underline{Forward Secrecy.}} Here again we consider two different notions: the \emph{perfect Forward Secrecy} (FS) from definition~\ref{def:perfect-fs} and the \emph{weak Forward Secrecy} (wFS) from definition~\ref{def:weak-fs}. In this work, we also consider a new notion called \emph{weak state Forward Secrecy} (wsFS) that we define as the wFS property except that the leakage concerns states instead of long term keys.
+
+\begin{definition}[perfect Forward Secrecy (FS)~\cite{DBLP:books/crc/MenezesOV96}]
+\label{def:perfect-fs}
+A protocol is said to have \emph{perfect forward secrecy} if compromised long-term keys does not compromise past session keys.
+\end{definition}
+
+\begin{definition}[weak Forward Secrecy (wFS)~\cite{DBLP:conf/crypto/Krawczyk05}]
+\label{def:weak-fs}
+Any session key established by uncorrupted parties without active intervention by the attacker is guaranteed to remain secrete
+even if the parties to the exchange are corrupted after the session key has been erased.
+\end{definition}
+
+\paragraph{\underline{Key Compromise Impersonation Resistance.}} The KCI resistance from definition~\ref{def:kci} is related to the use of long term public/private keys. Since there is no use of long term public/private key in the KEM-DR protocol, the KCI property is only applicable to the PQ-X3DH protocol.
+
+\begin{definition}[Key Compromise Impersonation (KCI) Resistance]
+\label{def:kci}
+Even if an adversary compromises the long term private key of a user $\:U$, this adversary can not use this key to impersonate (to $\:U$) another user $\:V$ that is communicating to $\:U$.
+\end{definition}
+
+\paragraph{\underline{Unknown Key-Share Resistance.}} We recall the definition of a UKS attack in definition~\ref{def:uks}. UKS attacks can be seen as implicit impersonation. Thus, in the same way as for the KCI resistance, this property is only applicable to the PQ-X3DH protocol.
+
+\begin{definition}[Unknown Key-Share (UKS) attack~\cite{DBLP:conf/pkc/Blake-WilsonM99}]
+\label{def:uks}
+An unknown key-share attack on an AKE protocol is an attack whereby a user $\:U$ ends up believing she shares a key with $\:V$, and although this is in fact the case, $\:V$ mistakenly believes the key is instead shared with an entity $\:W \neq U$.
+\end{definition}
+
+\paragraph{\underline{Post-Compromise Recovery.}} We recall the post-compromise recovery property in definition~\ref{def:pcr}. By definition, this property is only applicable when a protocol is iterated repeatedly between the parties, this is the case for KEM-DR but not for PQ-X3DH.
+
+\begin{definition}[Post-Compromise Recovery (PCR)~\cite{EC:AlwCorDod19}]
+\label{def:pcr}
+If the attacker remains passive, i.e.,
+the attacker does not inject any messages, and if users have access to fresh randomness, then the users recover a secure state from a compromised state after a few communication rounds.
+\end{definition}
+
+\subsection{Tamarin Formalization}
+\label{sec:tamform}
+Before describing in more detail the Tamarin formalization of the different security properties presented above, we need to define some notations that will be useful later. In the rest of the paper, we use the following notations:
+\begin{compactitem}
+    \item $\mathcal{L} = \{0, 1, 2\}$ is the set of iteration indices, i.e., the three first exchanges ;
+    \item $\mathcal{M} \subset \{0,1\}^*$ is the set of messages sent via the Signal protocol ;
+    \item $\mathcal{K} \subset \{0,1\}^k$ is the set of secret keys where $k$ is the key length ;
+    \item $\mathcal{S} \subset \{0,1\}^*$ is the set of message indices, i.e., the message numbers ;
+    \item $\Sigma$ is the set of protocol states.
+    \item $\Gamma$ is the set of user states.
+\end{compactitem}
+Moreover, using the Tamarin formalism, we note:
+\begin{compactitem}
+    \item KU(x): The adversary sent x and therefore has knowledge of x ;
+    \item K(x): The adversary has knowledge of x.
+\end{compactitem}
+
+In Table~\ref{tab:X3DHTam}, respectively Table~\ref{tab:DRTam}, we introduce the Tamarin action facts and their abbreviations needed in our symbolic analysis of PQ-X3DH, respectively KEM-DR. These action facts are used to define the Tamarin lemmas corresponding to the security properties.
+
+%{\renewcommand{\arraystretch}{0.65}
+\begin{table}[!ht]
+    \centering
+        \caption{Tamarin action facts for PQ-X3DH, abbreviations and definitions}
+    \begin{tabular}{|l|c|l|}
+    \hline
+        Action fact & Abbreviation & Definition \\
+        \hline
+        \hline
+        SessA & S$_\text{A}$(A,B,k)  & A accepts the key k as valid to communicate with B \\
+        %&&\\
+        \hline
+        ExplicitAuth & EA(B,A) & A explicitly authenticates B\\
+          %      &&\\
+          \hline
+        RevealL & R$_\text{L}$(A) &  The long-term key of A is revealed to the attacker\\
+            %            &&\\
+            \hline
+        RevealE & R$_\text{E}$(A) &  The ephemeral key of A is revealed to the attacker\\
+              %//          &&\\
+              \hline
+        SendConnect & SC(A) & A initiates the PQ-X3DH protocol\\
+               % //        &&\\
+                \hline
+        RecvConnect & RC(A,B) & B receives the initialization message from A\\
+                %  //      &&\\
+                  \hline
+        SendSign & SS(B,A) & B sends its signature to A\\
+                 %   //    &&\\
+                    \hline
+        weakFS & wFS$_{\text{A,B}}$(k) & Saves k to check its resistance against future reveal\\
+                  %    //  &&\\
+                      \hline
+        Send/Recv & Send$_{\text{A,n}}$(m) & A sends the message m of index n\\ 
+        & Recv$_{\text{B,A,n}}$(m)& B checks the integrity of message m of index n from A\\
+        \hline
+    \end{tabular}
+    \label{tab:X3DHTam}
+\end{table}
+%}
+
+%{\renewcommand{\arraystretch}{0.65}
+\begin{table}[!ht]
+    \centering
+        \caption{Tamarin action facts for KEM-Double-Ratchet, abbreviations and de\-fi\-ni\-tions}
+    \begin{tabular}{|l|c|l|}
+    \hline
+        Action fact & Abbreviation & Definition \\
+        \hline
+        \hline
+        IntegS/IntegR & I$_{\text{S/R}}$(n,m,s) & Sends or receives message m of index n associated\\
+        && with session key s and checks its integrity in reception\\
+                       % &&\\
+                       \hline
+        FS & FS(A,B,n,st)& Saves the current state st associated with the sending\\
+        && of the message of index n between A and B in order to\\
+        && check its resistance against future reveal \\
+                       % &&\\
+                       \hline
+        Healed & H$_{\textsf{A,B}}$(st) & Checks if the state st has recovered from a previous\\
+        &&reveal in the communication between A and B\\
+                       % &&\\
+                       \hline
+        Reveal & R(A,n) & Reveals the secrets of A associated with the message\\
+        && of index n.\\
+        \hline
+    \end{tabular}
+    \label{tab:DRTam}
+\end{table}
+%}
+
+In Tamarin, the user state is the current set of the secrets of this user. In order to characterize respectively full and partial knowledge of the user's secrets by the attacker, we define the \emph{revealed} state in definition~\ref{def:revealed-state} and the \emph{compromised} state in definition~\ref{def:compromised-state}. 
+
+\begin{definition}[Revealed State]
+\label{def:revealed-state}
+A state is said to be \emph{revealed} if the adversary has knowledge of every hidden elements of the state. 
+\end{definition}
+
+\begin{definition}[Compromised State]
+\label{def:compromised-state}
+A state is said to be \emph{compromised} if the adversary has knowledge of any hidden element of the state.
+\end{definition}
+
+\subsubsection{PQ-X3DH Security Properties.} For the sake of clarity, we 
+describe the security properties verified with Tamarin in the usual 
+mathematical formalism. Let $\text{E} = \text{A} <_t \text{B}$ the notation 
+$<_t$ means that $\text{E}$ is true if and only if event $\text{A}$ occurs 
+before event $\text{B}$. 
+The definitions of the corresponding Tamarin lemmas 
+are presented in appendix~\ref{ann:lemmas}.
+% VECOS
+%For lack of space, the definitions of the corresponding Tamarin lemmas 
+%are presented in the full version of this paper.
+
+\paragraph{\underline{Integrity.}} The integrity is checked on both messages transmitted through the PQ-X3DH protocol. Nothing in this protocol allows an immediate integrity check of the first transmitted message. However, if both parties share the same key at the end of the protocol, then the integrity of this message is ensured in a delayed manner. For this reason, we define the following condition under which the delayed integrity of the first message is assured:
+\begin{align*}
+    & \forall \text{A},\text{B} \in \mathcal{U}, \forall \text{m}_\text{1},\text{m}_\text{2} \in \mathcal{M}, \forall \text{k} \in \mathcal{K} . \\
+    & \text{S}_\text{A}\text{(A,B,k)} \land \text{S}_\text{B}\text{(B,A,k)} \land \text{Send(A,1,m}_\text{1}\text{)} \land \text{Recv(B,A,1,m}_\text{2}\text{)}
+    \implies \text{m}_\text{1} = \text{m}_\text{2} \; .
+\end{align*}
+The integrity of the second message can be immediately verified thanks to the signature. Thus the condition to check the immediate integrity of this message is as follows:
+\begin{align*}
+& \forall \text{A},\text{B} \in \mathcal{U},\  \forall \text{m}_\text{1},\text{m}_\text{2} \in \mathcal{M}.
+    ~\text{Send}_{\text{B},\text{2}}\text{(}\text{m}_\text{1}\text{)} \land \text{Recv}_{\text{A},\text{B},\text{2}}\text{(}\text{m}_\text{2}\text{)} \land \lnot \text{R}_\text{E}\text{(A)} \land \lnot \text{R}_\text{L}\text{(B)} \\
+    & \land \text{R}_\text{E}\text{(A)} \leq_t \text{Recv}_{\text{A},\text{B},\text{2}}\text{(}\text{m}_\text{2}\text{)} \land \text{R}_\text{L}\text{(B)} \leq_t \text{Recv}_{\text{A},\text{B},\text{2}}\text{(}\text{m}_\text{2}\text{)}
+    \implies \text{m}_\text{1} = \text{m}_\text{2} \; .
+\end{align*}
+
+\paragraph{\underline{Authentication.}} We consider two different notions of authentication depending on the role of the user in the PQ-X3DH protocol. Indeed, the initiator, Alice, does not sign any message and her KEM long term key is provided by a server without guaranteeing its authenticity. In these conditions, Alice can only be partially authenticated according to definition~\ref{def:partial-auth}. In the case where the equivalent of a certificate of the Alice's KEM long term key was added, then she could be fully authenticated at the end of the PQ-X3DH protocol. The second user, Bob, signs the message which allows Alice to explicitly authenticates him under the classical conditions of a public key infrastructure. The following condition is for the full authentication of Bob by Alice:
+\begin{align*}
+    & \forall \text{A},\text{B} \in \mathcal{U}. ~\text{EA(B,A)} \land \lnot \text{R}_\text{L}\text{(B)} \land \text{EA(B,A)} \leq_t \text{R}_\text{L}\text{(B)}
+     \implies
+     \text{SS(B,A)} \land \text{RC(A,B)} \\
+    & \land \text{SC(A)} \land \text{SS(B,A)} \leq_t \text{EA(B,A)} \land \text{SC(A)} \leq_t \text{SS(B,A)} \land \text{RC(A,B)} =_t \text{SS(B,A)} \; .
+\end{align*}
+
+\paragraph{\underline{weak Forward Secrecy.}} The following condition verifies the wFS property on $k_\text{root}$ and $\tilde{k}$ keys of the PQ-X3DH protocol in case of future compromise of the initiator's short-term and responder's signing keys.
+\begin{align*}
+& \forall \text{A},\text{B} \in \mathcal{U}, \forall \text{k}_\text{1}, \text{k}_\text{2} \in \mathcal{K}.
+~ \text{wFS}_{\text{A,B}}\text{(k}_\text{1}, \text{k}_\text{2}\text{)} \land \lnot \text{R}_\text{L}\text{(B)} \\
+& \land \text{R}_\text{L}\text{(B)} \leq_t \text{wFS}_{\text{A,B}}\text{(k}_\text{1}, \text{k}_\text{2}\text{)} \land \text{R}_\text{E}\text{(A)}
+\implies \lnot \text{KU}\text{(k}_\text{1}\text{)} \land \lnot \text{KU}\text{(k}_\text{2}\text{)} \; .
+\end{align*}
+
+\paragraph{\underline{KCI resistance.}} The only possible scenario in which a KCI attack occurs is when the signing long-term key of the responder is compromised, in this case it must be guaranteed that an attacker cannot use this key to impersonate any of the users. Thus we have the following condition for KCI resistance:
+\begin{align*}
+    & (\forall \text{A},\text{B},\text{S} \in \mathcal{U}, \forall \text{k} \in \mathcal{K}. \text{S}_\text{A}\text{(A,S,k)} \land \text{R}_\text{L}\text{(A)} \land \text{S}_\text{B}\text{(B,A,k)} \implies \text{S}=\text{B} ) ~\land \\
+    %& \land \\
+    & (\forall \text{A},\text{B},\text{S} \in \mathcal{U}, \forall \text{k} \in \mathcal{K}. \text{S}_\text{A}\text{(A,B,k)} \land \text{R}_\text{L}\text{(A)} \land \text{S}_\text{B}\text{(B,S,k)} \implies \text{S}=\text{A} ) \; .
+\end{align*}
+
+\paragraph{\underline{UKS resistance.}} The UKS resistance consists of ensuring that if two users have agreed on a common session key, then they have the assurance that if neither key is compromised then no other user can impersonate either of them.
+\begin{align*}
+    &\forall \text{A},\text{B},\text{C},\text{S} \in \mathcal{U}, \forall \text{k} \in \mathcal{K}.
+    ~\text{S}_\text{A}\text{(A,S,k)} \land \text{S}_\text{B}\text{(B,C,k)} \implies \text{S}=\text{B} \land \text{C}=\text{A} \; .
+\end{align*}
+
+\subsubsection{Double-Ratchet Security Properties.} Regarding the KEM-DR protocol, we verify the classical security properties as well as the post-compromise recovery from~\cite{EC:AlwCorDod19}.
+
+\paragraph{\underline{Integrity.}} For each exchange, we verify that the message sent is indeed the message received thanks to the integrity provided by the AEAD scheme.
+\begin{align*}
+    &\forall \text{n} \in \mathcal{S}, \forall \text{m}_\text{1}, \text{m}_\text{2} \in \mathcal{M}, \forall \text{k} \in \mathcal{K}.
+    ~\text{I}_\text{S}\text{(n,m}_\text{1}\text{,s)} \land \text{I}_\text{R}\text{(n,}\text{m}_\text{2}\text{,s)} \land \lnot \text{K(k)} \implies \text{m}_\text{1}=\text{m}_\text{2} \; .
+\end{align*}
+
+\paragraph{\underline{PCR.}} As this property ensures that for a corruption during a given exchange it is enough to wait for two exchanges before the session key is secret again, it is necessary to check this condition on three consecutive exchanges. Then this base case allows to prove theorem~\ref{thm:PCS} by induction.
+
+\begin{align*}
+    & \forall \text{A},\text{B} \in \mathcal{U}, \forall \text{st} \in \Sigma.\\
+    &\text{H}_{\text{A,B}}\text{(st)} \land \text{R}\text{(B,0)} \land \text{H}_{\text{A,B}}\text{(st)} <_t \text{R}\text{(B,0)} 
+    \implies \lnot \text{K(st)} \lor \text{R(B,2)} \lor \text{R(A,1)} \; .
+\end{align*}
+
+\paragraph{\underline{weak state Forward Secrecy.}} Similarly, two consecutive exchanges of the KEM-DR protocol are sufficient to prove by induction the wsFS property in theorem~\ref
+{thm:wsFS}.
+\begin{align*}
+    & \forall \text{A},\text{B} \in \mathcal{U}, \forall \text{st} \in \Sigma. \\
+    & \text{FS(A,B,0,st)} \land \text{R(A,1)} \land \text{FS(A,B,0,st)} <_t \text{R(A,1)} 
+     \implies \lnot \text{K(st)} \lor \text{R(B,0)} \; .
+\end{align*}
+
+\subsection{Formal Verification Results}
+\label{sec:results}
+In Table~\ref{tab:tamarin-results} we present the results obtained from the automatic verification with Tamarin of the security properties considered for the PQ-X3DH and KEM-DR protocols.
+%We give in Table~\ref{tab:tamarin-results} results of Tamarin security proofs. Each security property for the KEM-X3DH protocol is proved automatically using Tamarin. However, the KEM-Double-Ratchet protocol is an iterative protocol hence we only prove in Table~\ref{tab:tamarin-results} the base cases for each property. Only wsFS and PCR properties impact previous or future states. On contrary properties that do not propagate are trivially proven. As such we prove in Theorem~\ref{thm:PCS} that PCR holds for any exchange block and in Theorem~\ref{thm:wsFS} that wsFS holds for any exchange block. Proofs of Theorems~\ref{thm:PCS} and~\ref{thm:wsFS} are respectively given in Appendixes~\ref{app:thm-PCS} and~\ref{app:thm-wsPS}.
+
+\begin{table}[!ht]
+    \centering
+        \caption{Results of Tamarin verification for PQ-X3DH and KEM-Double-Ratchet protocols.}
+        \label{tab:tamarin-results}
+		\resizebox{\linewidth}{!}{
+        \begin{tabular}{|c|c|c|c|c|c|c|c|c|c|}
+        \hline
+        \multirow{2}{*}{Protocols} & \multicolumn{2}{c|}{Integrity} & \multirow{2}{*}{Auth.} & \multicolumn{2}{|c|}{Imp. resistance} & \multicolumn{3}{c|}{Forward secrecy} & \multirow{2}{*}{PCR} \\
+        \cline{2-3} \cline{5-9}
+         & Instant & Delayed & & KCI & UKS & FS & wFS & wsFS &  \\
+         \hline
+         \hline
+         PQ-X3DH & \ding{55} & \ding{51} & \ding{51} & \ding{51} & \ding{51} & \ding{55} & \ding{51} & NA & NA \\
+         \hline
+         KEM-Double-Ratchet & \ding{51} & NA & NA & NA & NA & \ding{51} & NA & \ding{51} & \ding{51} \\
+         \hline
+        \end{tabular}
+	}
+\end{table}
+
+Since the KEM-DR protocol admits an arbitrary number of interactions, properties impacting previous or future states of the protocol require an additional proof in order to holds for any exchange of the protocol. Only the PCR and wsFS properties fall in this case, the others are trivially proven. 
+
+\begin{theorem}[KEM-Double-Ratchet Post Compromise Security]
+\label{thm:PCS}
+For all user state $\text{State}_n$ with $n > 0$:
+\begin{align*}
+& \texttt{Compromised}(\text{State}_n) \land \lnot \ \texttt{Revealed}(\text{State}_{n+1}) \land \lnot \ \texttt{Revealed}(\text{State}_{n+2}) \\
+& \implies \texttt{Healed}_{n}(\text{State}_{n+2}) \; .
+\end{align*}
+\end{theorem}
+\begin{proof}
+We prove theorem~\ref{thm:PCS} by induction for all integer $n > 0$. The base case has been proven using Tamarin. Suppose that the theorem is true for all integer $k < n$, and that: 
+\[\lnot \ \texttt{Healed}_{n+1}(\text{State}_{n+3})\quad\mbox{with}\quad \lnot \ \texttt{Compromised}(\text{State}_{n+3})\] 
+By definition of a healed state, for all $n > 2$ we have: 
+\[\texttt{ Healed}(\text{State}_n) \iff \exists k<n,\ \  \texttt{Revealed}(\text{State}_k)\  \land \lnot \ \texttt{Compromised}(\text{State}_n) \]
+And thus:
+\[
+\begin{split}
+&\lnot \ \texttt{Healed}(\text{State}_{n+3})) \implies \forall k<n+3, \\ 
+&\texttt{Revealed}(\text{State}_k) \lor  \texttt{Compromised}(\text{State}_{n+3})
+\end{split}
+\]
+Since the knowledge of the $\text{State}_k$ decapsulation secret key implies the knowledge of the $\text{State}_{k+1}$ exchanged key, we have:
+\[\quad \texttt{Revealed}(\text{State}_k) \implies \texttt{Compromised}(\text{State}_k)\ \land \  \texttt{Compromised}(\text{State}_{k+1})\]
+And then:
+\[
+\begin{split}
+& \lnot \ \texttt{Healed}(\text{State}_{n+3}) \implies \forall k<n+3,\\  
+& \texttt{ Compromised}(\text{State}_k)\ \land \  \texttt{Compromised}(\text{State}_{k+1})\ \lor \  \texttt{Compromised}(\text{State}_{n+3})
+\end{split}
+\]
+Finally, by induction hypothesis: 
+\[
+\begin{split}
+& \lnot \ \texttt{Healed}(\text{State}_{n+1})) \\
+&\implies \lnot \ \texttt{Compromised}(\text{State}_{n+1}) \lor \ \texttt{Revealed}(\text{State}_{n+2}) 
+\lor \texttt{Revealed}(\text{State}_{n+3})
+\end{split}
+\]
+\end{proof}
+
+We introduce the notion of \emph{healing ball} in definition~\ref{def:healing-ball} to prove the wsFS property in theorem~\ref{thm:wsFS}.
+
+\begin{definition}[Healing Ball]
+\label{def:healing-ball}
+We define the \emph{healing ball} $B_h$ for all user state $S \in \Gamma$, as $B_h(S) = \{\gamma \in \Gamma~|~\texttt{Revealed}(\gamma) \implies \lnot \ \texttt{Healed}(S)\}$.
+\end{definition}
+
+\begin{theorem}[KEM-Double-Ratchet weak state Forward Secrecy]
+\label{thm:wsFS}
+For all user state $\text{State}_n$ with $n \ge 2$: 
+\begin{align*}
+& \texttt{Compromised}(\text{State}_{n}) \land \left(\forall k < n,\ S \in B_h(\text{State}_k)\mbox{, } \lnot \ \texttt{Revealed}(S)\right)\\
+& \implies \lnot \ \texttt{Compromised}(\text{State}_k) \; .
+\end{align*}
+\end{theorem}
+
+\begin{proof}
+We prove theorem~\ref{thm:wsFS} by induction for all integer $n > 1$. The base case has been proven using Tamarin. Suppose that the theorem is true for all integer $\ell \le n$, and that $\text{State}_{n+1}$ has been compromised. Then, we have:
+\[
+\texttt{Compromised}(\text{State}_{n+1}) \implies \texttt{Revealed}(\text{State}_{n}) \lor \texttt{Revealed}(\text{State}_{n+1}) \]
+and by definition, for all $\ell$:
+\[\texttt{Revealed}(\text{State}_\ell) \implies \texttt{Compromise}(\text{State}_\ell) \]
+If $\text{State}_n$ has been revealed and not $\text{State}_{n+1}$, we apply the induction hypothesis.
+Now suppose that $\text{State}_{n+1}$ has been revealed but not $\text{State}_n$, we then use the fact that KEM.decaps is supposed ideal by Tamarin and then deterministic, so regarding the backward analysis $\text{State}_{n+1}$ is a deterministic function of $\text{State}_n$. Finally, if both states have been revealed, then we apply the induction hypothesis.
+\end{proof}
