@@ -2,6 +2,17 @@
 
 \section{Accréditations anonymes post-quantique} % (fold)
 
+Afin de parer à la menace que représenterait l’essor des calculateurs quantiques sur nombre de systèmes cryptographiques
+(et non des moindres) en usage actuellement, d’importants efforts sont faits pour que voient le jour et se développent des
+systèmes dits « post-quantiques » de chiffrement, d’authentification et d’identification, analogues aux systèmes classiques
+mais qui résisteraient à des attaques rendues possibles par de tels calculateurs, y compris si ces derniers venaient à
+devenir particulièrement puissants.
+C’est avec l’intention de m’associer à ces efforts que je me suis penché sur les systèmes d’accréditations anonymes. Ces
+systèmes permettent à un fournisseur de services de vérifier les droits d’un utilisateur à bénéficier de ces services en
+vertu de la garantie – donnée antérieurement par une autorité de confiance – du fait que cet utilisateur possède bien
+les attributs requis, cela en préservant le secret des autres attributs, tels que l’identité de l’utilisateur, dont l’autorité
+aurait eu à prendre connaissance, cela en permettant aussi la levée de l’anonymat de l’utilisateur par un autre agent,
+disposant d’une clef secrète spéciale.
 
 En cryptographie, une accréditation anonyme est une preuve numérique de détention de l’attestation par une autorité reconnue de certaines propriétés liées à son identité, qui n’implique pas la révélation de ladite identité mais uniquement de certaines propriétés utiles à la situation. Un billet pour un concert peut être vu une accréditation anonyme dans le monde physique s’il ne comporte pas le nom de son possesseur. Comme il est, en général, la preuve qu’une place à bien été payée pour son possesseur, il confère à son possesseur le droit d’accéder au spectacle. Le vendeur de places de spectacle est alors l’autorité qui atteste, par la délivrance de billet, du droit à assister au spectacle. Si un cinéma, remplissant le rôle d’une autorité reconnue, procède à une vérification de l’âge de l’acheteur, l’ouvreur ne fait que vérifier les billets et le spectateur est pour lui anonyme. On comprends bien dans ce cas qu’il y a trois rôles différents : celui de l’utilisateur, lié à l’identité, qui souvent correspond à un véritable être humains qui cherche à préserver au mieux sa vie privée, celui de l’autorité, qui a vue sur tous les éléments permettant justement l’attestation de certaines propriétés relatives au possesseur de l’identité, celui du vérificateur, à qui l’utilisateur prouve uniquement les propriétés nécessaires. Un autre rôle peut exister :\par
 Notre protocole d’accréditations anonymes est fondée sur une primitive appelée signature de groupe. Ce système permet aux membres d’un groupe de signer au nom du groupe, tout en restant anonyme au sein de ce groupe.\par 

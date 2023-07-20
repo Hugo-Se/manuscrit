@@ -43,7 +43,7 @@ Par exemple, deux personnes pouvaient convenir qu’à chacune des lettres d’u
 souhaiteraient transmettre serait substituée une autre lettre de l’alphabet selon une table de
 correspondance définit à l’avance : qu’ainsi le A se verrait, en chacune de ses occurences,
 remplacer par un G, que le B serait remplacé par un A, le C par un M,
-et ainsi de suite, le mot « BAC » devenant alors « AGM » dans ce cas, suite
+et ainsi de suite, le mot « BAC » devenant alors ici « AGM », suite
 de lettres que les deux personnes seraient en mesure non seulement de produire, mais aussi de
 déchiffrer aisément en appliquant la table de substitution dans le sens inverse.
 La correspondance entre les lettres du clair et du chiffré est dans cet exemple l’information qui
@@ -91,10 +91,11 @@ De ces deux approches du chiffrement, la première a fini par être largement re
 cryptographes.
 L’article de Kerckhoffs exprimait déjà, au deuxième chef d’une liste de six « \emph{desiderata} de
 la cryptographie militaire », la nécessité que le système « n’exige pas le secret et qu’il puisse
-sans inconvénient tomber entre les mains de l’ennemi ».
-Par secret, Kerckhoffs entend « non la clef proprement dite, mais ce qui constitue la partie
-matérielle du système » --- ce qui correspondrait, à l’ère numérique, à l'algorithme de chiffrement
---- car, explique-t-il, « il n’est pas nécessaire de se créer des fantômes imaginaires et de mettre
+sans inconvénient tomber entre les mains de l’ennemi » (ici, le système est ce qui correspondrait, à
+l’ère numérique, à l'algorithme de chiffrement).
+%Par secret, Kerckhoffs entend « non la clef proprement dite, mais ce qui constitue la partie
+%matérielle du système » --- 
+En effet, l’auteur explique qu’« il n’est pas nécessaire de se créer des fantômes imaginaires et de mettre
 en suspicion l’incorruptibilité des employés ou agents subalternes, pour comprendre que, si un
 système exigeant le secret se trouvait entre les mains d’un trop grand nombre d’individus, il
 pourrait être compromis à chaque engagement auquel l’un ou l’autre d’entre eux prendrait part ».
@@ -152,13 +153,18 @@ Par l’emploi d’un chiffrement dit \emph{asymétrique}, deux individus ou dav
 Il leur faut pour cela être chacun pourvus de deux clefs propres, l’une publique, connaissable des autres correspondants, l’autre privée, secrète. 
 Imaginons que l’un de ces individus, qu’on appellera Alice, entreprenne d’envoyer un message chiffré à un autre individu nommé Benoît. C’est la clef publique de Benoît qui doit être employée par Alice pour chiffrer le message qu’elle lui destine, mais c’est la clef privée de Benoît, qu’il est normalement seul à posséder, que celui-ci doit utiliser pour déchiffrer le message qui lui est adressé.
 
-Ces systèmes asymétriques reposent sur la difficulté de résoudre des problèmes mathématiques dits
-« difficiles ».
-Or, ces problèmes, comme le problème du logarithme discret ou le problème de la factorisation de
-grands entiers, pourraient ne plus être suffisamment difficiles dans certaines conditions liées au
+La sécurité de ces systèmes asymétriques repose sur la difficulté de résoudre certains problèmes mathématiques.
+Or, ces problèmes, comme celui du logarithme discret ou celui de la factorisation de
+grands entiers, pourraient ne plus être suffisamment difficiles dans les conditions liées au
 développement potentiel des calculateurs quantiques.
-De nombreux systèmes cryptographiques utilisés actuellement reposent sur ces problèmes, considéré maintenant comme potentiellement vulnérables.
-C’est pourquoi il est impératif de parer à cette menace et de trouver à tous les systèmes dits « classiques » des adaptations résistantes à ces possibilités de calculs potentielles, qui soient suffisamment efficaces pour être utilisées dans le monde réel.
+%De nombreux systèmes cryptographiques utilisés actuellement reposent sur ces problèmes, considéré maintenant comme potentiellement vulnérables.
+Afin de parer à la menace que représenterait l’essor de ces calculateurs quantiques sur nombre de ces systèmes, d’importants efforts sont faits pour que voient le jour et se développent des
+systèmes dits « post-quantiques » de chiffrement, d’authentification et d’identification, analogues aux systèmes classiques
+mais qui résisteraient à des attaques rendues possibles par de tels calculateurs, y compris si ces derniers venaient à
+devenir particulièrement puissants.
+%C’est pourquoi il est impératif de parer à cette menace et de trouver à tous les systèmes dits « classiques » des adaptations résistantes à ces possibilités de calculs nouvelles, qui soient suffisamment efficaces pour être utilisées dans le monde réel.
+
+
 
 
 %Une fois le message reçu, il ne reste à Benoît que de déchiffrer, avec sa clef privée
