@@ -5,16 +5,15 @@
 
 Le protocole Signal est un protocole de chiffrement de bout en bout conçu pour assurer une communication sécurisée et privée. Développé par Open Whisper Systems, il est utilisé dans des applications de messagerie populaires comme Signal, WhatsApp et Facebook Messenger.\par
 
-L'un des principaux algorithmes du protocole Signal est son utilisation de l'algorithme X3DH, ou « Triple Diffie-Hellman étendu ». X3DH est un protocole d'établissement de clés qui permet à deux parties, même si elles n'ont pas de clé de session commune, d'établir une telle clé de manière sécurisée et privée.\par
+L'un des principaux sous-protocoles de Signal est X3DH, le « Triple Diffie-Hellman étendu ». X3DH est un protocole d'établissement de clefs qui permet à deux parties, même si elles n'ont pas de clef de session commune, de convenir d’une telle clef de manière sécurisée et privée.\par
 
-X3DH utilise une combinaison de clés de longue durée et de clés éphémères pour assurer à la fois la sécurité et la confidentialité des communications. Il implique trois étapes d’échange de clés Diffie-Hellman, d’où le nom « Triple Diffie-Hellman ». Cela offre la sécurité en avançant, ce qui signifie que si une clé privée est compromise à un moment donné, cela ne compromet pas les sessions passées car chaque session utilise une nouvelle clé éphémère.\par
+X3DH utilise une combinaison de clefs de longue durée et de clefs éphémères pour assurer à la fois la sécurité et le secret des communications. Il implique trois étapes d’échange de clefs Diffie-Hellman, d’où le nom « Triple Diffie-Hellman ». Cela offre la sécurité en avançant, ce qui signifie que si une clef privée est compromise à un moment donné, cela ne compromet pas les sessions passées car chaque session utilise une nouvelle clef éphémère.\par
 
-En plus de X3DH, le protocole Signal utilise un algorithme appelé le algorithme du double cliquet (\emph{double ratchet} en anglais) pour offrir une sécurité encore plus forte et une plus grande confidentialité. Une fois que les deux parties ont établi une clé de session commune en utilisant X3DH, elles utilisent l'algorithme du double cliquet pour échanger des messages.\par
+En plus de X3DH, le protocole Signal utilise un algorithme appelé le algorithme du double cliquet (\emph{double ratchet} en anglais) pour offrir une sécurité encore plus forte et une plus grande confidentialité. Une fois que les deux parties ont établi une clef de session commune en utilisant X3DH, elles utilisent l'algorithme du double cliquet pour échanger des messages.\par
 
-L'algorithme du double cliquet est conçu pour renouveler automatiquement les clés de chiffrement après chaque message envoyé, en s'assurant que même si une clé est compromise, seuls les messages futurs seront compromis, pas les messages passés.
-%C'est ce qu'on appelle la « future secrecy » ou  « post-compromise security ».\par
+L'algorithme du double cliquet est conçu pour renouveler automatiquement les clefs de chiffrement après chaque message envoyé, en s'assurant que même si une clef est compromise, seuls les messages futurs seront compromis, pas les messages passés.
 
-En somme, le protocole Signal, en combinant X3DH et l'algorithme du double cliquet, offre une sécurité renforcée, en assurant à la fois la confidentialité des communications et une résilience robuste face à la compromission potentielle des clés.\par
+En somme, le protocole Signal, en combinant X3DH et l'algorithme du double cliquet, offre une sécurité renforcée, en assurant à la fois la confidentialité des communications et une résilience robuste face à la compromission potentielle des clefs.\par
 
 
 % section signal (end)

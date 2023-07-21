@@ -1,6 +1,6 @@
 % !TEX root = introduction_master.tex
 
-\section{Cryptographie post-quantique et réseaux euclidiens} % (fold)
+\section{La cryptographie fondée sur les réseaux euclidiens} % (fold)
 \label{sec:reseaux}
 
 %\usepackage{amsmath,amssymb}
@@ -11,7 +11,7 @@
 %\mathcal{L} = \left\{ \sum_{i=1}^n z_i \mathbf{b}_i : z_i \in \mathbb{Z} \right\}.
 %\]
 
-\subsection{Définitions}
+\subsection{Définitions d’un réseau euclidien}
 Un \emph{réseau euclidien} $\mathcal{L}$ est, pour un entier naturel $n$, un sous-groupe discret de l’espace vectoriel $\mathbb{R}^n$ pour lequel il existe une base $(\mathbf{b}_i)_{i\in[\![1, n]\!]}$ de $\mathbb{R}^n$ telle que
 \[
 \mathcal{L} =\left\{ \sum^n_{i=1} x_i\,\mathbf{b}_i : x_i \in \mathbb Z\right\}\text{.}
@@ -39,9 +39,10 @@ Ajtai démontre que si un algorithme probabilistique qui opère en temps polynom
 probabilité de $1/2$ au moins, un vecteur court dans un réseau tiré aléatoirement dans cette classe,
 il existe un autre algorithme en temps polynomial qui résout les trois problèmes difficiles avec une
 probabilité qui tend exponentiellement vers $1$.
-En démontrant ainsi la difficulté du problème du plus court vecteur avec des instances aisément
+En démontrant ainsi la difficulté du problème du plus court vecteur, et des deux autres problèmes, avec des instances aisément
 engendrables, Ajtai a ouvert la voie à la création de primitives cryptographiques reposant sur des
 problèmes attachés aux réseaux euclidiens.
+%%%%%%%%%%%%%%%%%%%%%%%% et des deux autres problèmes 
 
 
 
@@ -52,25 +53,18 @@ problèmes attachés aux réseaux euclidiens.
 %En 1996, Miklós Ajtai définit une classe de réseaux euclidiens telle 
 
 
-\vskip1cm
-\hrule
-\vskip1cm
-Le problème du plus proche vecteur (CVP pour \emph{closest vector problem}) est un problème calculatoire fondamental associé aux réseaux euclidiens. Étant donné un réseau $\mathcal{L}$ dans $\mathbb{R}^n$ généré par une base $\{\mathbf{b}_1, \mathbf{b}_2, \ldots, \mathbf{b}_n\}$ et un point quelconque $\mathbf{t}$ dans $\mathbb{R}^n$, le problème CVP demande de trouver le vecteur dans $\mathcal{L}$ qui est le plus proche de $\mathbf{t}$ en termes de distance euclidienne.
+\subsection{Le problème du vecteur le plus proche} 
+Le problème du vecteur le plus proche (ou CVP pour \emph{closest vector problem}) est un problème calculatoire fondamental associé aux réseaux euclidiens. Étant donné un réseau $\mathcal{L}$ dans $\mathbb{R}^n$ généré par une base $\{\mathbf{b}_1, \mathbf{b}_2, \ldots, \mathbf{b}_n\}$ et un point quelconque $\mathbf{t}$ dans $\mathbb{R}^n$, le problème CVP demande de trouver le vecteur dans $\mathcal{L}$ qui est le plus proche de $\mathbf{t}$ en termes de distance euclidienne.
 
-Formellement, nous cherchons un vecteur $\mathbf{v}$ dans $\mathcal{L}$ tel que $\|\mathbf{v}-\mathbf{t}\| = \min_{\mathbf{w} \in \mathcal{L}} \|\mathbf{w}-\mathbf{t}\|$.
+Formellement, il s’agit de chercher un vecteur $\mathbf{v}$ dans $\mathcal{L}$ tel que $\|\mathbf{v}-\mathbf{t}\| = \min_{\mathbf{w} \in \mathcal{L}} \|\mathbf{w}-\mathbf{t}\|$.
 
-Le CVP est connu pour être NP-difficile. De plus, il a été démontré que la version d'approximation du CVP, où l'on cherche un vecteur qui est presque le plus proche de $\mathbf{t}$, est également difficile pour certaines approximations. 
+Ce problème est connu pour être NP-difficile. En outre, il a été démontré que la version d'approximation du problème, où l'on cherche un vecteur qui est presque le plus proche de $\mathbf{t}$, est également difficile pour certaines approximations. 
 
-\vskip1cm
-\hrule
-\vskip1cm
+\subsection{Le problème du plus court vecteur}
 
+Le problème du plus court vecteur (ou SVP pour \emph{Shortest Vector Problem}) dans un réseau euclidien est un autre problème calculatoire supposé difficile. Étant donné un réseau $\mathcal{L}$ dans $\mathbb{R}^n$ généré par une base $\{\mathbf{b}_1, \mathbf{b}_2, \ldots, \mathbf{b}_n\}$, ce problème demande de trouver le vecteur non nul le plus court dans $\mathcal{L}$. Formellement, il s’agit de chercher un vecteur $\mathbf{v}$ dans $\mathcal{L}$ tel que $\|\mathbf{v}\| = \min_{\mathbf{w} \in \mathcal{L} \setminus \{ \mathbf{0} \}} \|\mathbf{w}\|$. Ce problème est NP-difficile, et même sa version d'approximation est difficile dans certains cas. 
 
-Le problème du plus court vecteur (SVP pour \emph{Shortest Vector Problem}) dans un réseau euclidien est un autre problème calculatoire supposé difficile. Étant donné un réseau $\mathcal{L}$ dans $\mathbb{R}^n$ généré par une base $\{\mathbf{b}_1, \mathbf{b}_2, \ldots, \mathbf{b}_n\}$, le SVP demande de trouver le vecteur non nul le plus court dans $\mathcal{L}$. Formellement, nous cherchons un vecteur $\mathbf{v}$ dans $\mathcal{L}$ tel que $\|\mathbf{v}\| = \min_{\mathbf{w} \in \mathcal{L} \setminus \{ \mathbf{0} \}} \|\mathbf{w}\|$. Le SVP est NP-difficile, et même la version d'approximation du SVP est difficile pour certaines approximations.
-
-\vskip1cm
-\hrule
-\vskip1cm
+\subsection{Le problème de l’apprentissage avec erreurs}
 
 Le problème de l’\emph{apprentissage avec erreurs}, communément appelé problème LWE (de l’anglais \emph{Learning With Errors}) est un problème calculatoire supposé difficile introduit en 2005 par Oded Regev~\cite{STOC:Regev05}, ce qui lui a valu d’obtenir le prix Gödel en 2018.
 
@@ -78,14 +72,15 @@ Le problème de l’\emph{apprentissage avec erreurs}, communément appelé prob
 % avéré être un excellent candidat pour la construction de systèmes cryptographiques résistants aux attaques par ordinateur quantique.
 
 
-Soit $q$ un entier naturel et $\chi$ une distribution de probabilité sur l'ensemble des entiers. Le problème LWE consiste à distinguer entre deux types de paires $(\mathbf{a}, b)$, où $\mathbf{a}$ est un vecteur à $n$ composantes tiré uniformément au hasard dans $\mathbb{Z}_q^n$ et $b$ est un scalaire dans $\mathbb{Z}_q$. Dans le premier type de paire, $b$ est égal à $\langle\mathbf{a},\mathbf{s}\rangle + e \mod q$ pour un certain vecteur secret $\mathbf{s}$ dans $\mathbb{Z}_q^n$ et un bruit $e$ tiré de la distribution $\chi$. Dans le deuxième type de paire, $b$ est tiré uniformément au hasard dans $\mathbb{Z}_q$.
+Soit $q$ un entier naturel et $\chi$ une distribution de probabilité sur l'ensemble des entiers. Le problème de décision LWE consiste à distinguer entre deux types de paires $(\mathbf{a}, b)$, où $\mathbf{a}$ est un vecteur à $n$ composantes tiré aléatoirement, selon la distribution uniforme, dans $\mathbb{Z}_q^n$ (c’est-à-dire dans les vecteurs à $n$ composantes d’entiers relatifs modulo $q$) et $b$ est un scalaire dans $\mathbb{Z}_q$. Dans le premier type de paire, $b$ est égal à $\langle\mathbf{a},\mathbf{s}\rangle + e \mod q$ pour un certain vecteur secret $\mathbf{s}$ dans $\mathbb{Z}_q^n$ et un bruit $e$ tiré selon la distribution $\chi$. Dans le deuxième type de paire, $b$ est tiré selon la distribution uniforme dans $\mathbb{Z}_q$.
 
 
 Les réseaux euclidiens sont un élément clef dans la preuve de la sécurité du problème LWE. En particulier, Regev a montré que si certaines variantes du problème du plus court vecteur (SVP) et du problème du plus proche vecteur (CVP) dans les réseaux euclidiens sont difficiles à résoudre, alors le problème LWE est aussi difficile à résoudre.
 
-Cela a été démontré en montrant une réduction quantique de ces problèmes de réseaux euclidiens vers le problème LWE. En d'autres termes, si nous avions un algorithme efficace pour résoudre le problème LWE, alors nous pourrions utiliser cet algorithme pour résoudre ces problèmes de réseaux euclidiens en temps polynomial, en supposant que nous ayons accès à un ordinateur quantique.
+Cela a été démontré en procédant à une réduction quantique de ces problèmes de réseaux euclidiens vers le problème LWE. En d'autres termes, si nous avions un algorithme efficace pour résoudre le problème LWE, alors nous pourrions utiliser cet algorithme pour résoudre ces problèmes de réseaux euclidiens en temps polynomial, en supposant que nous ayons accès à un ordinateur quantique.
 
 
-Le problème LWE a trouvé de nombreuses applications en cryptographie, notamment dans la construction de systèmes de chiffrement, de signatures numériques et de protocoles de transfert de clef. La sécurité de ces constructions repose sur la difficulté supposée du problème LWE, qui à son tour est liée à la difficulté de certains problèmes dans les réseaux euclidiens. Cela fait du problème LWE un outil précieux pour la construction de systèmes cryptographiques résistants aux attaques par ordinateur quantique.
+Le problème LWE a trouvé de nombreuses applications en cryptographie, notamment dans la construction de systèmes de chiffrement, de signatures numériques et de protocoles de transfert de clef. La sécurité de ces constructions repose sur la difficulté supposée du problème LWE, qui à son tour est liée à la difficulté de certains problèmes dans les réseaux euclidiens.
+%Cela fait du problème LWE un outil précieux pour la construction de systèmes cryptographiques résistants aux attaques par ordinateur quantique.
 
 % section reseaux (end)

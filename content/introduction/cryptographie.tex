@@ -1,5 +1,8 @@
 % !TEX root = introduction_master.tex
 
+%\usepackage{relsize}
+\renewcommand*{\UrlFont}{\ttfamily\smaller\relax}
+
 \section{La cryptographie} % (fold)
 \label{sec:cryptographie}
 
@@ -7,19 +10,19 @@
 Dans son \emph{Dictionnaire de la langue française}, Émile Littré définissait la cryptographie comme
 l’« Art d'écrire en caractères secrets qui sont ou de convention ou le résultat d'une transposition
 des lettres de l'alphabet\footnote{\emph{Dictionnaire de la langue française}, d’Émile Littré,
-édition de 1873, tome premier, page 922, entrée « CRYPTOGRAPHIE ».} ».
+édition de 1873, tome premier, page 922, entrée « cryptographie ».} ».
 Il est vrai qu’en général, en cette seconde moitié  du \textsc{xix}ᵉ siècle, pour rendre un message
 inintelligible au cas où celui-ci, confidentiel, viendrait à être intercepté, on écrivait un
 caractère pour un autre, ou on remplaçait une suite de lettres par une autre (par exemple, selon une
 substitution dite polyalphabétique) ; la cryptographie était alors, pour ainsi dire, balbutiante.
-Pourtant, à cette époque déjà, dans ses \emph{Recherches arithmétiques}\footnote{}, Carl Friedrich
+Pourtant, à cette époque déjà, dans ses \emph{Recherches arithmétiques}~\cite{gauss1801}, Carl Friedrich
 Gauss avait jeté les bases de la théorie des nombres moderne, et Évariste Galois, dans son fameux
-mémoire\footnote{} --- publié après sa mort par le mathématicien Joseph Liouville ---, celles de la
-théorie qui portera son nom.
+mémoire --- publié après sa mort par le mathématicien Joseph Liouville~\cite{galois1846} ---,
+celles de la théorie qui portera son nom.
 
 La constatation de l’insuffisante valeur de la cryptographie du {\sc xix}ᵉ siècle se retrouve dans
 l’article en deux parties d’Auguste Kerckhoffs, paru en 1883, intitulé \emph{La cryptographie
-militaire}\footnote{}, où le cryptographe s’étonne de voir savants et professeurs « enseigner et
+militaire}~\cite{kerckhoffs1883premier}~\cite{kerckhoffs1883second}, où le cryptographe s’étonne de voir savants et professeurs « enseigner et
 recommander pour les usages de la guerre des systèmes dont un déchiffreur tant soit peu expérimenté
 trouverait certainement la clef en moins d’une heure de temps » ; l’auteur ne voit guère
 d’explication à cet « excès de confiance dans certains chiffres » que par « l’abandon dans lequel la
@@ -117,55 +120,55 @@ Ce système résulte d’un concours public du NIST\footnote{Le NIST est l’Ins
 et de la technologie des États-Unis.} dont l’ambition affichée était de choisir un algorithme de
 chiffrement, dans plusieurs déclinaisons déterminées précisément pour que le système fût à la fois
 robuste et efficace, d’en faire une norme dont les spécifications%
-\footnote{https://csrc.nist.gov/csrc/media/publications/fips/197/final/documents/fips-197.pdf}
+\footnote{\url{https://csrc.nist.gov/csrc/media/publications/fips/197/final/documents/fips-197.pdf}}
 fussent accessibles à tous, et d’en permettre un usage non dissimulé comme celui qu’en fait par
 exemple l’environnement de messagerie
-Signal\footnote{https://signal.org/docs/specifications/doubleratchet/doubleratchet.pdf}, dont le
+Signal\footnote{\url{https://signal.org/docs/specifications/doubleratchet/doubleratchet.pdf}}, dont le
 code-source est ouvert.
 De ce concours du NIST est sorti gagnant l’algorithme de Rijndael, du nom de ses deux concepteurs
-Joan Daemen et Vincent Rijmen dans trois déclinaisons spécifiques correspondant à trois tailles de
+Joan Daemen et Vincent Rijmen, dans trois déclinaisons spécifiques correspondant à trois tailles de
 clef différentes : 128, 192 et 256 bits. 
 Le libre accès aux spécifications du système AES a permis la réalisation d’analyses précises de
 celui-ci par le monde de la recherche et la publication de méthodes d’attaques qui, bien que de
 nature à le fragiliser un peu en certains aspects, ne se sont pas montrées suffisamment
 puissantes pour le rendre caduc.
-% à le rendre ?
+
 Notons cependant qu’il apparaît, au nombre des révélations dont fut à l’orgine Edward Snowden, que
 la NSA\footnote{\emph{National Security Agency}, «Agence nationale de la sécurité » aux États-Unis.},
 tout en recommandant l’utilisation d’AES, s’est employée à essayer de trouver des attaques sur ce
 système ; il ne semble pas déraisonnable de penser qu’un tel organisme de renseignement pourrait
 garder pour lui toute trouvaille offensive déterminante dans un système de chiffrement à
 spécifications publiques.
-%C’est un risque qui n’est pas complètement à exclure.
-%On parle souvent de la cryptographie comme un art plutôt qu’une science.
-%Juger de la probabilité d’un tel scénario est souvent difficile. On parle souvent de la
-%cryptographie comme un art
 
 Pour que des systèmes informatiques, directement liés à des êtres humains ou non, puissent
 employer un système de chiffrement symétrique tel qu’AES, il est nécessaire comme nous l’avons dit,
 qu’ils aient en commun une clef.
 Or, si ces systèmes sont distants et sont supposés communiquer de façon sécurisé pour la première
 fois, comment faire en sorte qu’ils puissent convenir d’une clef qui doit être secrète et le rester
-longtemps ?
-
+longtemps ?\par
 C’est ce que permet la cryptographie \emph{asymétrique}.
 Par l’emploi d’un chiffrement dit \emph{asymétrique}, deux individus ou davantage peuvent établir une communication secrète sans pourtant détenir une clef commune.
 Il leur faut pour cela être chacun pourvus de deux clefs propres, l’une publique, connaissable des autres correspondants, l’autre privée, secrète. 
-Imaginons que l’un de ces individus, qu’on appellera Alice, entreprenne d’envoyer un message chiffré à un autre individu nommé Benoît. C’est la clef publique de Benoît qui doit être employée par Alice pour chiffrer le message qu’elle lui destine, mais c’est la clef privée de Benoît, qu’il est normalement seul à posséder, que celui-ci doit utiliser pour déchiffrer le message qui lui est adressé.
-
+Imaginons que l’un de ces individus, qu’on appellera Alice, entreprenne d’envoyer un message chiffré à un autre individu nommé Benoît. C’est la clef publique de Benoît qui doit être employée par Alice pour chiffrer le message qu’elle lui destine, mais c’est la clef privée de Benoît, qu’il est normalement seul à posséder, que celui-ci doit utiliser pour déchiffrer le message qui lui est adressé.\par
 La sécurité de ces systèmes asymétriques repose sur la difficulté de résoudre certains problèmes mathématiques.
 Or, ces problèmes, comme celui du logarithme discret ou celui de la factorisation de
-grands entiers, pourraient ne plus être suffisamment difficiles dans les conditions liées au
-développement potentiel des calculateurs quantiques.
-%De nombreux systèmes cryptographiques utilisés actuellement reposent sur ces problèmes, considéré maintenant comme potentiellement vulnérables.
-Afin de parer à la menace que représenterait l’essor de ces calculateurs quantiques sur nombre de ces systèmes, d’importants efforts sont faits pour que voient le jour et se développent des
+grands entiers, pourraient ne plus être suffisamment difficiles pour qui aurait à sa disposition la puissance de calculateurs quantiques.\par
+Afin de parer à la menace que représenterait l’essor de tels calculateurs sur ces systèmes, d’importants efforts sont faits pour que voient le jour et se développent des
 systèmes dits « post-quantiques » de chiffrement, d’authentification et d’identification, analogues aux systèmes classiques
-mais qui résisteraient à des attaques rendues possibles par de tels calculateurs, y compris si ces derniers venaient à
-devenir particulièrement puissants.
+mais qui résisteraient à des attaques rendues possibles par ces calculateurs, y compris si ces derniers venaient à devenir particulièrement puissants.\par
+Parmi les constructions qui se développent en tant que systèmes cryptographiques post-quantiques, celles qui sont fondées sur les problèmes difficiles relatifs aux réseaux euclidiens s’imposent comme étant parmi les plus efficaces. C’est l’objet de la section suivante.
+
+
+%C’est un risque qui n’est pas complètement à exclure.
+%On parle souvent de la cryptographie comme un art plutôt qu’une science.
+%Juger de la probabilité d’un tel scénario est souvent difficile. On parle souvent de la
+%cryptographie comme un art
+
+%dans les conditions liées au
+%développement potentiel des calculateurs quantiques.
+%De nombreux systèmes cryptographiques utilisés actuellement reposent sur ces problèmes, considéré maintenant comme potentiellement vulnérables.
+
 %C’est pourquoi il est impératif de parer à cette menace et de trouver à tous les systèmes dits « classiques » des adaptations résistantes à ces possibilités de calculs nouvelles, qui soient suffisamment efficaces pour être utilisées dans le monde réel.
-
-
-
 
 %Une fois le message reçu, il ne reste à Benoît que de déchiffrer, avec sa clef privée
 
