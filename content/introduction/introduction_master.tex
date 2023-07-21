@@ -3,7 +3,20 @@
 \chapterquote{Introduction}{Call me Ishmael}{Moby-Dick}{Herman Melville} % (fold)
 \label{cha:introduction}
 
-\enluminure{C}{’est sur des protocoles cryptographiques} que repose la sécurité de nombreux systèmes de notre monde numérique. 
+%\enluminure{C}{’est sur des protocoles cryptographiques} que repose la sécurité de nombreux systèmes de notre monde numérique. 
+
+
+%Des transactions bancaires, aux systèmes de vote électroniques,
+%les propriétés
+
+%Ces systèmes sont régi par des protocoles, des ensembles de règles qui régissent le fonctionnement des systèmes cryptographique et l’intéraction des différents agent qui les composent.
+
+%C’est, pour une large part, sur des systèmes cryptographiques que reposent la sécurité.
+\enluminure{T}{ant} pour ce qui est de la préservation du secret des informations confidentielles que de l’authentification des entités numériques ou que de la vérification de l’intégrité des données, les systèmes cryptographiques apportent une sécurité indispensable à l’existence même du monde numérique tel que nous le connaissons. Ces systèmes cryptographiques sont fondées sur des protocoles, des ensembles de règles qui régissent le fonctionnement des agents d’un système et les interractions entre ces agents. Face à la menace que représente le possible essor des calculateurs quantiques sur certains des systèmes cryptographiques les plus utilisés actuellement, les protocoles se doivent d’évoluer afin d’offrir aux systèmes cryptographiques la résistance la mieux adaptée possible.
+
+%sont établis à partir de protocoles, qui sont des ensembles de règles (qui établissent)
+%codifie
+
 
 \onlyif{chap_minitoc}{
 \minitoc
@@ -15,15 +28,17 @@
 \subimport{./}{reseaux.tex}
 \subimport{./}{preuves_opaques.tex}
 \subimport{./}{accréditations_anonymes.tex}
+\subimport{./}{protocole_Signal.tex}
+\subimport{./}{contributions.tex}
 %\subimport{./}{history.tex}
-%\subimport{./}{contributions.tex}
 
 %% You can list your papers to make sure they appear in the bibliography
-\nocite{EPRINT:Doe36}
-\nocite{CCS:DDMS39}
-\nocite{NDSS:DoeSmi38}
+%\nocite{EPRINT:Doe36}
+%\nocite{CCS:DDMS39}
+%\nocite{NDSS:DoeSmi38}
 
 \iftoggle{biblatex}{
+\newpage
 
 %% List your contributions
 \printbibliography[heading=selfbib, category=self, title=My Contributions]

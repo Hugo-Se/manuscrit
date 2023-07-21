@@ -57,21 +57,44 @@
   %annote = ""
 }
 
-@InProceedings{IHMMSec:KTBBS21,
+%@InProceedings{IHMMSec:KTBBS21,
+%  author =       "Katarzyna Kapusta and
+%                  Vincent Thouvenot and
+%                  Olivier Bettan and
+%                  Hugo Beguinet and
+%                  Hugo Senet",
+%  title =        "A Protocol for Secure Verification of Watermarks Embedded into Machine Learning Models",
+%  pages =        "171--176",
+%  editor =       acisp22ed,
+%  booktitle =    "\emph{IH\&MMSec’21}~-- Proceedings of the 2021 ACM Workshop on Information Hiding and Multimedia Security",
+%  %volume =       acisp22vol,
+%  %address =      acisp22addr,
+%  %month =        acisp22month,
+%  publisher =    "Association for Computing Machinery",
+%  %series =       mylncs,
+%  year =         2021,
+%  doi =          "10.1145/3437880.3460409",
+%}
+
+@inproceedings{IHMMSec:KTBBS21,
   author =       "Katarzyna Kapusta and
                   Vincent Thouvenot and
                   Olivier Bettan and
                   Hugo Beguinet and
                   Hugo Senet",
-  title =        "A Protocol for Secure Verification of Watermarks Embedded into Machine Learning Models",
-  pages =        "171--176",
-  editor =       acisp22ed,
-  booktitle =    "\textit{IH\&MMSec’21}~-- Proceedings of the 2021 ACM Workshop on Information Hiding and Multimedia Security",
-  %volume =       acisp22vol,
-  %address =      acisp22addr,
-  %month =        acisp22month,
-  publisher =    "Association for Computing Machinery",
-  %series =       mylncs,
-  year =         2021,
-  doi =          "10.1145/3437880.3460409",
+%author = {Kapusta, Katarzyna and Thouvenot, Vincent and Bettan, Olivier and Beguinet, Hugo and Senet, Hugo},
+title = {A Protocol for Secure Verification of Watermarks Embedded into Machine Learning Models},
+year = {2021},
+isbn = {9781450382953},
+publisher = {Association for Computing Machinery},
+address = {New York, NY, USA},
+url = {https://doi.org/10.1145/3437880.3460409},
+doi = {10.1145/3437880.3460409},
+abstract = {Machine Learning is a well established tool used in a variety of applications. As training advanced models requires considerable amounts of meaningful data in addition to specific knowledge, a new business model separate models creators from model users. Pre-trained models are sold or made available as a service. This raises several security challenges, among others the one of intellectual property protection. Therefore, a new research track actively seeks to provide techniques for model watermarking that would enable model identification in case of suspicion of model theft or misuse. In this paper, we focus on the problem of secure watermarks verification, which affects all of the proposed techniques and until now was barely tackled. First, we revisit the existing threat model. In particular, we explain the possible threats related to a semi-honest or dishonest verification authority. Secondly, we show how to reduce trust requirements between participants by performing the watermarks verification on encrypted data. Finally, we describe a novel secure verification protocol as well as detail its possible implementation using Multi-Party Computation. The proposed solution does not only preserve the confidentiality of the watermarks but also helps detecting evasion attacks. It could be adopted to work with other authentication schemes based on watermarking, especially with image watermarking schemes.},
+booktitle = {Proceedings of the 2021 ACM Workshop on Information Hiding and Multimedia Security},
+pages = {171–176},
+numpages = {6},
+keywords = {machine learning watermarking, private intersection set, intellectual property protection, secure verification, multi-party computation},
+location = {Virtual Event, Belgium},
+series = {IH\&MMSec '21}
 }

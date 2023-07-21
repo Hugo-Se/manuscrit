@@ -18,27 +18,11 @@ En cryptographie, une accréditation anonyme est une preuve numérique de déten
 Notre protocole d’accréditations anonymes est fondée sur une primitive appelée signature de groupe. Ce système permet aux membres d’un groupe de signer au nom du groupe, tout en restant anonyme au sein de ce groupe.\par 
 La mise en gage permet à une partie de s'engager sur une certaine valeur tout en gardant cette valeur secrète. Les systèmes de mise en gage sont souvent comparés à des enveloppes scellées : l'émetteur place une valeur à l'intérieur de l'enveloppe et la scelle (l'engagement), puis à un moment ultérieur, l'émetteur peut ouvrir l'enveloppe pour révéler la valeur (la divulgation).\par
 
-\hrule
-
 Un bon système de mise en gage doit satisfaire deux propriétés principales :
 \begin{itemize}
   \item La propriété de dissimulation (ou secret) : cela garantit que, une fois l'engagement pris, aucune autre partie ne peut déterminer la valeur engagée avant que l'émetteur ne l'ouvre.
   \item La propriété de liaison (ou contraignante) : cela garantit que l'émetteur ne peut pas modifier la valeur engagée après avoir pris l'engagement, c'est-à-dire qu'il est « lié » à la valeur initiale.
 \end{itemize}
-
-\hrule
-Le protocole Signal est un protocole de chiffrement de bout en bout conçu pour assurer une communication sécurisée et privée. Développé par Open Whisper Systems, il est utilisé dans des applications de messagerie populaires comme Signal, WhatsApp et Facebook Messenger.\par
-
-L'un des principaux algorithmes du protocole Signal est son utilisation de l'algorithme X3DH, ou « Triple Diffie-Hellman étendu ». X3DH est un protocole d'établissement de clés qui permet à deux parties, même si elles n'ont pas de clé de session commune, d'établir une telle clé de manière sécurisée et privée.\par
-
-X3DH utilise une combinaison de clés de longue durée et de clés éphémères pour assurer à la fois la sécurité et la confidentialité des communications. Il implique trois étapes d’échange de clés Diffie-Hellman, d’où le nom « Triple Diffie-Hellman ». Cela offre la sécurité en avançant, ce qui signifie que si une clé privée est compromise à un moment donné, cela ne compromet pas les sessions passées car chaque session utilise une nouvelle clé éphémère.\par
-
-En plus de X3DH, le protocole Signal utilise un algorithme appelé le algorithme du double cliquet (\emph{double ratchet} en anglais) pour offrir une sécurité encore plus forte et une plus grande confidentialité. Une fois que les deux parties ont établi une clé de session commune en utilisant X3DH, elles utilisent l'algorithme du double cliquet pour échanger des messages.\par
-
-L'algorithme du double cliquet est conçu pour renouveler automatiquement les clés de chiffrement après chaque message envoyé, en s'assurant que même si une clé est compromise, seuls les messages futurs seront compromis, pas les messages passés.
-%C'est ce qu'on appelle la « future secrecy » ou  « post-compromise security ».\par
-
-En somme, le protocole Signal, en combinant X3DH et l'algorithme du double cliquet, offre une sécurité renforcée, en assurant à la fois la confidentialité des communications et une résilience robuste face à la compromission potentielle des clés.\par
 
 %On peut voir en la monnaie fiduciaire un analogue aux accréditations anonymes dans le monde physique.
 

@@ -1,39 +1,48 @@
 % !TEX root = introduction_master.tex
 
-\section{Contributions de cette thèse} % (fold)
+\section{Contributions} % (fold)
 \label{sec:contributions}
 
+J’ai participé, en préparant ma thèse, à la rédaction de trois articles de recherche en
+cryptographie et à l’écriture du code informatique d’un démonstrateur.
+Le premier de ces trois articles s’intitule \emph{A Protocol for Secure Verification of Watermarks
+Embedded into Machine Learning Models}~\cite{IHMMSec:KTBBS21} (« Un protocole de vérification sécurisée de tatouages
+numériques inclus dans des modèles d’apprentissage automatique ») ; j’ai choisi de concentrer ce
+mémoire sur les deux autres articles, que je présente dans cette section : ils s’intitulent
+\emph{Efficient Implementation of a Post-Quantum Anonymous Credential Protocol}~\cite{ARES:CRSS23}
+(« Mise en œuvre efficace d’un protocole post-quantique d’accréditations anonymes ») et \emph{Formal
+Verification of a Post-Quantum Signal Protocol with Tamarin}~\cite{BCRS} (« Vérification formelle
+d’un protocole Signal post-quantique avec Tamarin »).
+%que je présente dans cette section.
 
-\subsection[Premier article]{Mise en œuvre efficace d’un protocole d’accréditation anonymes post-quantique~\cite{ARES:CRSS23}} % (fold)
+
+\subsection[Premier article]{Mise en œuvre efficace d’un protocole post-quantique d’accréditations anonymes~\cite{ARES:CRSS23}} % (fold)
 \label{sub:paper_1}
 
 
-Je me suis employé à étudier les systèmes d’accréditations anonymes décrits dans
-la littérature et j’ai participé à l’élaboration d’un schéma d’accréditations anonymes post-quantiques optimisé, fondé
-sur les problèmes diﬀiciles liés aux réseaux euclidiens, pour ensuite contribuer au développement du premier ensemble de programmes
-informatique à sources ouvertes d’accréditations anonymes post-quantiques qui soit une démonstration directe de la
+Je me suis appliqué à étudier, dans la littérature, les systèmes de signatures de groupe et
+d’accréditations anonymes fondés sur les problèmes difficiles relatifs aux réseaux euclidiens, puis 
+j’ai participé à l’élaboration d’un schéma d’accréditations anonymes post-quantiques optimisé, pour
+ensuite contribuer au développement du premier programme informatique à sources
+ouvertes d’accréditations anonymes post-quantiques qui soit une démonstration directe de la
 compatibilité d’un tel schéma avec des cas d’usages concrets.
-C’est pour le projet européen PROMETHEUS que nous avons développé la permière version de ces programmes, en tant que démonstrateur.
-J’ai notamment programmé en langage C certains éléments de bas niveau comme la transformée de Fourier numérique (souvent désignée dans la littérature comme NTT, pour \textit{number theoretic transform}), qui permet la réalisation de multiplications rapides dans les anneaux de polynômes à coefficients entiers modulo un polynôme cyclotomique $X^d + 1$. Pour optimiser ce programme, j’ai mis en œuvre un système de compression reposant principalement sur le système de Colomb-Rice, particulièrement bien adapté à la compression des nombreuses valeurs gaussiennes utilisées dans notre schéma.
+C’est dans le cadre du projet européen H2020 PROMETHEUS que mon équipe et moi avons développé la permière version de ce programme, en tant que démonstrateur.
+J’y ai par exemple programmé, en langage C, certains éléments de bas niveau comme la transformée de Fourier numérique (souvent appelée NTT, pour \textit{number theoretic transform}), qui permet la réalisation de multiplications rapides dans les anneaux de polynômes à coefficients entiers, modulo un polynôme cyclotomique $X^d + 1$, que nous manipulons dans notre système. Ensuite, afin d’optimiser notre programme, j’ai notamment mis en œuvre un système de compression reposant principalement sur le système de Golomb-Rice, particulièrement bien adapté à la compression des nombreuses valeurs gaussiennes utilisées dans notre schéma.
 
 % subsection paper_1 (end)
 
 \subsection[Second article]{Vérification formelle d’un protocole Signal post-quantique avec Tamarin~\cite{BCRS}} % (fold)
 \label{sub:paper_2}
-Le protocole Signal, sur lequel se fondent de nombreux systèmes de messagerie instantanée actuels, étant lui aussi appelé
-à connaître une adaptation post-quantique, nous en avons proposé une vérification formelle réalisée avec
-Tamarin en mettant l’accent sur ses deux principales composantes, le protocole d’échange de clefs X3DH et le protocole
-du « double-cliquet » de gestion des clefs de session.\par
-Tamarin est un outil puissant qui permet de modéliser les protocoles cryptographiques, de définir des propriétés de sécurité et de vérifier automatiquement si ces propriétés, exprimées dans la logique du première ordre, sont satisfaites.\par
-Cette analyse de sécurité permet de montrer que, instancié avec le protocole d’échange de clefs de Hashimoto-Katsumata-Kwiatkowski-Prest~\cite{PKC:HKKP21} et le double-cliquet de Alwen, Coretti, et Dodis~\cite{EC:AlwCorDod19}, ce protocole Signal post-quantique présente des propriétés de sécurité équivalentes au protocole classique.
+Le protocole Signal, sur lequel se fondent de nombreux systèmes de messagerie instantanée actuels, est appelé à connaître une adaptation post-quantique.\par
+
+Nous avons proposé la première vérification symbolique, réalisée avec le prouveur Tamarin, de l’une des variantes post-quantiques de Signal présentées dans la littérature, en mettant l’accent sur ses deux principales composantes, le protocole d’échange de clefs X3DH et le protocole du « double-cliquet » de mise à jour des clefs de session.\par
+
+%Tamarin est un outil puissant qui permet de modéliser les protocoles cryptographiques, de définir des propriétés de sécurité et de vérifier automatiquement si ces propriétés, exprimées dans la logique du première ordre, sont satisfaites.\par
+Tamarin est un outil de preuve automatisée qui utilise la logique du premier ordre pour vérifier que, étant donnée une description d’un protocole sous forme de machine à états et étant données des propositions correspondant à des propriétés de sécurité, lesdites propriétés sont bien satisfaites par le protocole, sous l’hypothèse que les primitives de celui-ci se comportent comme des primitives idéales.\par
+
+
+Cette analyse nous a permis de vérifier que, instancié avec le protocole d’échange de clefs de Hashimoto, Katsumata, Kwiatkowski et Prest~\cite{PKC:HKKP21} et le double-cliquet de Alwen, Coretti, et Dodis~\cite{EC:AlwCorDod19}, ce protocole Signal post-quantique présente des propriétés de sécurité équivalentes au protocole classique.
 
 % subsection paper_2 (end)
-
-\subsection[Troisième article]{Un protocole pour la vérification sûre de tatouages numériques embarqués dans les modèles d’apprentissage automatique~\cite{IHMMSec:KTBBS21}} % (fold)
-\label{sub:paper_3}
-
-\lipsum[34-35]
-
-% subsection paper_3 (end)
 
 % section contributions (end)

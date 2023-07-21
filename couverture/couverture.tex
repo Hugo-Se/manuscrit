@@ -22,7 +22,7 @@
 %\doctoralschool{Sciences\hskip.2cm mathématiques de Paris-Centre}{386}
 \doctoralschool{Sciences mathématiques\newline de Paris-Centre}{386}
 \specialty{Informatique}
-\date{18 septembre 2023}
+\date{22 septembre 2023}
 
 % cotutelle
 % \entitle{Thesis Subject in English}
@@ -54,11 +54,11 @@ d’accréditations anonymes. Ces systèmes permettent à un fournisseur de serv
 droits d’un utilisateur à bénéficier de ces services en vertu de la garantie --~donnée antérieurement
 par une autorité de confiance~-- du fait que cet utilisateur possède bien les attributs requis, cela
 en préservant le secret des autres attributs, tels que l’identité de
-l’utilisateur, dont l’autorité aurait eu à prendre connaissance, cela en permettant aussi la levée
+l’utilisateur, dont l’autorité aurait eu à prendre connaissance, et cela en permettant la levée
 de l’anonymat de l’utilisateur par un autre agent, disposant d’une clef secrète spéciale.
 Je me suis employé à étudier les systèmes d’accréditations anonymes décrits dans la
-littérature et j’ai participé à l’élaboration d’un schéma d’accréditations anonymes post-quantiques
-optimisé, fondé sur les problèmes difficiles liés aux réseaux euclidiens, pour ensuite contribuer au
+littérature et j’ai participé à l’élaboration d’un schéma théorique d’accréditations anonymes post-quantiques
+optimisé, fondé sur les problèmes difficiles relatifs aux réseaux euclidiens, pour ensuite contribuer au
 développement du premier programme informatique à sources ouvertes d’accréditations anonymes
 post-quantiques qui soit une démonstration directe de la compatibilité d’un tel schéma avec des cas
 d’usages concrets.
@@ -75,7 +75,7 @@ d’usages concrets.
 
 
 
-Le protocole Signal, sur lequel se fondent de nombreux systèmes de messagerie instantanée actuels, est lui aussi appelé à connaître une adaptation post-quantique. Dans un article, nous en proposons une vérification formelle réalisée avec Tamarin en mettant l’accent sur ses deux principales composantes, le protocole d’échange de clefs X3DH et le protocole du « double cliquet » de gestion des clefs de session.\par
+Le protocole Signal, sur lequel se fondent de nombreux systèmes de messagerie instantanée actuels, est lui aussi appelé à connaître une adaptation post-quantique. Dans un article, nous en proposons une vérification formelle réalisée avec le prouveur Tamarin en mettant l’accent sur ses deux principales composantes, le protocole d’échange de clefs X3DH et le protocole du « double cliquet » de mise à jour des clefs de session.\par
 
 %, que nous avons ensuite mise en œuvre de façon fine sur le plan informatique, avec des optimisations de nos programmes en mémoire et en temps.
 %à apporter notre pierre à l’édifice
@@ -122,6 +122,6 @@ Le protocole Signal, sur lequel se fondent de nombreux systèmes de messagerie i
 
 It was with the intention of contributing to these efforts that I delved into anonymous credential systems. These systems allow a service provider to verify a user's rights to access these services, based on a guarantee previously given by a trusted authority, that the user indeed possesses the required attributes, while preserving the secrecy of other attributes such as the user's identity which the authority would have had to acknowledge, and also allowing for the user's anonymity to be lifted by another actor, possessing a special secret key. I have endeavoured to study anonymous credential systems described in the literature and participated in the development of an optimized post-quantum anonymous credential scheme, based on hard problems related to lattices, and then contributed to the first open-source implementation of a post-quantum anonymous credential system that is a direct demonstration of the compatibility of such a scheme with real use cases.
 
-The Signal protocol, upon which many current instant messaging systems are based, is also expected to undergo a post-quantum adaptation. In a paper, we propose a formal verification carried out with Tamarin, placing emphasis on its two main components, the X3DH key agreement protocol and the ``double ratchet'' session key management protocol.}
+The Signal protocol, upon which many current instant messaging systems are based, is also expected to undergo a post-quantum adaptation. In a paper, we propose a formal verification carried out with the Tamarin prover, placing emphasis on its two main components, the X3DH key agreement protocol and the ``double ratchet'' session key management protocol.}
 
 \enkeywords{Post-quantum cryptography, anonymous credentials, public-key cryptography, verifiable encryption, zero-knowledge proofs, lattices.}
