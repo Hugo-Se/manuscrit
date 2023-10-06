@@ -236,18 +236,14 @@ return, for, restart, goto,
 %-------------------------------------------------------------------
 
 \iftoggle{biblatex}{
-\printbibliography[heading=fullbib, title=Bibliography]
+\printbibliography[heading=fullbib, title=Bibliographie]
 }{
 \bibliographystyle{alpha}
 %% If you use the standard bibtex, list your bib resources here
 \bibliography{cryptobib/abbrev3,biblio_aux,cryptobib/crypto}
 }
 \listoffigures
-
 \listoftables
-
-\listofalgorithms
-
+%\listofalgorithms
 % \includepdf{cover/back.pdf}
-
 \end{document}
