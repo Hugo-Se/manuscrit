@@ -1,11 +1,13 @@
-{
+%{
 
 \newcommand{\vs}[1]{\vspace*{-#1mm}}
 
 \subimport{./}{macros.tex}
 
+\begin{refsegment}
 \chapterquote{Formal Verification of a Post-Quantum Signal Protocol with Tamarin}{« la cryptologie n’est plus seulement la science du secret mais aussi la science de la confiance\footnote{~« cryptology is no longer only the science of secrecy, but also the science of trust »} »}{\emph{Discours au CNRS}}{\newline Jacques Stern} \label{cha:PQSignal}
 
+\begin{english}
 
 \enluminure{T}{he Signal protocol} is used by billions of people for instant 
 messaging in applications such as Facebook Messenger, Google Messages, Signal, 
@@ -42,5 +44,20 @@ has equivalent security properties to its current classical count\-er\-part.
 \subimport{./}{security_properties}
 
 \subimport{./}{Annexe.tex}
+\end{english}
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\iftoggle{biblatex}{
+\newpage
+\sloppy
+%% List your contributions
+\printbibliography[heading=selfbib, category=self, title=My Contributions]
+
+\onlyif{chapter_bib}{
+\printbibliography[heading=references, segment=\therefsegment]
 }
+}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%}
+\end{refsegment}

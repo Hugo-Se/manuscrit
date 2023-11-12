@@ -85,7 +85,7 @@ for such schemes before presenting our generic scheme.
 \subsubsubsection{Relaxed Signature 
 Scheme}\label{sec:relaxed_signature_scheme}
 	We use the same definition as in~\cite[Section 5.1]{ISC:BosCamNev18}. The 
-only difference is our different definition of a relaxed set: instead of using 
+only difference is our definition of a relaxed set: instead of using 
 a function $g: X \rightarrow 2^{\bar{X}}$, we consider a surjection $\bar{X} 
 \rightarrow X$. One can easily switch from one vision to the other.
 
@@ -208,7 +208,7 @@ $(\relationcipher, \barrelationcipher,\allowbreak \projcipher)$,
 
  \item a subset $\DomEncRel \subset \SetPublicKeysEnc \times \relationclear$,
 
-\item a probabilistic algorithm $\EncRel : \DomEncRel \rightarrow 
+\item a probabilistic algorithm $\EncRel: \DomEncRel \rightarrow 
 \relationcipher$ that extends the function $\Enc$ to relation thanks to 
 the requisite $\projL \circ \EncRel = (\Enc, \id) \circ (\id, \projL)$,
 
@@ -242,8 +242,8 @@ Our generic construction will need to use relaxed signature and relaxed verifiab
 with the following requirements:
 \begin{compactitem}
 	\item $\SetMessSign = \SetMessEnc \times \SetAttrAC$, $\SetRelMessSign = \SetRelMessEnc \times \SetAttrAC$
-	\item The relaxed function of the signature scheme preserves the attributes : $\proj{\SetAttrAC} \circ \projsign = \proj{\SetAttrAC}$.
-	\item The relations of the relaxed verifiable encryption are such that :
+	\item The relaxed function of the signature scheme preserves the attributes: $\proj{\SetAttrAC} \circ \projsign = \proj{\SetAttrAC}$.
+	\item The relations of the relaxed verifiable encryption are such that:
 %		\tiny
 		  \begin{align*}
 \relationclear    & := \Big\{\left(\left(\identity, \spk, R, 

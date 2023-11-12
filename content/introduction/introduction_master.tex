@@ -1,6 +1,7 @@
 % !TEX root = ../content.tex
 
 %\chapterquote{Introduction}{Call me Ishmael}{Moby-Dick}{Herman Melville} % (fold)
+\begin{refsegment}
 \chapterquote{Introduction}{Je ne pourrais vous dire, les amis, même si je le voulais, si je
 suis ou non un espion français, car je suis tenu au plus absolu secret.}{Là où il y a de l’homme...}{\\ Hervé Le Corneur}
 \label{cha:introduction}
@@ -45,9 +46,9 @@ Le possible essor des calculateurs quantiques est de nature à mettre à mal la 
 
 \iftoggle{biblatex}{
 \newpage
-
+\sloppy
 %% List your contributions
-\printbibliography[heading=selfbib, category=self, title=My Contributions]
+%\printbibliography[heading=selfbib, category=self, title=My Contributions]
 
 \onlyif{chapter_bib}{
 \printbibliography[heading=references, segment=\therefsegment]
@@ -55,3 +56,4 @@ Le possible essor des calculateurs quantiques est de nature à mettre à mal la 
 }{
 %% List your contributions using a \bibitem list
 }
+\end{refsegment}

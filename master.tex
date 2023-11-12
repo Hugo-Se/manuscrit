@@ -51,6 +51,9 @@
 \input{aux/chapter_toggles.tex}
 
 \usepackage{lipsum}
+\usepackage{polyglossia}
+\setdefaultlanguage{french} %%%%%%%%%%
+\setotherlanguage{english} %%%%%%%%%%
 
 % groupsig
 \usepackage[olditem,oldenum]{paralist}
@@ -125,7 +128,7 @@ return, for, restart, goto,
 
 \addbibresource{biblio_aux.bib}
 
-\defbibheading{references}[References]{% 
+\defbibheading{references}[Références]{% 
     \section*{#1}% 
     \markboth{#1}{#1}%
 }
@@ -236,6 +239,9 @@ return, for, restart, goto,
 %-------------------------------------------------------------------
 
 \iftoggle{biblatex}{
+\DeclareFieldFormat[article]{title}{\textit{#1}}
+
+\sloppy
 \printbibliography[heading=fullbib, title=Bibliographie]
 }{
 \bibliographystyle{alpha}

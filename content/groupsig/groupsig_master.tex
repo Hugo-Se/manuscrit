@@ -1,5 +1,5 @@
 {
-
+\begin{refsegment}
 %\subimport{./}{preamble/packages.tex}
 \subimport{./}{preamble/meta.tex}
 \subimport{./}{preamble/common.tex}
@@ -13,6 +13,7 @@
 
 \chapterquote[Efficient Implementation of a PQ Anonymous Credential Protocol]{Efficient Implementation of a Post-Quantum Anonymous Credential Protocol}{« Three may keep a Secret, if two of them are dead. »\footnote{~« Trois personnes peuvent garder un secret, si deux d’entre elles sont mortes. »}}{Poor Richard’s Almanack}{Benjamin Franklin} \label{cha:groupsig}
 
+\begin{english}
 
 \enluminure{A}{uthentication on the Internet} usually has the drawback of 
 leaking the identity of the users, or at least allowing to trace them from a 
@@ -52,5 +53,22 @@ post-quantum.
 
 
 \fi
+
+\end{english}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\iftoggle{biblatex}{
+\newpage
+\sloppy
+%% List your contributions
+\printbibliography[heading=selfbib, category=self, title=My Contributions]
+
+\onlyif{chapter_bib}{
+\printbibliography[heading=references, segment=\therefsegment]
+}
+}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\end{refsegment}
 
 }
