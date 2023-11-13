@@ -102,7 +102,7 @@ NTT inverse transform & 5.02 \% \\
 Obviously, the verification can be speeded up by removing the compression step, but at the cost of a significant increase in bandwidth usage due to sending uncompressed presentation tokens.
 
 \subsubsubsection{Golomb-Rice coding}
-Golomb-Rice coding is a lossless data compression method that is particularly well-suited for compressing Gaussian samples as explained in~\cite{C:ETWY22}. The basic idea behind Golomb-Rice coding for integers is to use a variable-length unary prefix code to represent the quotient and a fixed-length binary code to represent the remainder of the integer divided by a chosen parameter~$\sigma$, the standard deviation of the distribution in our case.
+The Golomb-Rice coding is a lossless data compression method that is particularly well-suited for compressing Gaussian samples as explained in~\cite{C:ETWY22}. The basic idea behind Golomb-Rice coding for integers is to use a variable-length unary prefix code to represent the quotient and a fixed-length binary code to represent the remainder of the integer divided by a chosen parameter~$\sigma$, the standard deviation of the distribution in our case.
 
 More specifically, suppose we have a discrete Gaussian sample~$z$, and we want to compress it using Golomb-Rice coding with parameter $\sigma$. We first compute the quotient $c$ and remainder $r$ of~$z$ divided by $\sigma$, i.e., $z = c\sigma + r$, where $c$ and $r$ are integers and $0 \leq r < \sigma$. We then use a variable-length prefix code to represent $c$ and separately represent $r$ in binary.
 

@@ -40,12 +40,16 @@
 \toggletrue{lettrine}
 \toggletrue{enluminure}
 
+
 \input{aux/layout.tex}
 \input{aux/packages.tex}
 \input{aux/fonts.tex}
 \input{aux/macros.tex}
 \input{aux/topic_macros.tex}
 
+\DeclareFieldFormat[article]{title}{\textit{#1}}
+\DeclareFieldFormat[InProceedings]{title}{\textit{#1}}
+\DeclareFieldFormat{url}{}
 
 \input{couverture/couverture.tex}
 \input{aux/chapter_toggles.tex}
@@ -239,7 +243,7 @@ return, for, restart, goto,
 %-------------------------------------------------------------------
 
 \iftoggle{biblatex}{
-\DeclareFieldFormat[article]{title}{\textit{#1}}
+%\DeclareFieldFormat[article]{title}{\textit{#1}}
 
 \sloppy
 \printbibliography[heading=fullbib, title=Bibliographie]

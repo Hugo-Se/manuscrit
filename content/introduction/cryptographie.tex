@@ -13,7 +13,7 @@ des lettres de l'alphabet\footnote{\emph{Dictionnaire de la langue française}, 
 édition de 1873, tome premier, page 922, entrée « cryptographie ».} ».
 Il est vrai qu’en général, en cette seconde moitié  du \textsc{xix}ᵉ siècle, pour rendre un message
 inintelligible au cas où celui-ci, confidentiel, viendrait à être intercepté, on écrivait un
-caractère pour un autre, ou on remplaçait une suite de lettres par une autre (par exemple, selon une
+caractère pour un autre, ou l’on remplaçait une suite de lettres par une autre (par exemple, selon une
 substitution dite polyalphabétique) ; la cryptographie était alors, pour ainsi dire, balbutiante.
 Pourtant, à cette époque déjà, dans ses \emph{Recherches arithmétiques}~\cite{gauss1801}, Carl Friedrich
 Gauss avait jeté les bases de la théorie des nombres moderne, et Évariste Galois, dans son fameux
@@ -25,32 +25,32 @@ l’article en deux parties d’Auguste Kerckhoffs, paru en 1883, intitulé \emp
 militaire}~\cite{kerckhoffs1883premier}~\cite{kerckhoffs1883second}, où le cryptographe s’étonne de voir savants et professeurs « enseigner et
 recommander pour les usages de la guerre des systèmes dont un déchiffreur tant soit peu expérimenté
 trouverait certainement la clef en moins d’une heure de temps » ; l’auteur ne voit guère
-d’explication à cet « excès de confiance dans certains chiffres » que par « l’abandon dans lequel la
+d’autre explication à cet « excès de confiance dans certains chiffres » que « l’abandon dans lequel la
 suppression des cabinets noirs et la sécurité des relations postales ont fait tomber les études
 cryptographiques ».
 
-Ce n’est qu’au siècle suivant, sous l’impulsion, notamment, des grands conflits qui l’ont déchiré,
+Ce n’est qu’au siècle suivant, par l’effet, notamment, des grands conflits qui l’ont déchiré,
 qu’on vit la cryptographie tirer réellement parti des outils de la mathématique moderne et muer en
 une science complexe, si bien que dans les années 1970 apparut une nouvelle sorte de cryptographie,
 qu’on dit asymétrique par opposition à la cryptographie symétrique, son pendant plus ancien.
 
 Jusqu’alors, en effet, pour établir une communication chiffrée, il fallait que les correspondants
-convinssent au préalable d’une règle secrète de chiffrement fixant notamment les caractéristiques du
-système à connaître pour réaliser la transformation du texte d’origine, le clair.
+convinssent au préalable d’une règle secrète de chiffrement fixant notamment les caractéristiques
+à connaître du système pour réaliser la transformation du texte d’origine, le \emph{clair}.
 Avec cette configuration, celle de la cryptographie symétrique, tout correspondant était en mesure
 de chiffrer, \emph{à la place} d’un autre, un clair donné, et tout chiffré produit par l’un des
-correspondant pouvait être déchiffré naturellement par un autre, sans même qu’il ait été convenu
+correspondants pouvait être déchiffré naturellement par un autre, sans même qu’il ait été convenu
 d’une méthode de déchiffrement, mais simplement par l’application d’un procédé inverse à celui
 employé pour chiffrer.
 Par exemple, deux personnes pouvaient convenir qu’à chacune des lettres d’un clair qu’ils
 souhaiteraient transmettre serait substituée une autre lettre de l’alphabet selon une table de
-correspondance définit à l’avance : qu’ainsi le A se verrait, en chacune de ses occurences,
+correspondance définie à l’avance : qu’ainsi le A se verrait, en chacune de ses occurrences,
 remplacer par un G, que le B serait remplacé par un A, le C par un M,
 et ainsi de suite, le mot « BAC » devenant alors ici « AGM », suite
-de lettres que les deux personnes seraient en mesure non seulement de produire, mais aussi de
+de lettres que ces deux personnes seraient en mesure non seulement de produire, mais aussi de
 déchiffrer aisément en appliquant la table de substitution dans le sens inverse.
 La correspondance entre les lettres du clair et du chiffré est dans cet exemple l’information qui
-doit rester secrète pour que le chiffrement le demeure aussi.
+doit rester secrète pour que le chiffrement le reste aussi.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %tous les correspondants sont capables de produire le même chiffré à partir d’un clair déterminé.
@@ -63,16 +63,14 @@ doit rester secrète pour que le chiffrement le demeure aussi.
 %Dotés des mêmes éléments
 %Ainsi, chacun des correspondants
 %Ainsi, chacun des correspondants était en mesure d’y appliquer la même transformation.
-%qu’un texte serait qu’en chacune de ses occurences dans le texte d’origine, la lettre \emph{h} se verrait remplacer par la lettre \emph{f}.
+%qu’un texte serait qu’en chacune de ses occurrences dans le texte d’origine, la lettre \emph{h} se verrait remplacer par la lettre \emph{f}.
 %caractéristiques éventuellement variables dans le système général.
 %, qui devait concerner, non seulement les caractéristiques générales du système employé, mais aussi ses éventuelles caractéristiques spécifiques à la communication nécessaire à la transformation des messages. 
 %Cette convention devait concerner non seulement les caractéristiques générales du système employé, mais aussi ses caractéristiques variables propres à cette communication spécifique.
 %Avec cette règle commune, il était 
 %commune quant au système et aux données techniques précises à employer pour chiffrer et déchiffrer.
 %L’individu doté de la capacité de chiffrer avec le système était immédiatement en mesure de déchiffrer
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
 %Jusqu’alors en effet, toute communication chiffrée ne pouvait s’établir qu’avec le partage préalable entre les correspondants d’une information secrète qui correspondait aux données techniques du système de chiffrement et déchiffrement, système qui se trouvait être identique pour la communication en question y compris dans  
 %Autrement dit, il fallait une convention 
 %utilisées pour chiffrer et déchiffrer, données identiques pour chacun des
@@ -85,7 +83,9 @@ doit rester secrète pour que le chiffrement le demeure aussi.
 %type de cryptographie.
 %, avec laquelle le chiffrement est le même
 %des deux côtés, il utilisent exactement les mêmes paramètres.
-Cette information secrète --- il en faut une --- sur lequel se fonde le chiffrement peut être de deux natures : soit elle
+
+
+Cette information secrète --- il en faut une --- sur laquelle se fonde le chiffrement peut être de deux natures : soit elle
 correspond au système de chiffrement lui-même, et la sécurité de la communication repose alors
 sur la méconnaissance par l’adversaire du système employé, soit elle se réduit à un petit ensemble de
 paramètres du système, appelé \emph{clef}, et la connaissance de la méthode générale de chiffrement
@@ -103,11 +103,11 @@ en suspicion l’incorruptibilité des employés ou agents subalternes, pour com
 système exigeant le secret se trouvait entre les mains d’un trop grand nombre d’individus, il
 pourrait être compromis à chaque engagement auquel l’un ou l’autre d’entre eux prendrait part ».
 Ce \emph{desideratum} de la cryptographie militaire est ce qui est maintenant connu sous le nom de
-principe de Kerckhoffs ; il s’applique tout aussi bien en dehors du domaine militaire.
+\emph{principe de Kerckhoffs} ; il s’applique tout aussi bien en dehors du domaine militaire.
 %qui reste bien sûr tout à fait valable en-dehors du cadre militaire.
 À l’époque actuelle, en outre, le fait qu’un système de
-chiffrement soit connaissable du monde entier, et donc largement susceptible d’être étudié et mis à
-l’épreuve par les spécialistes, et qu’aucune faille critique ne se fasse connaître malgré cela, tend
+chiffrement soit connaissable du monde entier --- donc largement susceptible d’être étudié et mis à
+l’épreuve par les spécialistes --- et qu’aucune faille critique ne se fasse connaître malgré cela, tend
 à être perçu comme un gage de sa bonne qualité.
 % source ?
 
@@ -125,39 +125,52 @@ fussent accessibles à tous, et d’en permettre un usage non dissimulé comme c
 exemple l’environnement de messagerie
 Signal\footnote{\url{https://signal.org/docs/specifications/doubleratchet/doubleratchet.pdf}}, dont le
 code-source est ouvert.
-De ce concours du NIST est sorti gagnant l’algorithme de Rijndael, du nom de ses deux concepteurs
+De ce concours du NIST est sorti gagnant l’algorithme Rijndael, du nom de ses deux concepteurs
 Joan Daemen et Vincent Rijmen, dans trois déclinaisons spécifiques correspondant à trois tailles de
-clef différentes : 128, 192 et 256 bits. 
+clef différentes : 128, 192 et 256~bits. 
 Le libre accès aux spécifications du système AES a permis la réalisation d’analyses précises de
 celui-ci par le monde de la recherche et la publication de méthodes d’attaques qui, bien que de
 nature à le fragiliser un peu en certains aspects, ne se sont pas montrées suffisamment
 puissantes pour le rendre caduc.
 
-Notons cependant qu’il apparaît, au nombre des révélations dont fut à l’orgine Edward Snowden, que
+Notons cependant qu’il apparaît, au nombre des révélations dont fut à l’origine Edward Snowden, que
 la NSA\footnote{\emph{National Security Agency}, «Agence nationale de la sécurité » aux États-Unis.},
 tout en recommandant l’utilisation d’AES, s’est employée à essayer de trouver des attaques sur ce
-système ; il ne semble pas déraisonnable de penser qu’un tel organisme de renseignement pourrait
+système\footnote{\url{https://www.spiegel.de/international/germany/inside-the-nsa-s-war-on-internet-security-a-1010361.html}} ; il ne semble pas déraisonnable de penser qu’un tel organisme de renseignement pourrait
 garder pour lui toute trouvaille offensive déterminante dans un système de chiffrement à
 spécifications publiques.
 
-Pour que des systèmes informatiques, directement liés à des êtres humains ou non, puissent
-employer un système de chiffrement symétrique tel qu’AES, il est nécessaire comme nous l’avons dit,
-qu’ils aient en commun une clef.
-Or, si ces systèmes sont distants et sont supposés communiquer de façon sécurisé pour la première
+Pour que des systèmes informatiques, directement associés à des êtres humains ou non, puissent employer
+un système de chiffrement symétrique tel qu’AES, il est nécessaire comme nous l’avons dit, qu’ils
+aient en commun une clef.
+Or, si ces systèmes sont distants et sont supposés communiquer de façon sécurisée pour la première
 fois, comment faire en sorte qu’ils puissent convenir d’une clef qui doit être secrète et le rester
-longtemps ?\par
-C’est ce que permet la cryptographie \emph{asymétrique}.
-Par l’emploi d’un chiffrement dit \emph{asymétrique}, deux individus ou davantage peuvent établir une communication secrète sans pourtant détenir une clef commune.
-Il leur faut pour cela être chacun pourvus de deux clefs propres, l’une publique, connaissable des autres correspondants, l’autre privée, secrète. 
-Imaginons que l’un de ces individus, qu’on appellera Alice, entreprenne d’envoyer un message chiffré à un autre individu nommé Benoît. C’est la clef publique de Benoît qui doit être employée par Alice pour chiffrer le message qu’elle lui destine, mais c’est la clef privée de Benoît, qu’il est normalement seul à posséder, que celui-ci doit utiliser pour déchiffrer le message qui lui est adressé.\par
-La sécurité de ces systèmes asymétriques repose sur la difficulté de résoudre certains problèmes mathématiques.
-Or, ces problèmes, comme celui du logarithme discret ou celui de la factorisation de
-grands entiers, pourraient ne plus être suffisamment difficiles pour qui aurait à sa disposition la puissance de calculateurs quantiques.\par
-Afin de parer à la menace que représenterait l’essor de tels calculateurs sur ces systèmes, d’importants efforts sont faits pour que voient le jour et se développent des
-systèmes dits « post-quantiques » de chiffrement, d’authentification et d’identification, analogues aux systèmes classiques
-mais qui résisteraient à des attaques rendues possibles par ces calculateurs, y compris si ces derniers venaient à devenir particulièrement puissants.\par
-Parmi les constructions qui se développent en tant que systèmes cryptographiques post-quantiques, celles qui sont fondées sur les problèmes difficiles relatifs aux réseaux euclidiens s’imposent comme étant parmi les plus efficaces. C’est l’objet de la section suivante.
+suffisamment longtemps ?
 
+C’est ce que permet la cryptographie \emph{asymétrique}.
+Par l’emploi d’un chiffrement dit \emph{asymétrique}, deux individus ou davantage peuvent établir
+une communication secrète sans pourtant détenir une clef commune.
+Il leur faut pour cela être chacun pourvus de deux clefs propres, l’une publique, connaissable des
+autres correspondants, l’autre privée, secrète. 
+Imaginons que l’un de ces individus, qu’on appellera Alice, entreprenne d’envoyer un message chiffré
+à un autre individu qu’on appellera Benoît. C’est la clef publique de Benoît qui doit être employée par Alice
+pour chiffrer le message qu’elle lui destine, mais c’est la clef privée de Benoît, qu’il est
+normalement seul à posséder, que celui-ci doit utiliser pour déchiffrer le message qui lui est
+adressé.
+
+La sécurité de ces systèmes asymétriques repose sur la difficulté de résoudre certains problèmes
+mathématiques.
+Or ces problèmes, comme celui du logarithme discret ou celui de la factorisation de
+grands entiers, pourraient ne plus être suffisamment difficiles pour qui aurait à sa disposition la
+puissance de calculateurs quantiques.
+
+Afin de parer à la menace que ferait peser l’essor de tels calculateurs sur ces systèmes,
+d’importants efforts sont faits pour que voient le jour et se développent des systèmes dits «
+post-quantiques » de chiffrement, d’authentification et d’identification, analogues aux systèmes
+classiques mais qui résisteraient à des attaques rendues possibles par ces calculateurs, y compris
+si ces derniers venaient à devenir particulièrement puissants.
+
+Parmi les constructions qui se développent en tant que systèmes cryptographiques post-quantiques, celles qui sont fondées sur les problèmes difficiles relatifs aux réseaux euclidiens s’imposent comme étant parmi les plus efficaces. C’est le sujet de la section suivante.
 
 %C’est un risque qui n’est pas complètement à exclure.
 %On parle souvent de la cryptographie comme un art plutôt qu’une science.
@@ -171,7 +184,6 @@ Parmi les constructions qui se développent en tant que systèmes cryptographiqu
 %C’est pourquoi il est impératif de parer à cette menace et de trouver à tous les systèmes dits « classiques » des adaptations résistantes à ces possibilités de calculs nouvelles, qui soient suffisamment efficaces pour être utilisées dans le monde réel.
 
 %Une fois le message reçu, il ne reste à Benoît que de déchiffrer, avec sa clef privée
-
 
 %\vskip2cm
 %\hrule
@@ -188,8 +200,6 @@ Parmi les constructions qui se développent en tant que systèmes cryptographiqu
 
 %Informatique quantique et menace relatives aux problèmes difficiles de la cryptographie asymétrique.
 
-
-
 %et qu’aucun canal de communication sécurisé n’existe à cet instant, rester ?
 %On pourrait imaginer que ses systèmes pourrait se communiquer la clef comme deux humains pourrait le
 %faire en se murmurant à l’oreille la valeur de la clef, en se la montrant sur un bout de papier.
@@ -198,9 +208,5 @@ Parmi les constructions qui se développent en tant que systèmes cryptographiqu
 %Pour faire usage d’un système de chiffrement symétrique tel qu’AES, il est nécessaires que les
 %établir une communication sécurisé.
 %Or, en pratique, il est difficile de faire en sorte, il est très difficile de faire en sorte que la clef 
-
-
-
-
 
 % section motivation (end)

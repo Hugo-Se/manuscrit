@@ -66,10 +66,12 @@ m\end{bmatrix}\end{pcmbox} \!\!\mod\begin{pcmbox}\begin{bmatrix} \pcomI \\ \pcom
 \t  \t  \overbar{c} \gets c - c'
 \< \t \forall \iota \in \II\colon\\
 \t  \t   \pcif \norm{ \overbar{c}\:\mathbf{tmp\_dec}}_{\infty} \leq Q/4\kappa   \pcthen
-\< \t \mathbf{r} \mod \phi_\iota \!\!\mod \pcomI \pcomII Q = \frac{\mathbf{r}_\iota}{\bar{c}_\iota}\mod \phi_\iota \!\!\mod \pcomI \pcomII Q \\
+%\< \t \mathbf{r} \mod \phi_\iota \!\!\mod \pcomI \pcomII Q = \frac{\mathbf{r}_\iota}{\bar{c}_\iota}\mod \phi_\iota \!\!\mod \pcomI \pcomII Q \\
+\< \t \mathbf{r} \mod \phi_\iota \!\!\mod \pcomI \pcomII Q\\
 \t  \t   \t  \text{c\_found} \gets \pctrue 
-\< m \gets t_2 - \mathbf{A}_2 \mathbf{r}\\
+\< \t \t \t \t = \frac{\mathbf{r}_\iota}{\bar{c}_\iota}\mod \phi_\iota \!\!\mod \pcomI \pcomII Q \\
 \t \pcendwhile
+\< m \gets t_2 - \mathbf{A}_2 \mathbf{r}\\
 \< \pcreturn (\mathbf{r}, (m, (c_\iota)_{\iota\in\II}))
 	    }
 \caption{\label{fig:decryption_algorithm}Decryption algorithm}

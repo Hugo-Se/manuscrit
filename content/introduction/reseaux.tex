@@ -11,31 +11,31 @@
 %\mathcal{L} = \left\{ \sum_{i=1}^n z_i \mathbf{b}_i : z_i \in \mathbb{Z} \right\}.
 %\]
 
-\subsection{Définitions d’un réseau euclidien}
-Un \emph{réseau euclidien} $\mathcal{L}$ est, pour un entier naturel $n$, un sous-groupe discret de l’espace vectoriel $\mathbb{R}^n$ pour lequel il existe une base $(\mathbf{b}_i)_{i\in[\![1, n]\!]}$ de $\mathbb{R}^n$ telle que
+%\subsection{Définitions d’un réseau euclidien}
+Un \emph{réseau euclidien} $\mathcal{L} \subset \mathbb{R}^n$ est, pour un entier naturel $n$, un sous-groupe discret de l’espace vectoriel $\mathbb{R}^n$ pour lequel il existe une base $(\mathbf{b}_i)_{i\in[\![1, n]\!]}$ de $\mathbb{R}^n$ telle que
 \[
 \mathcal{L} =\left\{ \sum^n_{i=1} x_i\,\mathbf{b}_i : x_i \in \mathbb Z\right\}\text{.}
 \]
 %Chaque vecteur dans $\mathcal{L}$ est une combinaison linéaire avec des coefficients entiers des vecteurs de la base. On dit que $\mathcal{L}$ est généré par la base $\{\mathbf{b}_1, \mathbf{b}_2, \ldots, \mathbf{b}_n\}$.
 
 
-\subsection{Production d'instances difficiles de problèmes sur les réseaux}
+\subsection{Production d’instances difficiles de problèmes sur les réseaux}
 
 Dans un article publié en 1996~\cite{STOC:Ajtai96}, Miklós Ajtai présente la réduction de trois problèmes, considérés
 difficiles \emph{dans le pire des cas}, au \emph{cas moyen} d’un problème qu’il définit à partir
 d’une classe particulière de réseaux.
 En d’autres termes, à partir de la difficulté supposée de trois problèmes dans les instances les
-plus défavorables à leur résolution --- sans que ces instances spécifiques ne soit précisées ---
+plus défavorables à leur résolution --- sans que ces instances spécifiques ne soient précisées ---
 Ajtai démontre la difficulté d’un problème dont l’instance correspond à un réseau tiré aléatoirement
 dans la classe qu’il spécifie.
 
-Le premier des trois problèmes supposés difficiles, par exemple, consiste à trouver,
+Par exemple, le premier des trois problèmes supposés difficiles, consiste à trouver,
 approximativement, la plus petite norme parmi celles des vecteurs non nuls d’un réseau.
 
 %La classe \emph{aléatoire} se définit \emph{modulo} un entier $q$ ;
-Les réseaux euclidiens de la classe sont définis comme les suites finis de longueur $m$, où $m$ est un entier qui ne dépend que de $n$.
+Les réseaux euclidiens de la classe sont définis comme les suites finies de longueur $m$, où $m$ est un entier qui ne dépend que de $n$.
 
-Ajtai démontre que si un algorithme probabilistique qui opère en temps polynomial trouve, avec une
+Ajtai démontre que si un algorithme probabiliste qui opère en temps polynomial trouve, avec une
 probabilité de $1/2$ au moins, un vecteur court dans un réseau tiré aléatoirement dans cette classe,
 il existe un autre algorithme en temps polynomial qui résout les trois problèmes difficiles avec une
 probabilité qui tend exponentiellement vers $1$.
@@ -54,15 +54,14 @@ problèmes attachés aux réseaux euclidiens.
 
 
 \subsection{Le problème du vecteur le plus proche} 
-Le problème du vecteur le plus proche (ou CVP pour \emph{closest vector problem}) est un problème calculatoire fondamental associé aux réseaux euclidiens. Étant donné un réseau $\mathcal{L}$ dans $\mathbb{R}^n$ généré par une base $\{\mathbf{b}_1, \mathbf{b}_2, \ldots, \mathbf{b}_n\}$ et un point quelconque $\mathbf{t}$ dans $\mathbb{R}^n$, le problème CVP demande de trouver le vecteur dans $\mathcal{L}$ qui est le plus proche de $\mathbf{t}$ en termes de distance euclidienne.
-
+Le problème du vecteur le plus proche (ou CVP pour \emph{closest vector problem}) est un problème calculatoire fondamental associé aux réseaux euclidiens. Étant donné un réseau $\mathcal{L}$ dans $\mathbb{R}^n$ généré par une base $\{\mathbf{b}_1, \mathbf{b}_2, \ldots, \mathbf{b}_n\}$ et un point quelconque~$\mathbf{t}$ dans $\mathbb{R}^n$, le problème CVP demande de trouver le vecteur dans $\mathcal{L}$ qui est le plus proche de~$\mathbf{t}$ en termes de distance euclidienne.
 Formellement, il s’agit de chercher un vecteur $\mathbf{v}$ dans $\mathcal{L}$ tel que $\|\mathbf{v}-\mathbf{t}\| = \min_{\mathbf{w} \in \mathcal{L}} \|\mathbf{w}-\mathbf{t}\|$.
 
-Ce problème est connu pour être NP-difficile. En outre, il a été démontré que la version d'approximation du problème, où l'on cherche un vecteur qui est presque le plus proche de $\mathbf{t}$, est également difficile pour certaines approximations. 
+Ce problème est connu pour être NP-difficile. En outre, il a été démontré que la version approximative du problème, où l'on cherche un vecteur qui est presque le plus proche de $\mathbf{t}$, est également difficile pour certaines approximations. 
 
 \subsection{Le problème du plus court vecteur}
 
-Le problème du plus court vecteur (ou SVP pour \emph{Shortest Vector Problem}) dans un réseau euclidien est un autre problème calculatoire supposé difficile. Étant donné un réseau $\mathcal{L}$ dans $\mathbb{R}^n$ généré par une base $\{\mathbf{b}_1, \mathbf{b}_2, \ldots, \mathbf{b}_n\}$, ce problème demande de trouver le vecteur non nul le plus court dans $\mathcal{L}$. Formellement, il s’agit de chercher un vecteur $\mathbf{v}$ dans $\mathcal{L}$ tel que $\|\mathbf{v}\| = \min_{\mathbf{w} \in \mathcal{L} \setminus \{ \mathbf{0} \}} \|\mathbf{w}\|$. Ce problème est NP-difficile, et même sa version d'approximation est difficile dans certains cas. 
+Le problème du plus court vecteur (ou SVP pour \emph{Shortest Vector Problem}) dans un réseau euclidien est un autre problème calculatoire supposé difficile. Étant donné un réseau $\mathcal{L}$ dans $\mathbb{R}^n$ généré par une base $\{\mathbf{b}_1, \mathbf{b}_2, \ldots, \mathbf{b}_n\}$, ce problème demande de trouver le vecteur non nul le plus court dans $\mathcal{L}$. Formellement, il s’agit de chercher un vecteur $\mathbf{v}$ dans $\mathcal{L}$ tel que $\|\mathbf{v}\| = \min_{\mathbf{w} \in \mathcal{L} \setminus \{ \mathbf{0} \}} \|\mathbf{w}\|$. Ce problème est NP-difficile, et même sa version approximative est difficile dans certains cas. 
 
 \subsection{Le problème de l’apprentissage avec erreurs}
 
@@ -72,15 +71,16 @@ Le problème de l’\emph{apprentissage avec erreurs}, communément appelé prob
 % avéré être un excellent candidat pour la construction de systèmes cryptographiques résistants aux attaques par ordinateur quantique.
 
 
-Soit $q$ un entier naturel et $\chi$ une distribution de probabilité sur l'ensemble des entiers. Le problème de décision LWE consiste à distinguer entre deux types de paires $(\mathbf{a}, b)$, où $\mathbf{a}$ est un vecteur à $n$ composantes tiré aléatoirement, selon la distribution uniforme, dans $\mathbb{Z}_q^n$ (c’est-à-dire dans les vecteurs à $n$ composantes d’entiers relatifs modulo $q$) et $b$ est un scalaire dans $\mathbb{Z}_q$. Dans le premier type de paire, $b$ est égal à $\langle\mathbf{a},\mathbf{s}\rangle + e \mod q$ pour un certain vecteur secret $\mathbf{s}$ dans $\mathbb{Z}_q^n$ et un bruit $e$ tiré selon la distribution $\chi$. Dans le deuxième type de paire, $b$ est tiré selon la distribution uniforme dans $\mathbb{Z}_q$.
+Soit $q$ un entier naturel et $\chi$ une distribution de probabilité sur l'ensemble des entiers. Le problème de décision LWE consiste à distinguer entre deux types de paires $(\mathbf{a}, b)$, où $\mathbf{a}$ est un vecteur à $n$ composantes tiré aléatoirement, selon la distribution uniforme, dans $\mathbb{Z}_q^n$ (c’est-à-dire dans les vecteurs à $n$ composantes d’entiers relatifs modulo $q$) et $b$ est un scalaire dans $\mathbb{Z}_q$. Dans le premier type de paire, $b$ est égal à $\langle\mathbf{a},\mathbf{s}\rangle + e \mod q$ pour un certain vecteur secret $\mathbf{s}$ dans $\mathbb{Z}_q^n$ et une erreur $e$ tiré selon la distribution $\chi$. Dans le deuxième type de paire, $b$ est tiré selon la distribution uniforme sur $\mathbb{Z}_q$.
 
 
 Les réseaux euclidiens sont un élément clef dans la preuve de la sécurité du problème LWE. En particulier, Regev a montré que si certaines variantes du problème du plus court vecteur (SVP) et du problème du plus proche vecteur (CVP) dans les réseaux euclidiens sont difficiles à résoudre, alors le problème LWE est aussi difficile à résoudre.
 
-Cela a été démontré en procédant à une réduction quantique de ces problèmes de réseaux euclidiens vers le problème LWE. En d'autres termes, si nous avions un algorithme efficace pour résoudre le problème LWE, alors nous pourrions utiliser cet algorithme pour résoudre ces problèmes de réseaux euclidiens en temps polynomial, en supposant que nous ayons accès à un ordinateur quantique.
+Cela a été démontré en procédant à une réduction quantique de ces problèmes sur les réseaux euclidiens vers le problème LWE. En d'autres termes, si nous avions un algorithme efficace pour résoudre le problème LWE, alors nous pourrions utiliser cet algorithme pour résoudre ces problèmes sur les réseaux en temps polynomial, en supposant que nous ayons accès à un ordinateur quantique.
 
 
-Le problème LWE a trouvé de nombreuses applications en cryptographie, notamment dans la construction de systèmes de chiffrement, de signatures numériques et de protocoles de transfert de clef. La sécurité de ces constructions repose sur la difficulté supposée du problème LWE, qui à son tour est liée à la difficulté de certains problèmes dans les réseaux euclidiens.
+Le problème LWE a trouvé de nombreuses applications en cryptographie, notamment dans la construction de primitives pour certains systèmes post-quantiques de chiffrement, de signatures numériques ou d’échange de clefs. Parmi ces primitives, on peut citer les preuves à divulgation nulle de connaissance, très importantes dans les schémas de signatures de groupe et d’accréditations anonymes sur lesquels j’ai été amené à travailler. Ces preuves sont le sujet de la section suivante.
+%La sécurité de ces constructions repose sur la difficulté supposée du problème LWE, qui à son tour est liée à la difficulté de certains problèmes dans les réseaux euclidiens.
 %Cela fait du problème LWE un outil précieux pour la construction de systèmes cryptographiques résistants aux attaques par ordinateur quantique.
 
 % section reseaux (end)

@@ -40,7 +40,7 @@ identity of the credential used to create the presentation (or~$\bot$).
 $\bm{\VerifyCred(\acpar,\allowbreak \ipk, \cred)}$} checks the validity of the 
 credential for the associated attributes $(\alpha_i)_{i \in R}$ it contains and returns $1$ (if valid) or $0$.
 
-\item The \textbf{presentation token verification algorithm 
+\item The \textbf{token verification algorithm 
 $\bm{\VerifyPt(\acpar,\allowbreak \ipk, \opk, \pt)}$} checks the validity of the 
 presentation token for the associated attributes $(\alpha_i)_{i \in S}$ it contains and 
 returns $1$ (if valid) or~$0$. \end{compactitem}
@@ -90,7 +90,7 @@ a function $g: X \rightarrow 2^{\bar{X}}$, we consider a surjection $\bar{X}
 \rightarrow X$. One can easily switch from one vision to the other.
 
 A relaxed signature scheme  associated with a relaxed message 
-space $(\SetMessSign,\SetRelMessSign, \projsign)$ consists of 
+space \begin{equation*}(\SetMessSign,\SetRelMessSign, \projsign)\end{equation*} consists of 
 the following algorithms:
 
 %a relaxed space $(\SetMessSign, \projsign, \SetRelMessSign)$ and 
@@ -194,7 +194,7 @@ Moreover, we consider
 	\begin{compactitem}
 		\item two relaxed relations $(\relationclear, \barrelationclear,
 \projclear)$, $(\relationcipher, \barrelationcipher,\allowbreak \projcipher)$ 
-			with:
+			with:\\
 		$\Language{\relationclear} = \SetMessEnc \times \SetPubEnc$,
 		$\Language{\barrelationclear} = \SetRelMessEnc \times \SetPubEnc$, $\projclear =
 	(\idfunction, \projenc)$. 
@@ -242,7 +242,7 @@ Our generic construction will need to use relaxed signature and relaxed verifiab
 with the following requirements:
 \begin{compactitem}
 	\item $\SetMessSign = \SetMessEnc \times \SetAttrAC$, $\SetRelMessSign = \SetRelMessEnc \times \SetAttrAC$
-	\item The relaxed function of the signature scheme preserves the attributes: $\proj{\SetAttrAC} \circ \projsign = \proj{\SetAttrAC}$.
+	\item The relaxed function of the signature scheme preserves the attributes:\newline $\proj{\SetAttrAC} \circ \projsign = \proj{\SetAttrAC}$.
 	\item The relations of the relaxed verifiable encryption are such that:
 %		\tiny
 		  \begin{align*}
@@ -306,7 +306,7 @@ The complete scheme can be found in Figure~\ref{fig:general_construction_AC}.
 			\pcreturn  ({(\alpha_i \sqcup i)}_{i \in S}, \projL(C), \pi)
 		}
 		\procedure[headlinesep=2pt,bodylinesep=2pt]{$\Open\big(\acpar, \ipk,\osk, \pt\big)$}{%
-			c \dgets \text{the cipher included in the presentation } \pt \\
+			c \dgets \text{the cipher included in } \pt \\
 			\identity \gets \Dec(\esk, c)\\
 			\pcreturn \identity
 		}
@@ -349,7 +349,7 @@ proofs by simulations and the ciphertext by the encryption of any
 \Adv{\ProbNIZKAC}{\adv}$
 	where $\ProbAnomCredAC$ is the anonymity game of the anonymous 
 credential, $\ProbCPAEnc$ the
-	IND-CPA game of the encryption scheme $(\EncKeyGen, \Enc, \Dec)$ 
+	IND-CPA game of the encryption scheme\newline $(\EncKeyGen, \Enc, \Dec)$ 
 and $\ProbNIZKAC$ the game of distinction of a NIZK proof and its 
 simulation.
 

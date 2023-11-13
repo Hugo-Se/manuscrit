@@ -1,12 +1,12 @@
 % !TEX root = accréditations_anonymes.tex
 
-\section{Accréditations anonymes post-quantique} % (fold)
+\section{Accréditations anonymes} % (fold)
 
 %Afin de parer à la menace que représenterait l’essor des calculateurs quantiques sur nombre de systèmes cryptographiques (et non des moindres) en usage actuellement, d’importants efforts sont faits pour que voient le jour et se développent des systèmes dits « post-quantiques » de chiffrement, d’authentification et d’identification, analogues aux systèmes classiques mais qui résisteraient à des attaques rendues possibles par de tels calculateurs, y compris si ces derniers venaient à devenir particulièrement puissants.  C’est avec l’intention de m’associer à ces efforts que je me suis penché sur les systèmes d’accréditations anonymes.
-Les systèmes d’accréditations anonymes permettent à un fournisseur de services de vérifier les droits d’un utilisateur à bénéficier de ces services en vertu de la garantie – donnée antérieurement par une autorité de confiance – du fait que cet utilisateur possède bien les attributs requis, cela en préservant le secret des autres attributs, tels que l’identité de l’utilisateur, dont l’autorité aurait eu à prendre connaissance, cela en permettant aussi la levée de l’anonymat de l’utilisateur par un autre agent, disposant d’une clef secrète spéciale.
+Les systèmes d’accréditations anonymes permettent à un fournisseur de services de vérifier les droits d’un utilisateur à bénéficier de ces services en vertu de la garantie --- donnée antérieurement par une autorité de confiance --- du fait que cet utilisateur possède bien les attributs requis, cela en préservant le secret des autres attributs, tels que l’identité de l’utilisateur, dont l’autorité aurait eu à prendre connaissance, cela en permettant aussi la levée de l’anonymat de l’utilisateur par un autre agent, disposant d’une clef secrète spéciale.
 
 %Il s’agit donc d’une preuve numérique de détention de l’attestation par une autorité reconnue de certaines propriétés liées à son identité, qui n’implique pas la révélation de ladite identité mais uniquement de certaines propriétés utiles à la situation.
-Un billet pour un spectacle peut être vu une accréditation anonyme dans le monde physique s’il ne
+Un billet pour un spectacle peut être vu comme une accréditation anonyme dans le monde physique s’il ne
 comporte pas le nom de son possesseur.
 Supposons que des interdictions d’accès à certaines représentations s’appliquent pour les plus
 jeunes.
@@ -22,8 +22,8 @@ sur le billet, peut être en mesure de retrouver l’identité du spectateur.
 %son possesseur le droit d’accéder au spectacle.
 %Si un cinéma, remplissant le rôle d’une autorité reconnue, procède à une vérification de l’âge de l’acheteur, l’ouvreur, dans la salle, ne fait que vérifier les billets et le spectateur est pour lui anonyme.
 
-On peut se rendre compte ici qu’il y a donc quatre rôles différents : celui de l’utilisateur, lié à l’identité, qui, même dans le monde numérique correspond souvent à un véritable être humains qui cherche à préserver au mieux sa vie privée, celui de l’autorité de confiance, qui a vue sur tous les éléments permettant l’attestation de certaines propriétés relatives au possesseur de l’identité (comme son âge exacte et son nom), celui du vérificateur d’attributs, pour lequel l’utilisateur reste anonyme, et enfin celui de l’agent d’ouverture qui, muni d’une clef secrète spéciale dans le monde numérique, est en mesure de lever l’anonymat de l’utilisateur, d’obtenir son identité.\par
-Notre protocole d’accréditations anonymes est fondée sur une primitive appelée signature de groupe. Celle-ci permet aux membres d’un groupe de signer au nom du groupe, tout en restant anonyme au sein de ce groupe.\par 
+On peut se rendre compte ici qu’il y a donc quatre rôles différents : celui de l’utilisateur, lié à l’identité, qui, même dans le monde numérique correspond souvent à un véritable être humain qui cherche à préserver au mieux sa vie privée, celui de l’autorité de confiance, qui a vue sur tous les éléments permettant l’attestation de certaines propriétés relatives au possesseur de l’identité (comme son âge exacte et son nom), celui du vérificateur d’attributs, pour lequel l’utilisateur reste anonyme, et enfin celui de l’agent d’ouverture qui, muni d’une clef secrète spéciale dans le monde numérique, est en mesure de lever l’anonymat de l’utilisateur, d’obtenir son identité.\par
+Notre protocole d’accréditations anonymes est fondé sur une primitive appelée signature de groupe. Celle-ci permet aux membres d’un groupe de signer au nom du groupe, tout en restant anonyme au sein de ce groupe.\par 
 %La mise en gage permet à une partie de s'engager sur une certaine valeur tout en gardant cette valeur secrète. Les systèmes de mise en gage sont souvent comparés à des enveloppes scellées : l'émetteur place une valeur à l'intérieur de l'enveloppe et la scelle (l'engagement), puis à un moment ultérieur, l'émetteur peut ouvrir l'enveloppe pour révéler la valeur (la divulgation).\par
 
 %Un bon système de mise en gage doit satisfaire deux propriétés principales :
